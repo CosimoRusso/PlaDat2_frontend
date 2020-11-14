@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          API endpoint: {process.env.REACT_APP_API_ENDPOINT}
         </p>
         <a
           className="App-link"
