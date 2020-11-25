@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import history from './../history';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -11,7 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../Theme';
-
+import { post } from '../utils';
+import Cookies from 'universal-cookie';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,6 +40,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const cookies = new Cookies();
+
+  const onFormSubmit = async (e) => {
+    e.preventDefault();
+    const { status, data } = await post('/student/login', { email, password });
+    if (status !== 200) {
+      alert("Error: " + data.message);
+    }else{
+      alert("Login successful");
+      cookies.set('jwt', data.token, { path: '/' });
+    }
+    return false;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -48,7 +64,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h4">
          Login
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={onFormSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -60,6 +76,8 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={(e) => { setEmail(e.target.value); }}
           />
           <TextField
             variant="outlined"
@@ -71,6 +89,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={(e) => { setPassword(e.target.value); }}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
