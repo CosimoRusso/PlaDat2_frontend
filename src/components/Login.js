@@ -53,10 +53,10 @@ export default function SignIn() {
     if (status !== 200) {
       alert("Error: " + data.message);
     }else{
-      alert("Login successful");
       cookies.set('jwt', data.jwt, { path: '/' });
       cookies.set('userId', data.id, { path: '/' });
       cookies.set('userType', 'student', { path: '/' });
+      history.push("/dashboard");
     }
     return false;
   }
@@ -107,7 +107,6 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => history.push("/dashboard")}
           >
            Login
           </Button>
