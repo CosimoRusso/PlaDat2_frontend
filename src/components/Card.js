@@ -33,9 +33,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard(props) {
   const classes = useStyles();
-
+  let { job } = props;
+  if (!job) job = { name: 'React Developer', companyId: 1, id: 1, salary: 200, remote: true, company: {name: 'Netflix'} }
   return (
     <Card className={classes.root}>
         <Grid item xs>
@@ -49,13 +50,13 @@ export default function RecipeReviewCard() {
             <ClearIcon />
           </IconButton>
         }
-        title="React Developer"
-        subheader="Netflix"
+        title={job.name || 'React Developer'}
+        subheader={job.company && job.company.name || 'Netflix'}
       />
 
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.
+            {job.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.'}
         </Typography>
       </CardContent>
 
@@ -66,7 +67,7 @@ export default function RecipeReviewCard() {
        justify="flex-start"
         >
       <Typography variant="body2" color="textSecondary" component="p">
-        3000EUR | Remote
+          {job.salary || '3000'}EUR | {job.remote ? 'Remote' : 'In Place'}
         </Typography>
         </Grid>
         <Grid
