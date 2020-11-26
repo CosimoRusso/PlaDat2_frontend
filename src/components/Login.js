@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import history from './../history';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -13,8 +13,10 @@ import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../Theme';
 import utils from '../utils';
 import Cookies from 'universal-cookie';
+import {UserContext} from "../utils/user-context";
 
 const { post } = utils;
+const cookies = new Cookies();
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,12 +42,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cookies = new Cookies();
-
 export default function SignIn() {
   const classes = useStyles();
   const [email, setEmail] = useState(process.env.REACT_APP_EMAIL || "");
   const [password, setPassword] = useState(process.env.REACT_APP_PASSWORD || "");
+  const { setUser } = useContext(UserContext);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
@@ -53,9 +54,11 @@ export default function SignIn() {
     if (status !== 200) {
       alert("Error: " + data.message);
     }else{
-      cookies.set('jwt', data.jwt, { path: '/' });
-      cookies.set('userId', data.id, { path: '/' });
-      cookies.set('userType', 'student', { path: '/' });
+      const userData = { jwt: data.jwt, userId: data.id, userType: 'student'};
+      cookies.set('jwt', userData.jwt, { path: '/' });
+      cookies.set('userId', userData.id, { path: '/' });
+      cookies.set('userType', userData.userType, { path: '/' });
+      setUser(userData);
       history.push("/dashboard");
     }
     return false;

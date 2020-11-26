@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Typography from "@material-ui/core/Typography";
-import Login from "./Login"
+import Login from "./Login";
+import {UserContext} from '../utils/user-context';
+import history from './../history';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -37,9 +39,16 @@ const useStyles = makeStyles((theme) => ({
 export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const { user, setUser } = useContext(UserContext);
 
   const handleOpen = () => {
-    setOpen(true);
+      if(!user){
+          setOpen(true);
+      }else{
+          setUser(null);
+          history.push('/');
+      }
+
   };
 
   const handleClose = () => {
@@ -54,7 +63,7 @@ export default function TransitionsModal() {
                variant= "subtitle1"
                color="inherit"
                onClick={handleOpen}>
-        Login
+       { user ? 'Logout' : 'Login'}
       </Typography>
       <Modal
         aria-labelledby="transition-modal-title"
