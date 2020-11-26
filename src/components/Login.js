@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import history from './../history';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -11,8 +11,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../Theme';
-import { post } from '../utils';
+import utils from '../utils';
 import Cookies from 'universal-cookie';
+
+const { post } = utils;
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,11 +40,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const cookies = new Cookies();
+
 export default function SignIn() {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const cookies = new Cookies();
+  const [email, setEmail] = useState(process.env.REACT_APP_EMAIL || "");
+  const [password, setPassword] = useState(process.env.REACT_APP_PASSWORD || "");
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +54,9 @@ export default function SignIn() {
       alert("Error: " + data.message);
     }else{
       alert("Login successful");
-      cookies.set('jwt', data.token, { path: '/' });
+      cookies.set('jwt', data.jwt, { path: '/' });
+      cookies.set('userId', data.id, { path: '/' });
+      cookies.set('userType', 'student', { path: '/' });
     }
     return false;
   }
