@@ -1,85 +1,168 @@
-import React from "react";
-import Grid from '@material-ui/core/Grid';
+import React from 'react';
+import history from './history';
+import Navbar from './components/Navbar';
+import Carousel from 'react-elastic-carousel';
+import Card from './components/Card';
+import './job.css';
 import { makeStyles } from '@material-ui/core/styles';
-import Navbar from "./components/Navbar";
-import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
+import { Typography } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-import Theme, {MuiThemeProvider} from './Theme';
+
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+    root: {
+      width: '90%',
+        flexGrow: 1,
+        margin: 'auto',
+        marginTop: 20,
+        backgroundColor: 'white',
+        padding: 20,
+    },
+
+    avatarStyle: {
+        width: 80,
+        height: 80,
+    },
+
+    topMargin:{
+        marginTop: 20,
+    },
+
+    marginLeft:{
+      marginLeft: 10,
   },
-  large: {
-    width: theme.spacing(25),
-    height: theme.spacing(25),
-  },
 
-  margin: {
-    marginTop: '30px',
-  },
+    color: {
+      background: '#03a9f4',
+      '&:hover': {
+        background: "#1076a3",
+     },
+    },
 
-  color: {
-    background: '#03a9f4',
-    '&:hover': {
-      background: "#1076a3",
-   },
-},
-margin2: {
-  marginTop: '50px',
-
-},
-margin3: {
-  marginLeft: '20px',
-},
-
-margin4: {
-  marginBottom: '10px',
-},
 }));
 
-const Jobs = props => {
-  const classes = useStyles();
-  return <div className={classes.root}>
 
-      <Navbar/>
-      <MuiThemeProvider theme={Theme}>
-      <Container fluid className={classes.margin}>
-        <Grid container spacing={3}>
-      <Grid item xs={6} sm={5} md={3} container>
-      <Avatar className={classes.large} variant="square"></Avatar>
-</Grid>
+const breakPoints = [
+    { width: 1, itemsToShow: 1 },
+    { width: 550, itemsToShow: 2 },
+    { width: 768, itemsToShow: 3 },
+    { width: 1200, itemsToShow: 4 },
+]
 
-<Grid item xs={6} sm={7} md={4}>
-<Typography variant="h6">Front-end developer</Typography>
-<Typography variant="subtitle1">Netflix | San Francisko</Typography>
-      <Typography variant="subtitle1">Salary: 500EUR</Typography>
-      <Typography variant="subtitle1">Work: Remote</Typography>
-</Grid>
-<Grid item xs={4} md={3}>
-<Button size="large" variant="contained" color="primary" className={classes.color}>
- Apply now
-</Button>
-</Grid>
-</Grid>
-      <Grid item xs={12} md={9}
-       container
-       direction="column"
-       alignItems="left" className={classes.margin2}>
-          <Typography variant="h5">Description</Typography>
-          <Typography variant="subtitle1" className={classes.margin4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Typography>
-          <Typography variant="h5" className={classes.margin4}>Requirements</Typography>
-      </Grid>
-      <Chip label="HTML"/>
-          <Chip label="CSS" color="primary"  className={classes.margin3} />
-          <Chip label="jQuery" className={classes.margin3} />
-          <Chip label="Javascript (React or Angular)" className={classes.margin3}/>
-      </Container>
-      </MuiThemeProvider>
-      </div>;
-};
+export default function CardCarousel() {
+    const classes = useStyles();
 
-export default Jobs;
+    return (
+      <div>
+        <Navbar />
+        <div className={classes.root}>
+          <Grid container spacing={3} alignItems="center">
+            <Grid
+              container
+              item
+              xs={4}
+              sm={2}
+              md={2}
+              lg={1}
+              justify="flex-start"
+            >
+              <Avatar className={classes.avatarStyle} />
+            </Grid>
+            <Grid
+
+              item
+              xs={5}
+              sm={7}
+              md={7}
+              lg={8}
+              justify="flex-start"
+            >
+              <Typography variant="h6">Netflix</Typography>
+              <Typography variant="subtitle1">Los Angeles | USA</Typography>
+            </Grid>
+            <Grid container item xs={3} sm={3} md={3} lg={3} justify="flex-end">
+              <Button
+                size="medium"
+                variant="contained"
+                color="primary"
+                onClick={() => history.push("/job")}
+                className={classes.color}
+              >
+                Apply now
+              </Button>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={3}>
+            <Grid container item xs={12} md={12} lg={12} justify="flex-start">
+              <Grid>
+                <Typography variant="subtitle1">
+                  Remote | 500e
+                </Typography>
+                                <Typography variant="h6">Description</Typography></Grid>
+
+                <Typography variant="subtitle2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Mauris sit amet semper metus. Ut placerat dictum ornare.
+                  Integer suscipit ligula metus, sed consectetur elit lobortis
+                  eu. Fusce nec metus eu lorem dignissim aliquet vitae id leo.
+                  Nam vitae nisl hendrerit, elementum risus eget, elementum
+                  neque. Quisque sed erat interdum, rutrum nisl a, semper eros.
+                  Cras auctor lorem quis ultrices volutpat. Suspendisse potenti.
+                  Vestibulum ante ipsum primis in faucibus orci luctus et
+                  ultrices posuere cubilia curae; Duis pharetra, diam et
+                  placerat consequat, erat purus maximus nunc, vitae vehicula
+                  lectus sapien vel velit. Praesent ut cursus urna. Duis pretium
+                  mauris non condimentum semper. Mauris sed ante pharetra,
+                  tincidunt lacus id, posuere urna. Sed lobortis velit neque, ac
+                  placerat sapien dapibus ac. Curabitur posuere nisi malesuada
+                  mauris malesuada tempor. Praesent ullamcorper condimentum
+                  venenatis. Suspendisse metus felis, laoreet hendrerit vehicula
+                  ac, lacinia a enim. Curabitur sed arcu eget enim commodo
+                  tincidunt ut id augue. Sed tristique commodo ipsum
+                  pellentesque volutpat. Nullam sed fringilla dolor. Vestibulum
+                  at tellus id nunc condimentum pretium. Cras pellentesque
+                  consequat quam, in maximus elit maximus sit amet.
+                </Typography>
+<div className={classes.topMargin}>
+                <Chip
+                  variant="outlined"
+                  color="primary"
+                  label="HTML"
+                  href="#chip"
+                  clickable
+                />
+                <Chip className={classes.marginLeft}
+                  variant="outlined"
+                  color="primary"
+                  label="CSS"
+                  href="#chip"
+                  clickable
+                />
+                <Chip className={classes.marginLeft}
+                  variant="outlined"
+                  color="primary"
+                  label="REACT"
+                  href="#chip"
+                  clickable
+                />
+                </div>
+            </Grid>
+          </Grid>
+        </div>
+        <Grid container justify="center" lg={12}>
+        <h2>Similar internships</h2>
+        </Grid>
+        <Carousel breakPoints={breakPoints} className={classes.topMargin}>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </Carousel>
+      </div>
+    );
+}
