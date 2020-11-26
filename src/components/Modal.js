@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Login from "./Login";
 import {UserContext} from '../utils/user-context';
 import history from './../history';
+import utils from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -43,10 +44,11 @@ export default function TransitionsModal() {
 
   const handleOpen = () => {
       if(!user){
-          setOpen(true);
+        setOpen(true);
       }else{
-          setUser(null);
-          history.push('/');
+        setUser(null);
+        utils.setSessionCookies(null, null, null);
+        history.push('/');
       }
 
   };

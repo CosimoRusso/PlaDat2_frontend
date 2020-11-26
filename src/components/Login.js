@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import history from './../history';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -12,11 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../Theme';
 import utils from '../utils';
-import Cookies from 'universal-cookie';
 import {UserContext} from "../utils/user-context";
 
 const { post } = utils;
-const cookies = new Cookies();
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,9 +53,7 @@ export default function SignIn() {
       alert("Error: " + data.message);
     }else{
       const userData = { jwt: data.jwt, userId: data.id, userType: 'student'};
-      cookies.set('jwt', userData.jwt, { path: '/' });
-      cookies.set('userId', userData.id, { path: '/' });
-      cookies.set('userType', userData.userType, { path: '/' });
+      utils.setSessionCookies(userData.jwt, userData.id, userData.userType);
       setUser(userData);
       history.push("/dashboard");
     }
