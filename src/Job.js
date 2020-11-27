@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
     },
 
     avatarStyle: {
-        width: 80,
-        height: 80,
+        width: 70,
+        height: 70,
     },
 
     topMargin:{
@@ -63,27 +63,19 @@ export default function CardCarousel() {
             <Grid
               container
               item
-              xs={4}
+              xs={3}
               sm={2}
-              md={2}
+              md={1}
               lg={1}
               justify="flex-start"
             >
               <Avatar className={classes.avatarStyle} />
             </Grid>
-            <Grid
-
-              item
-              xs={5}
-              sm={7}
-              md={7}
-              lg={8}
-              justify="flex-start"
-            >
+            <Grid item xs={5} sm={7} md={8} lg={8} justify="flex-start">
+            <Typography variant="h5">React Developer</Typography>
               <Typography variant="h6">Netflix</Typography>
-              <Typography variant="subtitle1">Los Angeles | USA</Typography>
             </Grid>
-            <Grid container item xs={3} sm={3} md={3} lg={3} justify="flex-end">
+            <Grid container item xs={4} sm={3} md={3} lg={3} justify="flex-end">
               <Button
                 size="medium"
                 variant="contained"
@@ -99,35 +91,29 @@ export default function CardCarousel() {
           <Grid container spacing={3}>
             <Grid container item xs={12} md={12} lg={12} justify="flex-start">
               <Grid>
-                <Typography variant="subtitle1">
-                  Remote | 500e
-                </Typography>
-                                <Typography variant="h6">Description</Typography></Grid>
+                <Typography variant="subtitle1">Los Angeles | USA | Remote | 500e</Typography>
+                <Typography variant="h6">Description</Typography>
+              </Grid>
 
-                <Typography variant="subtitle2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Mauris sit amet semper metus. Ut placerat dictum ornare.
-                  Integer suscipit ligula metus, sed consectetur elit lobortis
-                  eu. Fusce nec metus eu lorem dignissim aliquet vitae id leo.
-                  Nam vitae nisl hendrerit, elementum risus eget, elementum
-                  neque. Quisque sed erat interdum, rutrum nisl a, semper eros.
-                  Cras auctor lorem quis ultrices volutpat. Suspendisse potenti.
-                  Vestibulum ante ipsum primis in faucibus orci luctus et
-                  ultrices posuere cubilia curae; Duis pharetra, diam et
-                  placerat consequat, erat purus maximus nunc, vitae vehicula
-                  lectus sapien vel velit. Praesent ut cursus urna. Duis pretium
-                  mauris non condimentum semper. Mauris sed ante pharetra,
-                  tincidunt lacus id, posuere urna. Sed lobortis velit neque, ac
-                  placerat sapien dapibus ac. Curabitur posuere nisi malesuada
-                  mauris malesuada tempor. Praesent ullamcorper condimentum
-                  venenatis. Suspendisse metus felis, laoreet hendrerit vehicula
-                  ac, lacinia a enim. Curabitur sed arcu eget enim commodo
-                  tincidunt ut id augue. Sed tristique commodo ipsum
-                  pellentesque volutpat. Nullam sed fringilla dolor. Vestibulum
-                  at tellus id nunc condimentum pretium. Cras pellentesque
-                  consequat quam, in maximus elit maximus sit amet.
-                </Typography>
-<div className={classes.topMargin}>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+                sit amet semper metus. Ut placerat dictum ornare. Integer
+                suscipit ligula metus, sed consectetur elit lobortis eu. Fusce
+                nec metus eu lorem dignissim aliquet vitae id leo. Nam vitae
+                nisl hendrerit, elementum risus eget, elementum neque. Quisque
+                sed erat interdum, rutrum nisl a, semper eros. Cras auctor lorem
+                quis ultrices volutpat. Suspendisse potenti. Vestibulum ante
+                ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+                curae; Duis pharetra, diam et placerat consequat, erat purus
+                maximus nunc, vitae vehicula lectus sapien vel velit. Praesent
+                ut cursus urna. Duis pretium mauris non condimentum semper.
+                Mauris sed ante pharetra, tincidunt lacus id, posuere urna. Sed
+                lobortis velit neque, ac placerat sapien dapibus ac. Curabitur
+                posuere nisi malesuada mauris malesuada tempor. Praesent
+                ullamcorper condimentum venenatis. Suspendisse metus felis,
+                laoreet hendrerit vehicula ac, lacinia a enim.
+              </p>
+              <div className={classes.topMargin}>
                 <Chip
                   variant="outlined"
                   color="primary"
@@ -135,26 +121,28 @@ export default function CardCarousel() {
                   href="#chip"
                   clickable
                 />
-                <Chip className={classes.marginLeft}
+                <Chip
+                  className={classes.marginLeft}
                   variant="outlined"
                   color="primary"
                   label="CSS"
                   href="#chip"
                   clickable
                 />
-                <Chip className={classes.marginLeft}
+                <Chip
+                  className={classes.marginLeft}
                   variant="outlined"
                   color="primary"
                   label="REACT"
                   href="#chip"
                   clickable
                 />
-                </div>
+              </div>
             </Grid>
           </Grid>
         </div>
         <Grid container justify="center" lg={12}>
-        <h2>Similar internships</h2>
+          <h2>Similar internships</h2>
         </Grid>
         <Carousel breakPoints={breakPoints} className={classes.topMargin}>
           <Card />
