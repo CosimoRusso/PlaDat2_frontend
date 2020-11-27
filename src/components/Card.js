@@ -33,13 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const discardJob = async (jobId) => {
-    alert(jobId);
-}
-
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
-  let { job } = props;
+  let { job, discardJob } = props;
   if (!job) job = { name: 'React Developer', companyId: 1, id: 1, salary: 200, remote: true, company: {name: 'Netflix'} }
   return (
     <Card className={classes.root}>

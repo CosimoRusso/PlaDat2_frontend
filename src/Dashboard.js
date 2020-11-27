@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     const { user } = useContext(UserContext);
     const [jobs, setJobs] = useState([]);
 
+    const discardJob = async (jobId) => {
+      alert(jobId);
+    }
+
     useEffect(() => {
       async function fetchData(){
         const { status, message, data } = await utils.get('/student/jobs/search', null, user.jwt);
@@ -55,24 +59,14 @@ const useStyles = makeStyles((theme) => ({
 >
   {jobs.map( job =>
       <Grid item lg={4} key={job.id}>
-        <Card job={job}/>
+        <Card job={job} discardJob={discardJob}/>
       </Grid>
   )}
-  <Grid item lg={4}>
-  <Card/>
-  </Grid>
-  <Grid item lg={4}>
-  <Card/>
-  </Grid>
-  <Grid item lg={4}>
-  <Card/>
-  </Grid>
-  <Grid item lg={4}>
-  <Card/>
-  </Grid>
-  <Grid item lg={4}>
-  <Card/>
-  </Grid>
+  {[1,2,3,4,5,6].map(n =>
+      <Grid item lg={4} key={'example'+n} >
+        <Card discardJob={discardJob}/>
+      </Grid>
+  )}
   </Grid>
   </div>
   );
