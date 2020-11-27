@@ -34,12 +34,11 @@ const useStyles = makeStyles((theme) => ({
           alert('Error: ' + message);
           return;
         }
-        setJobs(data);
-        for (let job of jobs){
+        for (let job of data){
           const { data } = await utils.get('/company/findOne/' + job.CompanyId);
-          job.company = data
+          job.company = data;
         }
-        setJobs(jobs);
+        setJobs(data);
       }
       fetchData();
     }, [])

@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const discardJob = async (jobId) => {
+    alert(jobId);
+}
+
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
   let { job } = props;
@@ -47,10 +51,11 @@ export default function RecipeReviewCard(props) {
         }
         action={
           <IconButton aria-label="clear">
-            <ClearIcon />
+            <ClearIcon onClick={discardJob.bind(null, job.id)} />
           </IconButton>
         }
         title={job.name || 'React Developer'}
+        // eslint-disable-next-line
         subheader={job.company && job.company.name || 'Netflix'}
       />
 
