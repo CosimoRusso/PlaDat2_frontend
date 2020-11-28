@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import history from './../history';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +9,10 @@ import Search from "./Search";
 import Filters, {RangeSlider} from "./Filters";
 import Avatar from '@material-ui/core/Avatar';
 import { Typography } from '@material-ui/core';
+import {UserContext} from "../utils/user-context";
+import utils from '../utils';
+
+const {get} = utils;
 
 const drawerWidth = 240;
 
@@ -40,6 +44,25 @@ function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { user } = useContext(UserContext);
+  const [userData, setUserData] = useState({firstName: 'Pippo', lastName: ''});
+
+  useEffect(() => {
+      const fetchData = async () => {
+          if(!(user && user.userId)) return;
+          const {data, status, message} = await get('/student/findOne/' + user.userId);
+
+          if (status === 200){
+              setUserData({
+                  firstName: data.firstName,
+                  lastName: data.lastName
+              })
+          }else{
+              console.log("ERROR " + message + " STATUS " + status);
+          }
+      }
+      fetchData();
+  })
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -51,7 +74,7 @@ function ResponsiveDrawer(props) {
       <div className={classes.align}>
     <Avatar>M</Avatar>
    <Typography variant="subtitle2" style={{marginLeft: "10px"}}>
-  Michaelo
+       {userData.firstName + ' ' + userData.lastName}
   <Typography variant="subtitle2" onClick={() => history.push("/profile")} color="primary">
   Profile details
    </Typography>
