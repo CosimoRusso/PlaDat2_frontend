@@ -76,7 +76,7 @@ export default function RecipeReviewCard(props) {
        direction="row"
        justify="flex-end"
         >
-        <Button size="small" variant="contained" color="primary" onClick={() => history.push("/job")} className={classes.color}>
+        <Button size="small" variant="contained" color="primary" onClick={() => history.push("/viewjob/"+job.id)} className={classes.color}>
   Read more
 </Button>
 </Grid>

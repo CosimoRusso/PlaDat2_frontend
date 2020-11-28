@@ -57,7 +57,7 @@ class JobsList extends React.Component {
     return (
       <div>
         {this.state.jobs.map((job) => (
-          <Card className={classes.root}>
+          <Card key={'job-'+job.id} className={classes.root}>
             <Grid item xs>
               <CardHeader
                 avatar={
@@ -96,7 +96,7 @@ class JobsList extends React.Component {
                     size="small"
                     variant="contained"
                     color="primary"
-                    onClick={() => history.push("/job/" + job.id)}
+                    onClick={() => history.push("/viewjob/" + job.id)}
                     className={classes.color}
                   >
                     Read more

@@ -8,6 +8,8 @@ import Avatar from '@material-ui/core/Avatar';
 import { Typography } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
+import utils from './utils';
+const {get} = utils;
 
 
 const useStyles = theme => ({
@@ -66,9 +68,22 @@ const breakPoints = [
 
 
 class CardCarousel extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            similarJobs: []
+        }
+    }
+    componentDidMount(){
+        get('/jobs').then(({status, data}) => {
+            if (status !== 200) return;
+            this.setState({similarJobs: data});
+        });
+    }
   render() {
     const { classes } = this.props;
     const {job} = this.props;
+
     if (!job)return (<p>Loading...</p>);
       return (
       <div>
@@ -104,7 +119,7 @@ class CardCarousel extends React.Component {
           <Grid container spacing={3}>
             <Grid container item xs={12} md={12} lg={12} justify="flex-start">
               <Grid>
-                <Typography variant="subtitle1">Los Angeles | USA | Remote | 500e</Typography>
+                <Typography variant="subtitle1">Los Angeles | USA | {job.remote ? 'Remote' : 'In Place'} | {job.salary || 500}€</Typography>
                 <Typography variant="h6">Description</Typography>
               </Grid>
 
@@ -159,11 +174,7 @@ class CardCarousel extends React.Component {
           <h2>Similar internships</h2>
         </Grid>
         <Carousel breakPoints={breakPoints} className={classes.topMargin}>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+            {this.state.similarJobs.map(j => <Card key={'similarJob-'+j.id} job={j} discardJob={() => {}} />)}
         </Carousel>
       </div>
     );
