@@ -66,6 +66,22 @@ const breakPoints = [
     { width: 1200, itemsToShow: 4 },
 ]
 
+const placeHolderText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris" +
+    "sit amet semper metus. Ut placerat dictum ornare. Integer" +
+    "suscipit ligula metus, sed consectetur elit lobortis eu. Fusce" +
+    "nec metus eu lorem dignissim aliquet vitae id leo. Nam vitae" +
+    "nisl hendrerit, elementum risus eget, elementum neque. Quisque" +
+    "sed erat interdum, rutrum nisl a, semper eros. Cras auctor lorem" +
+    "quis ultrices volutpat. Suspendisse potenti. Vestibulum ante" +
+    "ipsum primis in faucibus orci luctus et ultrices posuere cubilia" +
+    "curae; Duis pharetra, diam et placerat consequat, erat purus" +
+    "maximus nunc, vitae vehicula lectus sapien vel velit. Praesent" +
+    "ut cursus urna. Duis pretium mauris non condimentum semper." +
+    "Mauris sed ante pharetra, tincidunt lacus id, posuere urna. Sed" +
+    "lobortis velit neque, ac placerat sapien dapibus ac. Curabitur" +
+    "posuere nisi malesuada mauris malesuada tempor. Praesent" +
+    "ullamcorper condimentum venenatis. Suspendisse metus felis," +
+    "laoreet hendrerit vehicula ac, lacinia a enim."
 
 class CardCarousel extends React.Component {
     constructor(props) {
@@ -124,48 +140,29 @@ class CardCarousel extends React.Component {
               </Grid>
 
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-                sit amet semper metus. Ut placerat dictum ornare. Integer
-                suscipit ligula metus, sed consectetur elit lobortis eu. Fusce
-                nec metus eu lorem dignissim aliquet vitae id leo. Nam vitae
-                nisl hendrerit, elementum risus eget, elementum neque. Quisque
-                sed erat interdum, rutrum nisl a, semper eros. Cras auctor lorem
-                quis ultrices volutpat. Suspendisse potenti. Vestibulum ante
-                ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-                curae; Duis pharetra, diam et placerat consequat, erat purus
-                maximus nunc, vitae vehicula lectus sapien vel velit. Praesent
-                ut cursus urna. Duis pretium mauris non condimentum semper.
-                Mauris sed ante pharetra, tincidunt lacus id, posuere urna. Sed
-                lobortis velit neque, ac placerat sapien dapibus ac. Curabitur
-                posuere nisi malesuada mauris malesuada tempor. Praesent
-                ullamcorper condimentum venenatis. Suspendisse metus felis,
-                laoreet hendrerit vehicula ac, lacinia a enim.
+                  {job.description || placeHolderText}
               </p>
               <div className={classes.tags}>
-                <Chip
-                className={classes.tag}
-                  variant="outlined"
-                  color="primary"
-                  label="HTML"
-                  href="#chip"
-                  clickable
-                />
-                <Chip
-                  className={classes.tag}
-                  variant="outlined"
-                  color="primary"
-                  label="CSS"
-                  href="#chip"
-                  clickable
-                />
-                <Chip
-                  className={classes.tag}
-                  variant="outlined"
-                  color="primary"
-                  label="REACT"
-                  href="#chip"
-                  clickable
-                />
+                  {job.requiredSkills.map(s =>
+                      <Chip key={'skill-required-' + s.id}
+                          className={classes.tag}
+                          variant="outlined"
+                          color="primary"
+                          label={s.name}
+                          href="#chip"
+                          clickable
+                      />
+                  )}
+                  {job.optionalSkills.map(s =>
+                      <Chip key={'skill-optional' + s.id}
+                            className={classes.tag}
+                            variant="outlined"
+                            color="primary"
+                            label={s.name}
+                            href="#chip"
+                            clickable
+                      />
+                  )}
               </div>
             </Grid>
           </Grid>
