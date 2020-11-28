@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard"
 import Profile from "./Profile";
 import Jobs from "./Jobs";
 import Job from "./Job";
+import ViewJob from "./ViewJob";
 import history from './history';
 
 export default class Routes extends Component {
@@ -17,6 +18,7 @@ export default class Routes extends Component {
                     <Route path="/profile" component={Profile} />
                     <Route path="/browsejobs" component={Jobs} />
                     <Route path="/job" component={Job} />
+                    <Route path="/viewjob/:jobid" component={ViewJob} />
                 </Switch>
             </Router>
         )

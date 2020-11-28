@@ -1,10 +1,8 @@
-import React from 'react';
-import history from './history';
-import Navbar from './components/Navbar';
+import React from "react";
 import Carousel from 'react-elastic-carousel';
 import Card from './components/Card';
 import './job.css';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import { Typography } from '@material-ui/core';
@@ -12,7 +10,7 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
     root: {
       width: '90%',
         flexGrow: 1,
@@ -31,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 20,
     },
 
-    marginLeft:{
-      marginLeft: 10,
-  },
+    shadow:{
+      boxShadow: '2px 3px 9px -8px #000000',
+    },
 
     color: {
       background: '#03a9f4',
@@ -42,7 +40,21 @@ const useStyles = makeStyles((theme) => ({
      },
     },
 
-}));
+    tags: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        '& > *': {
+          margin: theme.spacing(0.5),
+        },
+    },
+
+    tag:{
+      border: '1.5px solid #1076a3',
+      color: '#1076a3',
+    }
+
+});
 
 
 const breakPoints = [
@@ -52,13 +64,15 @@ const breakPoints = [
     { width: 1200, itemsToShow: 4 },
 ]
 
-export default function CardCarousel() {
-    const classes = useStyles();
 
-    return (
+class CardCarousel extends React.Component {
+  render() {
+    const { classes } = this.props;
+    const {job} = this.props;
+    if (!job)return (<p>Loading...</p>);
+      return (
       <div>
-        <Navbar />
-        <div className={classes.root}>
+        <div className={`${classes.root} ${classes.shadow}`}>
           <Grid container spacing={3} alignItems="center">
             <Grid
               container
@@ -72,15 +86,14 @@ export default function CardCarousel() {
               <Avatar className={classes.avatarStyle} />
             </Grid>
             <Grid item xs={5} sm={7} md={8} lg={8} justify="flex-start">
-            <Typography variant="h5">React Developer</Typography>
-              <Typography variant="h6">Netflix</Typography>
+            <Typography variant="h5">{job.name}</Typography>
+      <Typography variant="h6">{job.Company.name}</Typography>
             </Grid>
             <Grid container item xs={4} sm={3} md={3} lg={3} justify="flex-end">
               <Button
                 size="medium"
                 variant="contained"
                 color="primary"
-                onClick={() => history.push("/job")}
                 className={classes.color}
               >
                 Apply now
@@ -113,8 +126,9 @@ export default function CardCarousel() {
                 ullamcorper condimentum venenatis. Suspendisse metus felis,
                 laoreet hendrerit vehicula ac, lacinia a enim.
               </p>
-              <div className={classes.topMargin}>
+              <div className={classes.tags}>
                 <Chip
+                className={classes.tag}
                   variant="outlined"
                   color="primary"
                   label="HTML"
@@ -122,7 +136,7 @@ export default function CardCarousel() {
                   clickable
                 />
                 <Chip
-                  className={classes.marginLeft}
+                  className={classes.tag}
                   variant="outlined"
                   color="primary"
                   label="CSS"
@@ -130,7 +144,7 @@ export default function CardCarousel() {
                   clickable
                 />
                 <Chip
-                  className={classes.marginLeft}
+                  className={classes.tag}
                   variant="outlined"
                   color="primary"
                   label="REACT"
@@ -154,3 +168,6 @@ export default function CardCarousel() {
       </div>
     );
 }
+}
+
+export default withStyles(useStyles)(CardCarousel)

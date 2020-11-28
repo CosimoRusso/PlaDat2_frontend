@@ -43,12 +43,13 @@ class JobsList extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`https://pladat2.herokuapp.com/api/v1/jobs`)
+    axios.get(`https://pladat2.herokuapp.com/api/v1/jobs/`)
       .then(res => {
         const jobs = res.data;
         this.setState({ jobs });
       })
   }
+
 
 
   render() {
@@ -76,7 +77,7 @@ class JobsList extends React.Component {
 
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {job.description}
+                  {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.' || job.description}
                 </Typography>
               </CardContent>
 
