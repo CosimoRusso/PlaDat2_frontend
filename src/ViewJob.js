@@ -1,10 +1,12 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import axios from 'axios';
+import utils from './utils';
 import Job from './Job';
 
+const { get } = utils;
+
 const init = async (self, jobId) => {
-    axios.get(`https://pladat2.herokuapp.com/api/v1/jobs/findOne/` + jobId)
+    get(`/jobs/findOne/` + jobId)
         .then(res => {
             const job = res.data;
             self.setState({ job });

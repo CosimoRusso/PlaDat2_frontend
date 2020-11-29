@@ -9,7 +9,9 @@ import { Typography } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import utils from './utils';
-const {get} = utils;
+import {UserContext} from './utils/user-context';
+
+const {get, post} = utils;
 
 
 const useStyles = theme => ({
@@ -87,15 +89,30 @@ class CardCarousel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            similarJobs: []
+            similarJobs: [],
+            applied: false
         }
     }
+    static contextType = UserContext;
     componentDidMount(){
         get('/jobs').then(({status, data}) => {
             if (status !== 200) return;
             this.setState({similarJobs: data});
         });
     }
+
+    applyToJob(jobId){
+        const { jwt } = this.context.user;
+        post('/student/jobs/apply/' + jobId, {}, jwt).then(({status, message}) => {
+            if (status === 201){
+                this.setState({applied: true});
+            }else{
+                alert('Something went wrong :(');
+                console.log(message);
+            }
+        });
+    }
+
   render() {
     const { classes } = this.props;
     const {job} = this.props;
@@ -126,8 +143,10 @@ class CardCarousel extends React.Component {
                 variant="contained"
                 color="primary"
                 className={classes.color}
+                onClick={() => this.applyToJob(job.id)}
+                disabled={this.state.applied}
               >
-                Apply now
+                  {this.state.applied ? 'Applied!' : 'Apply now'}
               </Button>
             </Grid>
           </Grid>
