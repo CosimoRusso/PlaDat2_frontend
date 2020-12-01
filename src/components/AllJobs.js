@@ -20,9 +20,7 @@ const useStyles = theme => ({
     flexGrow: 1,
     marginBottom: '20px',
     marginLeft: '12px',
-    display: 'inline-block',
-    justify: 'center',
-    alignItems: 'center',
+
   },
 
   color: {
@@ -56,7 +54,14 @@ class JobsList extends React.Component {
     const { classes } = this.props;
     return (
       <div>
+          <Grid
+          container
+          direction="row"
+          justify= "center"
+        >
         {this.state.jobs.map((job) => (
+
+          <Grid item lg={3}>
           <Card key={'job-'+job.id} className={classes.root}>
             <Grid item xs>
               <CardHeader
@@ -77,7 +82,7 @@ class JobsList extends React.Component {
 
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.' || job.description}
+                  {job.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.'}
                 </Typography>
               </CardContent>
 
@@ -105,7 +110,9 @@ class JobsList extends React.Component {
               </CardActions>
             </Grid>
           </Card>
+          </Grid>
         ))}
+                  </Grid>
       </div>
     );}
 }
