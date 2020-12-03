@@ -13,6 +13,7 @@ import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../Theme';
 import utils from '../utils';
 import {UserContext} from "../utils/user-context";
+import ModalRegistration from "./ModalRegistration";
 
 const { post } = utils;
 
@@ -53,7 +54,7 @@ export default function SignIn() {
       alert("Error: " + data.message);
     }else{
       const userData = { jwt: data.jwt, userId: data.id, userType: 'student'};
-      utils.setSessionCookies(userData.jwt, userData.userId, userData.userType);
+      utils.setSessionCookies(userData.jwt, userData.id, userData.userType);
       setUser(userData);
       history.push("/dashboard");
     }
@@ -72,7 +73,6 @@ export default function SignIn() {
           <TextField
             variant="outlined"
             margin="normal"
-            color="#03a9f4"
             required
             fullWidth
             id="email"
@@ -112,7 +112,7 @@ export default function SignIn() {
           <Grid container>
             <Grid item>
               <Link href="#" variant="body2">
-                {"Don't have an account? Register"}
+              <ModalRegistration/>
               </Link>
             </Grid>
           </Grid>
