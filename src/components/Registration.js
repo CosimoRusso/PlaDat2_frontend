@@ -10,6 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Date from './Date';
+import { useForm } from "react-hook-form";
 
 
 function getSteps() {
@@ -19,10 +20,14 @@ function getSteps() {
 export default function HorizontalLabelPositionBelowStepper() {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
+    const {register, handleSubmit, errors} = useForm();
 
-    const handleNext = () => {
+    const onSubmit = (data) => {
+      console.log(data);
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
+
+
 
     const handleBack = () => {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -31,13 +36,12 @@ export default function HorizontalLabelPositionBelowStepper() {
 function getStepContent(stepIndex) {
   switch (stepIndex) {
     case 0:
-   return <div >
-   <MuiThemeProvider theme={Theme}>
+   return <div>
       <CssBaseline />
-          <form  noValidate>
           <TextField
       variant="outlined"
       margin="normal"
+      inputRef={register({required: true})}
       required
       fullWidth
       id="name"
@@ -46,82 +50,71 @@ function getStepContent(stepIndex) {
       autoComplete="name"
       autoFocus
     />
+     {errors.name && <p>Name is required.</p>}
     <TextField
       variant="outlined"
       margin="normal"
+      inputRef={register({required: true})}
       required
       fullWidth
       id="surname"
       label="Surname"
       name="surname"
       autoComplete="surname"
-      autoFocus
     />
+     {errors.surname && <p>Surname is required.</p>}
           <TextField
       variant="outlined"
       margin="normal"
+      inputRef={register({required: true})}
       required
       fullWidth
       id="email"
       label="Email Address"
       name="email"
       autoComplete="email"
-      autoFocus
     />
+    {errors.email && <p>Email is required.</p>}
           <TextField
             variant="outlined"
             margin="normal"
+            inputRef={register({required: true, minLength: 8})}
             required
             fullWidth
             name="password"
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+            autoComplete="password"
           />
-    </form>
-    </MuiThemeProvider>
+          {errors.password && <p>Password must be atleast 8 characters long.</p>}
     </div>;
     case 1:
       return <div>
-      <MuiThemeProvider theme={Theme}>
          <CssBaseline />
-             <form noValidate>
              <Autocomplete
       id="skill"
       options={skills}
       getOptionLabel={(skill) => skill.title}
-      renderInput={(params) => <TextField {...params} label="Choose your primary skill" variant="outlined" required margin="normal"
+      renderInput={(params) => <TextField {...params} label="Choose your primary skill" variant="outlined" required margin="normal" autoFocus inputRef={register({required: true})} name="primaryskill" autoComplete="primaryskill"
 />}
     />
+    {errors.primaryskill && <p>Primary skill is required.</p>}
            <Autocomplete
-      id="skill"
+      id="secondskill"
       options={skills}
       getOptionLabel={(skill) => skill.title}
-      renderInput={(params) => <TextField {...params} label="Choose your secondary skill (optional)" variant="outlined" margin="normal"
+      renderInput={(params) => <TextField {...params} label="Choose your secondary skill (optional)" variant="outlined" margin="normal" inputRef={register} name="secondaryskill" autoComplete="secondaryskill"
  />}
     />
-     <TextField
-      variant="outlined"
-      margin="normal"
-      fullWidth
-      id="otherskill"
-      label="Write other skill (optional)"
-      name="otherskill"
-      autoComplete="otherskill"
-      autoFocus
-    />
-             </form>
-    </MuiThemeProvider>
     </div>;
     case 2:
       return <div>
-      <MuiThemeProvider theme={Theme}>
          <CssBaseline />
-             <form noValidate>
              <TextField
          variant="outlined"
          margin="normal"
+         inputRef={register}
          fullWidth
          id="country"
          label="Country (optional)"
@@ -132,29 +125,27 @@ function getStepContent(stepIndex) {
        <TextField
          variant="outlined"
          margin="normal"
+         inputRef={register}
          fullWidth
          id="city"
          label="City (optional)"
          name="city"
          autoComplete="city"
-         autoFocus
        />
        <Date/>
-       </form>
-       </MuiThemeProvider>
-       </div>;;
+       </div>;
     default:
       return 'Unknown stepIndex';
   }
 }
 
 const skills = [
-    { title: 'Java', id: 1 },
-    { title: 'JavaScript', id: 2 },
-    { title: 'HTML', id: 3 },
-    { title: 'CSS', id: 4},
-    { title: 'C#', id: 5 },
-    { title: "Python", id: 6 },
+    { title: 'Java'},
+    { title: 'JavaScript'},
+    { title: 'HTML'},
+    { title: 'CSS'},
+    { title: 'C#'},
+    { title: 'Python'},
 ];
 
   return (
@@ -180,11 +171,10 @@ const skills = [
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
-
               >
                 Back
               </Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>
+              <Button variant="contained" color="primary" type="submit" onClick={handleSubmit(onSubmit)}>
                 {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
               </Button>
             </div>
