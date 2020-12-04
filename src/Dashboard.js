@@ -58,12 +58,12 @@ const useStyles = makeStyles((theme) => ({
   justify= "center"
 >
   {jobs.map( job =>
-      <Grid item lg={4} key={job.id}>
+      <Grid item lg={4} xl={2}  key={job.id}>
         <Card job={job} discardJob={discardJob}/>
       </Grid>
   )}
-  {[1,2,3,4,5,6].map(n =>
-      <Grid item lg={4} key={'example'+n} >
+{[1,2,3,4,5,6].map(n =>
+      <Grid item lg={4} xl={2} key={'example'+n} >
         <Card discardJob={discardJob}/>
       </Grid>
   )}
