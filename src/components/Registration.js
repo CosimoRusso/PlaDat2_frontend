@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Date from './Date';
+import DateComponent from './Date';
 import { useForm } from "react-hook-form";
 import utils from '../utils';
 
@@ -45,7 +45,7 @@ export default function HorizontalLabelPositionBelowStepper() {
     const [secondarySkill, setSecondarySkill] = React.useState(null);
     const [country, setCountry] = React.useState(null);
     const [city, setCity] = React.useState(null);
-    const [birthDate, setBirthDate] = React.useState();
+    const [birthDate, setBirthDate] = React.useState(new Date());
 
     const steps = getSteps();
     const {handleSubmit} = useForm({defaultValues: {
@@ -223,14 +223,15 @@ function getStepContent(stepIndex) {
               renderInput={(params) => <TextField {...params} label="Choose your Country" variant="outlined" margin="normal" name="country" autoComplete="country" />}
           />
           <Autocomplete
+              disabled={!country}
               id="city"
-              options={cities}
+              options={country ? cities.filter(c => c.CountryId === country.id) : []}
               getOptionLabel={(c) => c.name}
               value={city}
               onChange={(e, newVal) => setCity(newVal)}
               renderInput={(params) => <TextField {...params} label="Choose your City" variant="outlined" margin="normal" name="city" autoComplete="city" />}
           />
-       <Date value={birthDate} onChange={d => setBirthDate(d) }/>
+       <DateComponent value={birthDate} onChange={d => setBirthDate(d) }/>
        <p>{error.finalMessage}</p>
        </div>;
     default:
