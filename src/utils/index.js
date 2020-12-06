@@ -57,6 +57,7 @@ const out = {
         }
     },
     setSessionCookies: (jwt, userId, userType) => {
+        console.log(userId);
         const expires = jwt ? new Date('01-01-2030') : new Date('01-01-2000');
         cookies.set('jwt', jwt, { path: '/', expires });
         cookies.set('userId', userId, { path: '/', expires });

@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
     useEffect(() => {
       async function fetchData(){
+        console.log(user);
         const { status, message, data } = await utils.get('/student/jobs/search', null, user.jwt);
         if (status !== 200) {
           alert('Error: ' + message);
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         }
         setJobs(data);
       }
-      fetchData();
+      return fetchData();
     }, [])
 
     return (

@@ -54,7 +54,7 @@ export default function SignIn() {
       alert("Error: " + data.message);
     }else{
       const userData = { jwt: data.jwt, userId: data.id, userType: 'student'};
-      utils.setSessionCookies(userData.jwt, userData.id, userData.userType);
+      utils.setSessionCookies(userData.jwt, userData.userId, userData.userType);
       setUser(userData);
       history.push("/dashboard");
     }

@@ -61,8 +61,8 @@ function ResponsiveDrawer(props) {
               console.log("ERROR " + message + " STATUS " + status);
           }
       }
-      fetchData();
-  })
+      return fetchData();
+  }, [])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
