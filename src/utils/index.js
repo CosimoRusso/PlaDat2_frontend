@@ -21,7 +21,11 @@ const out = {
             options.headers["Authorization"] = 'Bearer ' + jwt;
         const url = out.api(path);
         const req = await fetch(url, options);
-        const res = await req.json();
+        let res = null;
+        try{
+            res = await req.json();
+        }catch(e){ console.log(e); }
+
         return { status: req.status, data: res };
     },
     get : async (path, query, jwt = null) => {

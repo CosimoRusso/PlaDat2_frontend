@@ -8,20 +8,14 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-export default function MaterialUIPickers() {
+export default function MaterialUIPickers(props) {
   // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState();
-  const {register} = useForm();
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
+  const { value, onChange } = props;
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around">
         <KeyboardDatePicker fullWidth
-          inputRef={register}
           name="dateofbirth"
           disableToolbar
           variant="inline"
@@ -29,8 +23,8 @@ export default function MaterialUIPickers() {
           margin="normal"
           id="date-picker"
           label="Date of birth (optional)"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={value}
+          onChange={onChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
