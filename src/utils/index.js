@@ -20,8 +20,10 @@ const out = {
         if (jwt)
             options.headers["Authorization"] = 'Bearer ' + jwt;
         const url = out.api(path);
-        const req = await fetch(url, options);
-        let res = null;
+        let req = null, res = null;
+        try{
+            req = await fetch(url, options);
+        } catch (e) { console.log(e); return {status: 500, data: 'Unexpected error, please check console'} }
         try{
             res = await req.json();
         }catch(e){ console.log(e); }
@@ -45,9 +47,14 @@ const out = {
         if (jwt)
             options.headers["Authorization"] = 'Bearer ' + jwt;
         const url = out.api(path + queryString);
-        const req = await fetch(url, options);
-        const res = await req.json();
-        return { status: req.status, data: res };
+        try{
+            const req = await fetch(url, options);
+            const res = await req.json();
+            return { status: req.status, data: res };
+        }catch(e){
+            console.log(e);
+            return { status: 500, data: {message: 'Unexpected error, check console'} };
+        }
     },
     setSessionCookies: (jwt, userId, userType) => {
         const expires = jwt ? new Date('01-01-2030') : new Date('01-01-2000');

@@ -24,6 +24,15 @@ const env = (field) => {
     return process.env[`REACT_APP_REGISTRATION_${field.toUpperCase()}`] || '';
 }
 
+const checkEmailAlreadyUsed = async (email) => {
+    const { data, status } = await get('/student/findByEmail/' + email);
+    if (status !== 200){
+        console.log(data.message);
+        return false;
+    }
+    return (data && data.id);
+}
+
 export default function HorizontalLabelPositionBelowStepper() {
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -92,6 +101,10 @@ export default function HorizontalLabelPositionBelowStepper() {
           if (!surname) e.surname = 'Surname is required';
           if (!email) e.email = 'Email is required';
           if (password.length < 8) e.password = 'Password must be at least 8 characters';
+          if (email){
+              const alreadyExists = await checkEmailAlreadyUsed(email);
+              if (alreadyExists) e.email = 'Email already used';
+          }
       }else if (activeStep === 1){
           if(!primarySkill) e.primarySkill = 'At least the primary skill is required';
       }else if (activeStep === 2){
@@ -134,7 +147,7 @@ function getStepContent(stepIndex) {
       onChange={e => setName(e.target.value)}
       autoFocus
     />
-     {error.name && <p>Name is required.</p>}
+       {error.name && <p>{error.name}</p>}
     <TextField
       variant="outlined"
       margin="normal"
@@ -147,7 +160,7 @@ function getStepContent(stepIndex) {
       name="surname"
       autoComplete="surname"
     />
-     {error.surname && <p>Surname is required.</p>}
+     {error.surname && <p>{error.surname}</p>}
           <TextField
       variant="outlined"
       margin="normal"
@@ -160,7 +173,7 @@ function getStepContent(stepIndex) {
       name="email"
       autoComplete="email"
     />
-    {error.email && <p>Email is required.</p>}
+       {error.email && <p>{error.email}</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -174,7 +187,7 @@ function getStepContent(stepIndex) {
             id="password"
             autoComplete="password"
           />
-          {error.password && <p>Password must be at least 8 characters long.</p>}
+       {error.password && <p>{error.password}</p>}
     </div>;
     case 1:
       return <div>
@@ -187,7 +200,7 @@ function getStepContent(stepIndex) {
       getOptionLabel={(skill) => skill.name}
       renderInput={(params) => <TextField {...params} label="Choose your primary skill" variant="outlined" required margin="normal" autoFocus name="primaryskill" autoComplete="primaryskill" />}
     />
-    {error.primarySkill && <p>Primary skill is required.</p>}
+      {error.primarySkill && <p>{error.primarySkill}</p>}
     <Autocomplete
       id="secondskill"
       options={skills}
