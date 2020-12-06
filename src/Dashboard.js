@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   justify= "center"
 >
   {jobs.map( job =>
-      <Grid item lg={4} key={job.id}>
+      <Grid item lg={4} xl={2}  key={job.id}>
         <Card job={job} discardJob={discardJob}/>
       </Grid>
   )}

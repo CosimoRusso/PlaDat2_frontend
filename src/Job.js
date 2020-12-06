@@ -130,17 +130,17 @@ class CardCarousel extends React.Component {
               item
               xs={3}
               sm={2}
-              md={1}
+              md={2}
               lg={1}
               justify="flex-start"
             >
               <Avatar className={classes.avatarStyle} />
             </Grid>
-            <Grid item xs={5} sm={7} md={8} lg={8} justify="flex-start">
+            <Grid item xs={9} sm={7} md={7} lg={8} justify="flex-start">
             <Typography variant="h5">{job.name}</Typography>
       <Typography variant="h6">{job.Company.name}</Typography>
             </Grid>
-            <Grid container item xs={4} sm={3} md={3} lg={3} justify="flex-end">
+            <Grid container xs={12} sm={3} md={3} lg={3} justify="flex-end">
               <Button
                 size="medium"
                 variant="contained"
@@ -160,7 +160,6 @@ class CardCarousel extends React.Component {
                 <Typography variant="subtitle1">{cityName} | {countryName} | {job.remote ? 'Remote' : 'In Place'} | {job.salary || 500}€</Typography>
                 <Typography variant="h6">Description</Typography>
               </Grid>
-
               <p>
                   {job.description || placeHolderText}
               </p>
