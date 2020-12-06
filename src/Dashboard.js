@@ -62,11 +62,6 @@ const useStyles = makeStyles((theme) => ({
         <Card job={job} discardJob={discardJob}/>
       </Grid>
   )}
-  {[1,2,3,4,5,6].map(n =>
-      <Grid item lg={4} key={'example'+n} >
-        <Card discardJob={discardJob}/>
-      </Grid>
-  )}
   </Grid>
   </div>
   );

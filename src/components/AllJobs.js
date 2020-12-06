@@ -77,12 +77,12 @@ class JobsList extends React.Component {
                   </IconButton>
                 }
                 title={job.name}
-                subheader={"Netflix"}
+                subheader={job.Company.name}
               />
 
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {job.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.'}
+                  {job.description}
                 </Typography>
               </CardContent>
 
@@ -93,7 +93,7 @@ class JobsList extends React.Component {
                     color="textSecondary"
                     component="p"
                   >
-                    {job.salary}
+                    {job.salary}€ | {job.remote ? 'Remote' : 'In place'}
                   </Typography>
                 </Grid>
                 <Grid container direction="row" justify="flex-end">

@@ -116,8 +116,11 @@ class CardCarousel extends React.Component {
   render() {
     const { classes } = this.props;
     const {job} = this.props;
-
     if (!job)return (<p>Loading...</p>);
+    const cityName = job.City ? job.City.name : "Los angeles"
+    const countryName = (job.City && job.City.Country) ? job.City.Country.name : "USA"
+
+
       return (
       <div>
         <div className={`${classes.root} ${classes.shadow}`}>
@@ -154,7 +157,7 @@ class CardCarousel extends React.Component {
           <Grid container spacing={3}>
             <Grid container item xs={12} md={12} lg={12} justify="flex-start">
               <Grid>
-                <Typography variant="subtitle1">Los Angeles | USA | {job.remote ? 'Remote' : 'In Place'} | {job.salary || 500}€</Typography>
+                <Typography variant="subtitle1">{cityName} | {countryName} | {job.remote ? 'Remote' : 'In Place'} | {job.salary || 500}€</Typography>
                 <Typography variant="h6">Description</Typography>
               </Grid>
 
