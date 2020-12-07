@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Search() {
+export default function Search(props) {
     const classes = useStyles();
-
+    const { searchText, setSearchText } = props;
     return (
         <div className={classes.root}>
-                 <TextField id="outlined-search" label="Search" size="small" type="search" variant="outlined" style={{paddingRight: 20}}
+                 <TextField value={searchText} onChange={e => setSearchText(e.target.value)} id="outlined-search" label="Search" size="small" type="search" variant="outlined" style={{paddingRight: 20}}
              InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

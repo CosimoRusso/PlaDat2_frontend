@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ResponsiveDrawer(props) {
   const { window } = props;
+  const {searchText, setSearchText} = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -82,7 +83,7 @@ function ResponsiveDrawer(props) {
    </div>
    <Divider/>
       <div  className={classes.root}>
-      <Search/>
+      <Search searchText={searchText} setSearchText={setSearchText} />
       <Filters/>
       <RangeSlider/>
     </div>

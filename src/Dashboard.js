@@ -28,6 +28,27 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
     const { user } = useContext(UserContext);
     const [jobs, setJobs] = useState([]);
+    const [searchJob, setSearchJob] = useState('');
+
+    const filterJobsBySearch = (text) => {
+      if (!text) {
+        setJobs(jobs.map(j => {
+          j.hide = false;
+          return j;
+        }));
+        return;
+      }
+      const regex = new RegExp(text, 'i');
+      setJobs(jobs.map(j => {
+        j.hide = !regex.test(j.name)
+        return j;
+      }));
+    }
+
+    const onJobSearchTextChange = (text) => {
+      setSearchJob(text);
+      filterJobsBySearch(text);
+    }
 
     const discardJob = async (jobId) => {
       const {status, data} = await post('/student/jobs/discard/' + jobId, {}, user.jwt);
@@ -61,13 +82,13 @@ const useStyles = makeStyles((theme) => ({
 
     <div className={classes.root}>
       <Navbar/>
-<Drawer/>
+<Drawer searchText={searchJob} setSearchText={onJobSearchTextChange} />
       <Grid className={classes.margin}
   container
   direction="row"
   justify= "center"
 >
-  {jobs.map( job =>
+  {jobs.filter(j => !j.hide).map( job =>
       <Grid item lg={4} xl={2}  key={job.id}>
         <Card job={job} discardJob={discardJob}/>
       </Grid>
