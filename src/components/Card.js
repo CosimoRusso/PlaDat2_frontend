@@ -46,8 +46,8 @@ export default function RecipeReviewCard(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="clear">
-            <ClearIcon onClick={discardJob.bind(null, job.id)} />
+          <IconButton aria-label="clear" onClick={discardJob.bind(null, job.id)}>
+            <ClearIcon />
           </IconButton>
         }
         title={job.name || 'React Developer'}

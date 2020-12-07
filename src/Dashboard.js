@@ -7,6 +7,8 @@ import Drawer from "./components/Drawer";
 import {UserContext} from "./utils/user-context";
 import utils from './utils';
 
+const { post } = utils;
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,15 +30,22 @@ const useStyles = makeStyles((theme) => ({
     const [jobs, setJobs] = useState([]);
 
     const discardJob = async (jobId) => {
-      alert(jobId);
+      const {status, data} = await post('/student/jobs/discard/' + jobId, {}, user.jwt);
+      if (status === 201){
+        setJobs(jobs.filter(j => j.id !== jobId));
+      }else{
+        alert(data.message);
+      }
     }
 
     useEffect(() => {
       async function fetchData(){
-        console.log(user);
         const { status, message, data } = await utils.get('/student/jobs/search', null, user.jwt);
         if (status !== 200) {
-          alert('Error: ' + message);
+          if (message)
+            alert('Error: ' + message);
+          else
+            alert('Server is currently offline, please try again later');
           return;
         }
         for (let job of data){
