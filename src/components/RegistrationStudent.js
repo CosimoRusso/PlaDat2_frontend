@@ -28,7 +28,6 @@ export default function HorizontalLabelPositionBelowStepper() {
     };
 
 
-
     const handleBack = () => {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
@@ -50,7 +49,7 @@ function getStepContent(stepIndex) {
       autoComplete="name"
       autoFocus
     />
-     {errors.name && <p>Name is required.</p>}
+
     <TextField
       variant="outlined"
       margin="normal"
@@ -62,7 +61,7 @@ function getStepContent(stepIndex) {
       name="surname"
       autoComplete="surname"
     />
-     {errors.surname && <p>Surname is required.</p>}
+
           <TextField
       variant="outlined"
       margin="normal"
@@ -74,7 +73,7 @@ function getStepContent(stepIndex) {
       name="email"
       autoComplete="email"
     />
-    {errors.email && <p>Email is required.</p>}
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -87,7 +86,7 @@ function getStepContent(stepIndex) {
             id="password"
             autoComplete="password"
           />
-          {errors.password && <p>Password must be atleast 8 characters long.</p>}
+         {(errors.name && <Typography color="error">Name is required.</Typography>) || (errors.surname && <Typography color="error">Surname is required.</Typography>) || (errors.email && <Typography color="error">Email is required.</Typography>) || (errors.password && <Typography color="error">Password must be atleast 8 characters long.</Typography>)}
     </div>;
     case 1:
       return <div>
@@ -99,7 +98,6 @@ function getStepContent(stepIndex) {
       renderInput={(params) => <TextField {...params} label="Choose your primary skill" variant="outlined" required margin="normal" autoFocus inputRef={register({required: true})} name="primaryskill" autoComplete="primaryskill"
 />}
     />
-    {errors.primaryskill && <p>Primary skill is required.</p>}
            <Autocomplete
       id="secondskill"
       options={skills}
@@ -107,6 +105,7 @@ function getStepContent(stepIndex) {
       renderInput={(params) => <TextField {...params} label="Choose your secondary skill (optional)" variant="outlined" margin="normal" inputRef={register} name="secondaryskill" autoComplete="secondaryskill"
  />}
     />
+    {errors.primaryskill && <Typography color="error">Primary skill is required.</Typography>}
     </div>;
     case 2:
       return <div>
