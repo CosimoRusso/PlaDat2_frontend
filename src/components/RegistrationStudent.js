@@ -21,7 +21,7 @@ function getSteps() {
 }
 
 const env = (field) => {
-    return process.env[`REACT_APP_REGISTRATION_${field.toUpperCase()}`] || '';
+    return process.env[`REACT_APP_STUDENT_REGISTRATION_${field.toUpperCase()}`] || '';
 }
 
 const checkEmailAlreadyUsed = async (email) => {

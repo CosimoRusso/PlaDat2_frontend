@@ -10,8 +10,9 @@ import Theme, {MuiThemeProvider} from '../Theme';
 import Grid from '@material-ui/core/Grid';
 import BusinessCenterRounded from '@material-ui/icons/BusinessCenterRounded';
 import { useForm } from "react-hook-form";
+import utils from "../utils/";
 
-
+const { post } = utils;
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,10 +40,28 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const env = (field) => {
+    return process.env[`REACT_APP_COMPANY_REGISTRATION_${field.toUpperCase()}`] || '';
+}
+
 export default function SignIn() {
   const classes = useStyles();
-  const {register, handleSubmit, errors} = useForm();
-  const onSubmit = data => console.log(data);
+  const {register, handleSubmit, errors} = useForm({
+      defaultValues: {
+        name: env('name'),
+        email: env('email'),
+        password: env('password'),
+        description: env('description')
+      }
+  });
+  const onSubmit = async company => {
+      const { status, data } = await post('/company/register', company);
+      if (status === 201){
+          alert("Success");
+      }else{
+          alert("Error: " + data.message);
+      }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -52,7 +71,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h4">
          Company
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+        <form id={"register-company-form"} className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
             <Grid container justify="center" >
         <Avatar className={classes.large} alt="Company logo"><BusinessCenterRounded color="inherit" fontSize="large"/></Avatar>
         </Grid>
@@ -63,10 +82,10 @@ export default function SignIn() {
             inputRef={register({required: true})}
             required
             fullWidth
-            id="companyname"
+            id="name"
             label="Company Name"
-            name="companyname"
-            autoComplete="companyname"
+            name="name"
+            autoComplete="name"
             autoFocus
           />
 
@@ -76,10 +95,10 @@ export default function SignIn() {
             inputRef={register({required: true})}
             required
             fullWidth
-            id="companyemail"
+            id="email"
             label="Email Address"
-            name="companyemail"
-            autoComplete="companyemail"
+            name="email"
+            autoComplete="email"
           />
 
           <TextField
@@ -88,11 +107,11 @@ export default function SignIn() {
             inputRef={register({required: true, minLength: 8})}
             required
             fullWidth
-            name="companypassword"
+            name="password"
             label="Password"
             type="password"
-            id="companypassword"
-            autoComplete="companypassword"
+            id="password"
+            autoComplete="password"
           />
 
            <TextField
@@ -102,12 +121,12 @@ export default function SignIn() {
           rows={4}
           required
           fullWidth
-          name="companydescription"
-          id="companydescription"
-          autoComplete="companydescription"
+          name="description"
+          id="description"
+          autoComplete="description"
           variant="outlined"
         />
-          {(errors.companyname && <Typography color="error">Name is required.</Typography>) || (errors.companyemail && <Typography color="error">Email is required.</Typography>) || (errors.companypassword && <Typography color="error">Password must be atleast 8 characters long.</Typography>)}
+          {(errors.name && <Typography color="error">Name is required.</Typography>) || (errors.email && <Typography color="error">Email is required.</Typography>) || (errors.password && <Typography color="error">Password must be atleast 8 characters long.</Typography>)}
           <Button
             type="submit"
             fullWidth

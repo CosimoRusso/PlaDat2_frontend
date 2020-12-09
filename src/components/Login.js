@@ -67,6 +67,9 @@ export default function SignIn() {
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
+    if (e.target.id !== "login-form") {
+      return false;
+    }
     const { status, data } = await post('/student/login', { email, password });
     if (status !== 200) {
       alert("Error: " + data.message);
@@ -87,7 +90,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h4">
          Login
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onFormSubmit}>
+        <form id={"login-form"} className={classes.form} noValidate onSubmit={onFormSubmit}>
         <TextField
           id="usertype"
           select
