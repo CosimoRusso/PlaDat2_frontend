@@ -13,9 +13,22 @@ import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../Theme';
 import utils from '../utils';
 import {UserContext} from "../utils/user-context";
-import ModalRegistration from "./ModalRegistration";
+import MenuItem from '@material-ui/core/MenuItem';
+import ModalUser from "./ModalUser";
+
 
 const { post } = utils;
+
+const user = [
+  {
+    value: 'Student',
+    label: 'Student',
+  },
+  {
+    value: 'Company',
+    label: 'Company',
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,6 +59,11 @@ export default function SignIn() {
   const [email, setEmail] = useState(process.env.REACT_APP_EMAIL || "");
   const [password, setPassword] = useState(process.env.REACT_APP_PASSWORD || "");
   const { setUser } = useContext(UserContext);
+  const [usertype, setUserType] = React.useState('Student');
+
+  const handleChange = (event) => {
+    setUserType(event.target.value);
+  };
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
@@ -70,6 +88,25 @@ export default function SignIn() {
          Login
         </Typography>
         <form className={classes.form} noValidate onSubmit={onFormSubmit}>
+        <TextField
+          id="usertype"
+          select
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          placeholder = "Select user type"
+          value={usertype}
+          onChange={handleChange}
+
+        >
+          {user.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -112,7 +149,7 @@ export default function SignIn() {
           <Grid container>
             <Grid item>
               <Link href="#" variant="body2">
-              <ModalRegistration/>
+              <ModalUser/>
               </Link>
             </Grid>
           </Grid>

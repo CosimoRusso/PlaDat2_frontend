@@ -1,19 +1,23 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import Typography from "@material-ui/core/Typography";
-import Registration from "./Registration";
-import {UserContext} from '../utils/user-context';
-import history from './../history';
-import utils from '../utils';
+import Registration from "./RegistrationCompany";
+import Grid from '@material-ui/core/Grid';
+import Company from "../company.png";
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  fontAlign: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -25,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
   divline: {
       display: 'inline-block',
+      marginTop: 15,
   },
 
   line: {
@@ -40,17 +45,9 @@ const useStyles = makeStyles((theme) => ({
 export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const { user, setUser } = useContext(UserContext);
 
   const handleOpen = () => {
-      if(!user){
         setOpen(true);
-      }else{
-        setUser(null);
-        utils.setSessionCookies(null, null, null);
-        history.push('/');
-      }
-
   };
 
   const handleClose = () => {
@@ -60,13 +57,10 @@ export default function TransitionsModal() {
   return (
 
     <div className={classes.divline}>
-   <Typography
-
-               variant= "subtitle1"
-               color="inherit"
-               onClick={handleOpen}>
-       Don't have an account? Register
-      </Typography>
+      <Grid item onClick={handleOpen}>
+<img src={Company} alt="company" width="300" height="250"/>
+<Typography variant="h5" className={classes.fontAlign}>Company</Typography>
+</Grid>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
