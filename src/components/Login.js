@@ -21,11 +21,11 @@ const { post } = utils;
 
 const user = [
   {
-    value: 'Student',
+    value: 'student',
     label: 'Student',
   },
   {
-    value: 'Company',
+    value: 'company',
     label: 'Company',
   },
 ];
@@ -59,10 +59,11 @@ export default function SignIn() {
   const [email, setEmail] = useState(process.env.REACT_APP_EMAIL || "");
   const [password, setPassword] = useState(process.env.REACT_APP_PASSWORD || "");
   const { setUser } = useContext(UserContext);
-  const [usertype, setUserType] = React.useState('Student');
+  const [usertype, setUserType] = React.useState('student');
 
   const handleChange = (event) => {
-    setUserType(event.target.value);
+    const type = event.target.value;
+    setUserType(type);
   };
 
   const onFormSubmit = async (e) => {
@@ -70,7 +71,7 @@ export default function SignIn() {
     if (e.target.id !== "login-form") {
       return false;
     }
-    const { status, data } = await post('/student/login', { email, password });
+    const { status, data } = await post(`/${usertype}/login`, { email, password });
     if (status !== 200) {
       alert("Error: " + data.message);
     }else{
