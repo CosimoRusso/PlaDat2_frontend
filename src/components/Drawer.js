@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-  
+
   align: {
     display: 'flex',
     alignItems: 'center',
@@ -76,7 +76,7 @@ function ResponsiveDrawer(props) {
     <Avatar>M</Avatar>
    <Typography variant="subtitle2" style={{marginLeft: "10px"}}>
        {userData.firstName + ' ' + userData.lastName}
-  <Typography variant="subtitle2" onClick={() => history.push("/profile")} color="primary">
+  <Typography variant="subtitle2" onClick={() => history.push("/student/profile")} color="primary">
   Profile details
    </Typography>
    </Typography>

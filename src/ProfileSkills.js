@@ -50,16 +50,16 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(id, skillName, level) {
-  return { id, skillName, level };
+function createData(category, skillName, level) {
+  return { category, skillName, level };
 }
 
 const rows = [
-  createData(1, 'React', <Circle/>),
-  createData(2, 'Laravel', <Circle/>),
-  createData(3, 'Angular', <Circle/>),
-  createData(4, 'MySQL', <Circle/>),
-  createData(5, 'Java', <Circle/>),
+  createData('Programming', 'React', <Circle/>),
+  createData('Marketing', 'SEO', <Circle/>),
+  createData('Economy', 'Economic Consultant', <Circle/>),
+  createData('Programming', 'MySQL', <Circle/>),
+  createData('Programming', 'Java', <Circle/>),
 ];
 
 export default function BasicTable() {
@@ -81,7 +81,8 @@ export default function BasicTable() {
       <Table className={classes.table} aria-label="simple table">
         <TableHead className={classes.header}>
           <TableRow>
-            <StyledTableCell align="center">Name</StyledTableCell>
+          <StyledTableCell align="center">Category</StyledTableCell>
+            <StyledTableCell align="center">Skill</StyledTableCell>
             <StyledTableCell align="center">Level</StyledTableCell>
             <StyledTableCell align="center">Edit</StyledTableCell>
             <StyledTableCell align="center">Delete</StyledTableCell>
@@ -90,6 +91,7 @@ export default function BasicTable() {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
+               <TableCell align="center">{row.category}</TableCell>
               <TableCell align="center">{row.skillName}</TableCell>
               <TableCell align="center">{row.level}</TableCell>
               <TableCell align="center"><ModalSkills/></TableCell>
