@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -14,6 +14,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Theme, {MuiThemeProvider} from '../../Theme';
+import utils from '../../utils';
+import {UserContext} from '../../utils/user-context'
+import CustomizedSnackbars from "../CustomSnackbar";
+
+const {post} = utils;
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,20 +45,37 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ChangePassword() {
     const classes = useStyles();
-    const { register, handleSubmit, errors } = useForm();
-    const onSubmit = data => console.log(data);
-    const [values, setValues] = React.useState({
-        password: '',
-        showPassword: false,
-    });
+    const { register, handleSubmit } = useForm();
+    const [errors, setErrors] = useState([]);
+    const [currentPassword, setCurrentPassword] = React.useState('');
+    const [showCurrentPassword, setShowCurrentPassword] = React.useState(false);
+    const [newPassword, setNewPassword] = React.useState('');
+    const [showNewPassword, setShowNewPassword] = React.useState(false);
+    const [confirmNewPassword, setConfirmNewPassword] = React.useState('');
+    const [showConfirmNewPassword, setShowConfirmNewPassword] = React.useState(false);
 
-    const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
+    const [success, setSuccess] = React.useState('');
+    const [error, setError] = React.useState('');
 
-    const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    };
+    const {user} = useContext(UserContext);
+
+    const onSubmit = async data => {
+        const e = [];
+        const {currentPass, newPass, retypeNew} = data;
+        if (newPass !== retypeNew) e.push("The new passwords do not match");
+        if (newPass.length < 8) e.push("The new password must be at least 8 characters");
+        if (!currentPass) e.push("Invalid current password");
+        setErrors(e);
+        if (e.length) return false;
+        const res = await post('/student/profile', {
+            password: newPassword
+        }, user.jwt );
+        if (res.status === 200){
+            setSuccess('Password updated!')
+        }else{
+            setError('Error: ' + res.data.message)
+        }
+    }
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
@@ -71,21 +93,22 @@ export default function ChangePassword() {
                     <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Current password</InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-password"
+                            id="outlined-adornment-old-password"
                             inputRef={register({required: true})}
                             name="currentPass"
                             margin="normal"
-                            type={values.showPassword ? 'text' : 'password'}
-                            onChange={handleChange('password')}
+                            value={currentPassword}
+                            type={showCurrentPassword ? 'text' : 'password'}
+                            onChange={e => setCurrentPassword(e.target.value)}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
+                                        onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        {showCurrentPassword ? <Visibility /> : <VisibilityOff />}
                                     </IconButton>
                                 </InputAdornment>
                             }
@@ -95,21 +118,22 @@ export default function ChangePassword() {
                     <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">New password</InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-password"
+                            id="outlined-adornment-new-password"
                             inputRef={register({required: true})}
                             name="newPass"
                             margin="normal"
-                            type={values.showPassword ? 'text' : 'password'}
-                            onChange={handleChange('password')}
+                            value={newPassword}
+                            type={showNewPassword ? 'text' : 'password'}
+                            onChange={e => setNewPassword(e.target.value)}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
+                                        onClick={() => setShowNewPassword(!showNewPassword)}
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        {showNewPassword ? <Visibility /> : <VisibilityOff />}
                                     </IconButton>
                                 </InputAdornment>
                             }
@@ -117,22 +141,23 @@ export default function ChangePassword() {
                         />
                     </FormControl>
                     <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">Re-type password</InputLabel>
+                        <InputLabel htmlFor="outlined-adornment-new-password">Re-type password</InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-password"
+                            id="outlined-adornment-confirm-password"
                             inputRef={register({required: true})}
                             name="retypeNew"
-                            type={values.showPassword ? 'text' : 'password'}
-                            onChange={handleChange('password')}
+                            type={showConfirmNewPassword ? 'text' : 'password'}
+                            value={confirmNewPassword}
+                            onChange={e => setConfirmNewPassword(e.target.value)}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
+                                        onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
                                         onMouseDown={handleMouseDownPassword}
                                         edge="end"
                                     >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        {showConfirmNewPassword ? <Visibility /> : <VisibilityOff />}
                                     </IconButton>
                                 </InputAdornment>
                             }
@@ -140,10 +165,7 @@ export default function ChangePassword() {
                         />
                     </FormControl>
 
-
-                    {(errors.currentPass && <Typography color="error">Wrong current password</Typography>)
-                        || (errors.newPass && <Typography color="error">New password is required</Typography>)
-                        || (errors.retypeNew && <Typography color="error">Doesn't match with new pasword</Typography>)}
+                    {errors.map(e => <Typography color="error">{e}</Typography>)}
 
                     <Button
                         type="submit"
@@ -156,6 +178,8 @@ export default function ChangePassword() {
                 </form>
             </div>
             </MuiThemeProvider>
+            <CustomizedSnackbars type={"error"} message={error} />
+            <CustomizedSnackbars type={"success"} message={success} />
         </Container>
     );
 }

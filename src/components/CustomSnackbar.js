@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -18,7 +18,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomizedSnackbars(props) {
     const classes = useStyles();
-    const {open, setOpen, type, message} = props;
+    const {type, message} = props;
+    const [open, setOpen] = React.useState(false);
+
+    useEffect(() => {
+            setOpen(message !== '')
+    }, [message]);
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {

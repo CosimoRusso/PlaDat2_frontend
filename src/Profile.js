@@ -124,10 +124,8 @@ const useStyles = makeStyles((theme) => ({
 export default function GeneralInfo() {
     const classes = useStyles();
     const {user} = useContext(UserContext);
-    const [error, setError] = useState(null);
-    const [showError, setShowError] = useState(false);
-    const [success, setSuccess] = useState(null);
-    const [showSuccess, setShowSuccess] = useState(null);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const [ userData, setUserData ] = useState({
         firstName: '',
         lastName: '',
@@ -144,9 +142,10 @@ export default function GeneralInfo() {
         const loadUser = async () => {
             const userRes = await get('/student/findOne/' + user.userId);
             if (mounted && userRes.status !== 200){
-                setShowError(true);
                 setError("Error: " + userRes.data.message);
                 return;
+            }else{
+                setError('');
             }
             if (userRes.data.CityId){
                 const cityRes = await get('/cities/findOne/' + userRes.data.CityId);
@@ -397,8 +396,8 @@ To
 
 
             </div>
-            <CustomizedSnackbars open={showError} setOpen={setShowError} type={"error"} message={error} />
-            <CustomizedSnackbars open={showSuccess} setOpen={setShowSuccess} type={"success"} message={success} />
+            <CustomizedSnackbars type={"error"} message={error} />
+            <CustomizedSnackbars type={"success"} message={success} />
         </div>
     );
 }
