@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ClearIcon from '@material-ui/icons/Clear';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import history from './../../history';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       background: "#1076a3",
    },
+  },
+
+  colorfont: {
+    color: '#03a9f4',
   },
 
   avatar: {
@@ -66,8 +71,8 @@ export default function RecipeReviewCard(props) {
        direction="row"
        justify="flex-start"
         >
-      <Typography variant="body2" color="textSecondary" component="p">
-          {job.salary || '3000'}EUR | {job.remote ? 'Remote' : 'In Place'}
+      <Typography variant="subtitle2" className={classes.colorfont} onClick={() => history.push("/job/listofstudents")} >
+          View Students
         </Typography>
         </Grid>
         <Grid

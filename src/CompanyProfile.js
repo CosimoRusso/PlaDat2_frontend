@@ -63,25 +63,10 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
 
-    info: {
-        margin: 15,
-        padding: 10
-    },
-
-    divSpacing: {
-        marginTop: 3,
-    },
     divTop: {
       marginTop: 40,
     },
 
-    divTopMargin: {
-      marginTop: 50,
-    },
-
-    divSmall: {
-      marginTop: 30,
-    },
     large: {
       width: 50,
       height: 50,
@@ -103,13 +88,6 @@ const useStyles = makeStyles((theme) => ({
       paper2: {
         padding: theme.spacing(2),
       },
-
-    margininfo: {
-    marginLeft: 5,
-    marginTop: 5,
-    },
-
-
 
 
 }));

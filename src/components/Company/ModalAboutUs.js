@@ -35,14 +35,6 @@ const useStyles = makeStyles((theme) => ({
     background: '#03a9f4',
   },
 
-  line: {
-    margin: theme.spacing(3),
-    '&:hover': {
-     color: 'black',
-
-  }
-   },
-
 }));
 
 export default function TransitionsModal() {

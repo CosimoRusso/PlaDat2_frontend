@@ -10,6 +10,7 @@ import history from './history';
 import ProfileSkills from "./ProfileSkills";
 import AppliedInternships from "./AppliedInternships";
 import CompanyProfile from "./CompanyProfile";
+import ListOfStudents from "./ListOfStudents";
 
 export default class Routes extends Component {
     render() {
@@ -25,6 +26,7 @@ export default class Routes extends Component {
                     <Route path="/student/skills" component={ProfileSkills} />
                     <Route path="/student/appliedinternships" component={AppliedInternships} />
                     <Route path="/company/profile" component={CompanyProfile} />
+                    <Route path="/job/listofstudents" component={ListOfStudents}/>
                 </Switch>
             </Router>
         )

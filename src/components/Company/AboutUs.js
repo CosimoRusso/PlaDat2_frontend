@@ -27,12 +27,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
 
-  twofields: {
-    marginRight: 10
-  },
-  threefields: {
-    marginRight: 40
-  },
 
 }));
 
