@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -10,6 +10,11 @@ import ModalEducation from './components/Student/ModalEducation';
 import ModalJobExperience from './components/Student/ModalJobExperience';
 import ModalChangePass from './components/Student/ModalChangePass';
 import Avatar from '@material-ui/core/Avatar';
+import {UserContext} from './utils/user-context';
+import utils from './utils';
+import CustomizedSnackbars from "./components/CustomSnackbar";
+
+const {get, post} = utils;
 
 
 const theme = createMuiTheme();
@@ -118,6 +123,45 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GeneralInfo() {
     const classes = useStyles();
+    const {user} = useContext(UserContext);
+    const [error, setError] = useState(null);
+    const [showError, setShowError] = useState(false);
+    const [success, setSuccess] = useState(null);
+    const [showSuccess, setShowSuccess] = useState(null);
+    const [ userData, setUserData ] = useState({
+        firstName: '',
+        lastName: '',
+        gender: 'male',
+        country: '',
+        city: '',
+        dateOfBirth: '',
+        email: '',
+        phone: ''
+    });
+
+    useEffect(() => {
+        let mounted = true;
+        const loadUser = async () => {
+            const userRes = await get('/student/findOne/' + user.userId);
+            if (mounted && userRes.status !== 200){
+                setShowError(true);
+                setError("Error: " + userRes.data.message);
+                return;
+            }
+            if (userRes.data.CityId){
+                const cityRes = await get('/cities/findOne/' + userRes.data.CityId);
+                if (cityRes.status === 200){
+                    userRes.data.city = cityRes.data.name;
+                    userRes.data.country = cityRes.data.Country.name;
+                }
+            }
+            if(mounted){
+                setUserData(userRes.data);
+            }
+        }
+        loadUser().then(() => {});
+        return () => mounted = false;
+    }, []);
 
     return (
         <div className={classes.root}>
@@ -148,13 +192,13 @@ export default function GeneralInfo() {
                   First Name
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom>
-                  Oscar
+                    {userData.firstName}
                 </Typography>
                 <Typography color="textSecondary" variant="subtitle1">
                   Last Name
                 </Typography>
                 <Typography variant="subtitle2">
-                  Burek
+                    {userData.lastName}
                 </Typography>
           </Grid>
                     <Grid item xl={8} lg={8} md={7} sm={7} xs={7} container >
@@ -164,25 +208,25 @@ export default function GeneralInfo() {
                   Gender
                 </Typography>
               <Typography variant="subtitle2" gutterBottom>
-                  Male
+                  {userData.gender}
                 </Typography>
                 <Typography color="textSecondary" variant="subtitle1">
                   Country
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom>
-                  Poland
+                    {userData.country}
                 </Typography>
                 <Typography color="textSecondary" variant="subtitle1">
                   City
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom>
-                  Warsaw
+                    {userData.city}
                 </Typography>
                 <Typography color="textSecondary" variant="subtitle1">
                   Date of Birth
                 </Typography>
                 <Typography variant="subtitle2">
-                07/12/1995
+                    {userData.dateOfBirth}
                 </Typography>
               </Grid>
 
@@ -191,13 +235,13 @@ export default function GeneralInfo() {
                   Email address
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom>
-                  oscar@gmail.com
+                    {userData.email}
                 </Typography>
                 <Typography color="textSecondary" variant="subtitle1">
                   Phone
                 </Typography>
                 <Typography variant="subtitle2">
-                +12331231232
+                    {userData.phone}
                 </Typography>
                 </Grid>
             </Grid>
@@ -353,6 +397,8 @@ To
 
 
             </div>
+            <CustomizedSnackbars open={showError} setOpen={setShowError} type={"error"} message={error} />
+            <CustomizedSnackbars open={showSuccess} setOpen={setShowSuccess} type={"success"} message={success} />
         </div>
     );
 }
