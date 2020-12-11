@@ -183,7 +183,7 @@ export default function GeneralInfo() {
                       <Grid item xl={8} lg={6} md={7} sm={7} xs={9}>
                       <Typography className={classes.margininfo} color="textSecondary">Personal Details</Typography>
                       </Grid>
-                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end"><ModalPersonal/></Grid>
+                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end"><ModalPersonal userData={userData}/></Grid>
 
                     <Grid xl={4} lg={4} md={4} sm={4} xs={5} item>
            <Avatar className={classes.large}>M</Avatar>
