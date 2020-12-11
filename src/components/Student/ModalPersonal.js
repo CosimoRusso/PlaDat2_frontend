@@ -55,6 +55,7 @@ export default function TransitionsModal(props) {
   };
 
   const handleClose = () => {
+    props.updateUser && props.updateUser();
     setOpen(false);
   };
 
