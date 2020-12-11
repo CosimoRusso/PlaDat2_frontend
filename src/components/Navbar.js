@@ -91,8 +91,8 @@ const Header = props => {
     <div className={classes.root}>
       <AppBar position="static" className={`${classes.color} ${classes.appBar}`}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Placement Dating for Students
+          <Typography variant="h5" className={classes.title}>
+            PlaDat
           {/* <img
             className={classes.logo}
             width="100"

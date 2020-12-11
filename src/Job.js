@@ -158,11 +158,18 @@ class CardCarousel extends React.Component {
             <Grid container item xs={12} md={12} lg={12} justify="flex-start">
               <Grid>
                 <Typography variant="subtitle1">{cityName} | {countryName} | {job.remote ? 'Remote' : 'In Place'} | {job.salary || 500}€</Typography>
+                <Grid container>
+              <Typography variant="subtitle1">
+                Category: IT
+              </Typography>
+              </Grid>
                 <Typography variant="h6">Description</Typography>
               </Grid>
               <p>
                   {job.description || placeHolderText}
               </p>
+
+
               <div className={classes.tags}>
                   {job.requiredSkills.map(s =>
                       <Chip key={'skill-required-' + s.id}

@@ -7,6 +7,8 @@ import Jobs from "./Jobs";
 import Job from "./Job";
 import ViewJob from "./ViewJob";
 import history from './history';
+import ProfileSkills from "./ProfileSkills";
+import AppliedInternships from "./AppliedInternships"
 
 export default class Routes extends Component {
     render() {
@@ -19,6 +21,8 @@ export default class Routes extends Component {
                     <Route path="/browsejobs" component={Jobs} />
                     <Route path="/job" component={Job} />
                     <Route path="/viewjob/:jobid" component={ViewJob} />
+                    <Route path="/skills" component={ProfileSkills} />
+                    <Route path="/appliedinternships" component={AppliedInternships} />
                 </Switch>
             </Router>
         )
