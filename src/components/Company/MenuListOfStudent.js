@@ -7,8 +7,9 @@ import CheckIcon from '@material-ui/icons/Check';
 import history from './../../history';
 import Typography from '@material-ui/core/Typography';
 
-export default function SimpleMenu() {
+export default function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { accept, refuse } = props;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,9 +29,9 @@ export default function SimpleMenu() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}><Typography onClick={() => history.push("/student/profile")}>View Profile</Typography></MenuItem>
-        <MenuItem onClick={handleClose}><CheckIcon style={{color: "green"}}/>Accept</MenuItem>
-        <MenuItem onClick={handleClose}><ClearIcon color="secondary"/>Decline</MenuItem>
+        <MenuItem onClick={() => history.push("/student/profile")}><Typography>View Profile</Typography></MenuItem>
+        <MenuItem onClick={accept}><CheckIcon style={{color: "green"}}/>Accept</MenuItem>
+        <MenuItem onClick={refuse}><ClearIcon color="secondary"/>Decline</MenuItem>
       </Menu>
     </div>
   );

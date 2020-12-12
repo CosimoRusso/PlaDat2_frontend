@@ -22,7 +22,7 @@ export default function CustomizedSnackbars(props) {
     const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
-            setOpen(message !== '')
+        setOpen(message !== '')
     }, [message]);
 
     const handleClose = (event, reason) => {

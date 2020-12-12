@@ -13,7 +13,7 @@ import {UserContext} from "../../utils/user-context";
 import utils from '../../utils'
 import CustomizedSnackbars from "../CustomSnackbar";
 
-const { get } = utils;
+const { get, post } = utils;
 
 const theme = createMuiTheme();
 
@@ -108,6 +108,17 @@ export default function GeneralInfo(props) {
     const [students, setStudents] = useState([]);
     const [job, setJob] = useState(null);
 
+    const acceptOrRefuseStudent = async (isAccept, studentId) => {
+        const str = isAccept ? 'accept' : 'discard';
+        const res = await post(`/company/jobs/${jobId}/${str}/${studentId}`, {}, user.jwt);
+        if (res.status !== 201){
+            setShowAlert({type: 'error', message: res.data.message});
+            return;
+        }
+        setShowAlert({type: 'success', message: "Success!"});
+        setStudents(students.filter(s => s.id !== studentId));
+    }
+
     const fetchData = async () => {
         const jobRes = await get(`/jobs/findOne/${jobId}`);
         if (jobRes.status !== 200){
@@ -154,7 +165,11 @@ export default function GeneralInfo(props) {
            {students.map(s =>
                <Grid item xl={2} lg={2} xs={5} sm={5} md={5} style={{marginTop: 20}}  >
                    <Paper className={classes.paper} style={{textAlign: "center"}}>
-                       <Grid container justify="flex-end" alignItems="flex-end"><Menu/></Grid>
+                       <Grid container justify="flex-end" alignItems="flex-end">
+                           <Menu
+                               accept={acceptOrRefuseStudent.bind(null, true, s.id)}
+                               refuse={acceptOrRefuseStudent.bind(null, false, s.id)} />
+                       </Grid>
                        <Grid container justify="center" >
                            <Avatar className={classes.large} alt="Company logo"><Typography variant="h2" style={{fontSize: 40}}>{s.firstName.substr(0,1)}</Typography></Avatar>
                        </Grid>
