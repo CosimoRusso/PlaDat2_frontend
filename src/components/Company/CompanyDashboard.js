@@ -42,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
             return;
         }
         for (let job of companyRes.data.Jobs){
+            const cityRes = await get('/cities/findOne/' + job.CityId);
+            if (cityRes.status === 200){
+                job.City = cityRes.data;
+            }
             job.Company = {name: companyRes.data.name, id: companyRes.data.id};
         }
         setJobs(companyRes.data.Jobs);
@@ -59,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 
     <div className={classes.root}>
         <Navbar/>
-        <Drawer/>
+        <Drawer allJobs={jobs} jobs={jobsDisplayed} setJobs={setJobsDisplayed} />
         <Grid className={classes.margin}
             container
             direction="row"
@@ -79,5 +83,3 @@ const useStyles = makeStyles((theme) => ({
   </div>
   );
 }
-
-
