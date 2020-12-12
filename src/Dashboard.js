@@ -28,27 +28,7 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
     const { user } = useContext(UserContext);
     const [jobs, setJobs] = useState([]);
-    const [searchJob, setSearchJob] = useState('');
-
-    const filterJobsBySearch = (text) => {
-      if (!text) {
-        setJobs(jobs.map(j => {
-          j.hide = false;
-          return j;
-        }));
-        return;
-      }
-      const regex = new RegExp(text, 'i');
-      setJobs(jobs.map(j => {
-        j.hide = !regex.test(j.name)
-        return j;
-      }));
-    }
-
-    const onJobSearchTextChange = (text) => {
-      setSearchJob(text);
-      filterJobsBySearch(text);
-    }
+    const [jobsDisplayed, setJobsDisplayed] = useState([]);
 
     const discardJob = async (jobId) => {
       const {status, data} = await post('/student/jobs/discard/' + jobId, {}, user.jwt);
@@ -61,34 +41,37 @@ const useStyles = makeStyles((theme) => ({
 
     useEffect(() => {
       async function fetchData(){
-        const { status, message, data } = await utils.get('/student/jobs/search', null, user.jwt);
+        const { status, data } = await utils.get('/student/jobs/search', null, user.jwt);
         if (status !== 200) {
-          if (message)
-            alert('Error: ' + message);
+          if (data.message)
+            alert('Error: ' + data.message);
           else
             alert('Server is currently offline, please try again later');
           return;
         }
         for (let job of data){
-          const { data } = await utils.get('/company/findOne/' + job.CompanyId);
-          job.company = data;
+          const { data } = await utils.get('/jobs/findOne/' + job.id);
+          job.Company = data.Company;
+          job.City = data.City;
         }
         setJobs(data);
+        setJobsDisplayed(data);
       }
       return fetchData();
+      // eslint-disable-next-line
     }, [])
 
     return (
 
     <div className={classes.root}>
       <Navbar/>
-<Drawer searchText={searchJob} setSearchText={onJobSearchTextChange} />
+<Drawer allJobs={jobs} jobs={jobsDisplayed} setJobs={setJobsDisplayed} />
       <Grid className={classes.margin}
   container
   direction="row"
   justify= "center"
 >
-  {jobs.filter(j => !j.hide).map( job =>
+  {jobsDisplayed.map( job =>
       <Grid item lg={4} xl={2}  key={job.id}>
         <Card job={job} discardJob={discardJob}/>
       </Grid>

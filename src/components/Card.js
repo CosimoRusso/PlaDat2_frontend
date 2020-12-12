@@ -52,7 +52,7 @@ export default function RecipeReviewCard(props) {
         }
         title={job.name || 'React Developer'}
         // eslint-disable-next-line
-        subheader={job.company && job.company.name || 'Netflix'}
+        subheader={job.Company && job.Company.name || ''}
       />
 
       <CardContent>

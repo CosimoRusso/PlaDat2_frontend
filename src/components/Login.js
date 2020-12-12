@@ -78,7 +78,10 @@ export default function SignIn() {
       const userData = { jwt: data.jwt, userId: data.id, userType: usertype};
       utils.setSessionCookies(userData.jwt, userData.userId, userData.userType);
       setUser(userData);
-      history.push("/dashboard");
+      if (usertype==='student')
+        history.push("/dashboard");
+      else
+        history.push('/company/dashboard');
     }
     return false;
   }

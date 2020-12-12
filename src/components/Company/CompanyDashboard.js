@@ -6,8 +6,6 @@ import Drawer from "./../Drawer";
 import Card from './Card';
 // import CardAddJob from './CardAddJob';
 
-
-
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
     return (
 
     <div className={classes.root}>
-      <Navbar/>
-<Drawer/>
+        <Navbar/>
+        <Drawer/>
       <Grid className={classes.margin}
   container
   direction="row"

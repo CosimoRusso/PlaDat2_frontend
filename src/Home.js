@@ -7,7 +7,12 @@ const {UserContext} = require('./utils/user-context');
 const Home = props => {
   const { user } = useContext(UserContext);
 
-  if(user) return <Redirect to={'/dashboard'} />
+  if(user) {
+    if (user.userType === 'student')
+      return <Redirect to={'/dashboard'} />
+    else
+      return <Redirect to={'company/dashboard'} />
+  }
 
   return <div>
     <Navbar/>

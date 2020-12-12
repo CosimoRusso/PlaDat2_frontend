@@ -66,13 +66,14 @@ const BlueCheckbox = withStyles({
 
 })((props) => <Checkbox color="default" {...props} />);
 
-function CheckboxLabels() {
+function CheckboxLabels(props) {
     const [state, setState] = React.useState({
         checkedA: false,
         checkedB: false,
         checkedC: false,
         checkedD: false
     });
+    const {location, setLocation} = props;
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
@@ -80,7 +81,9 @@ function CheckboxLabels() {
 
     return (
         <div>
-                              <TextField id="outlined-search" label="Location" size="small" type="string" variant="outlined" style={{paddingRight: 20, marginTop: 15}}
+          <TextField id="outlined-search" label="Location" size="small" type="string" variant="outlined" style={{paddingRight: 20, marginTop: 15}}
+             value={location}
+             onChange={e => setLocation(e.target.value)}
              InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

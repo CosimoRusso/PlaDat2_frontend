@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import history from './../history';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -41,29 +41,57 @@ const useStyles = makeStyles((theme) => ({
 
 function ResponsiveDrawer(props) {
   const { window } = props;
-  const {searchText, setSearchText} = props;
+  const {allJobs, jobs, setJobs} = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { user } = useContext(UserContext);
-  const [userData, setUserData] = useState({firstName: 'Pippo', lastName: ''});
+  const [userData, setUserData] = useState({name: ''});
+  const dataFetched = useRef(false);
+
+  //filters
+    const [searchText, setSearchText] = React.useState('');
+    const [searchLocation, setSearchLocation] = React.useState('');
+
+    const applyFilters = () => {
+        if (!allJobs || !allJobs.length) return;
+        let out = JSON.parse(JSON.stringify(allJobs));
+        // search text
+        let regex;
+        if (searchText){
+            regex = new RegExp(searchText, 'i');
+            out = out.filter(j => regex.test(j.name) || regex.test(j.description));
+        }
+        // location
+        if (searchLocation){
+            regex = new RegExp(searchLocation, 'i');
+            out = out.filter(j => j.City && j.City.id && regex.test(j.City.name))
+        }
+        setJobs(out);
+    }
 
   useEffect(() => {
       const fetchData = async () => {
           if(!(user && user.userId)) return;
-          const {data, status, message} = await get('/student/findOne/' + user.userId);
+          const {data, status, message} = await get(`/${user.userType}/findOne/${user.userId}`);
 
           if (status === 200){
-              setUserData({
-                  firstName: data.firstName,
-                  lastName: data.lastName
-              })
+              const obj = {
+                  name: user.userType === "student" ? data.firstName + ' ' + data.lastName : data.name
+              }
+              setUserData(obj);
           }else{
               console.log("ERROR " + message + " STATUS " + status);
           }
       }
-      return fetchData();
-  }, [])
+      if (!dataFetched.current){
+          dataFetched.current = true;
+          return fetchData();
+      }else{
+          applyFilters()
+      }
+
+  }, [searchText, searchLocation])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -73,9 +101,9 @@ function ResponsiveDrawer(props) {
 
     <div>
       <div className={classes.align}>
-    <Avatar>M</Avatar>
+    <Avatar>{userData && userData.name && userData.name.substr(0,1)}</Avatar>
    <Typography variant="subtitle2" style={{marginLeft: "10px"}}>
-       {userData.firstName + ' ' + userData.lastName}
+       {userData.name}
   <Typography variant="subtitle2" onClick={() => history.push("/student/profile")} color="primary">
   Profile details
    </Typography>
@@ -84,7 +112,7 @@ function ResponsiveDrawer(props) {
    <Divider/>
       <div  className={classes.root}>
       <Search searchText={searchText} setSearchText={setSearchText} />
-      <Filters/>
+      <Filters location={searchLocation} setLocation={setSearchLocation}/>
       <RangeSlider/>
     </div>
     </div>
