@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import MUIDrawer from './components/ProfileDrawer';
 import Table from '@material-ui/core/Table';
@@ -10,6 +10,11 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 import Circle from "./components/Student/Circle";
 import Grid from '@material-ui/core/Grid';
 import ModalSkills from './components/Student/ModalSkills';
+import {UserContext} from "./utils/user-context";
+import utils from './utils';
+import CustomizedSnackbars from "./components/CustomSnackbar";
+
+const {get, post} = utils;
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -66,7 +71,42 @@ const rows = [
 
 export default function BasicTable() {
   const classes = useStyles();
+  const {user} = useContext(UserContext);
+  const studentId = user.userId;
+  const [student, setStudent] = useState(null);
+  const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+  const setError = message => setShowAlert({type: 'error', message});
+  const setSuccess = message => setShowAlert({type: 'success', message});
+  const dataLoaded = useRef(false);
 
+  const deleteSkill = async (skill) => {
+      const skillId = skill.id;
+      const res = await post('/student/removeCapability', {removeSkillId: skillId}, user.jwt);
+      if (res.status !== 200){
+          setError(res.data.message);
+          return;
+      }
+      setSuccess('Capability removed');
+      const newStudent = JSON.parse(JSON.stringify(student));
+      newStudent.skills = newStudent.skills.filter(s => s.id !== skillId);
+      setStudent(newStudent);
+  }
+
+  const loadData = async () => {
+    const studentRes = await get(`/student/findOne/${studentId}`);
+    if (studentRes.status !== 200){
+        setError(studentRes.data.message);
+        return;
+    }
+    setStudent(studentRes.data);
+  }
+
+  useEffect(() => {
+      if (!dataLoaded.current){
+          dataLoaded.current = true;
+          loadData().then(() => {});
+      }
+  })
   return (
       <div>
 
@@ -87,21 +127,24 @@ export default function BasicTable() {
             <StyledTableCell align="center">Delete</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-               <TableCell align="center">{row.category}</TableCell>
-              <TableCell align="center">{row.skillName}</TableCell>
-              <TableCell align="center">{row.level}</TableCell>
-              <TableCell align="center"><ModalSkills/></TableCell>
-              <TableCell align="center"><DeleteOutlineOutlinedIcon/></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+          {student &&
+          <TableBody>
+              {student.skills.map((skill) => (
+                  <TableRow key={skill.id}>
+                      <TableCell align="center">{ skill.SkillCategory ? skill.SkillCategory.name : 'No Category'}</TableCell>
+                      <TableCell align="center">{skill.name}</TableCell>
+                      <TableCell align="center"><Circle value={skill.StudentSkill.rating} /> </TableCell>
+                      <TableCell align="center"><ModalSkills/></TableCell>
+                      <TableCell align="center"><DeleteOutlineOutlinedIcon onClick={deleteSkill.bind(null, skill)}/></TableCell>
+                  </TableRow>
+              ))}
+          </TableBody>
+          }
       </Table>
       </Grid>
       </div>
       </Grid>
+          <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
       </div>
   );
 }

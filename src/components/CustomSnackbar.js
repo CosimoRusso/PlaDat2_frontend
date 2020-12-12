@@ -30,7 +30,7 @@ export default function CustomizedSnackbars(props) {
             return;
         }
         setOpen(false);
-        setMessage('');
+        setMessage({type, message: ''});
     };
 
     return (

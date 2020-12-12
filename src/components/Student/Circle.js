@@ -22,15 +22,15 @@ const useStyles = makeStyles({
 
 // const percentage = 44;
 
-export default function Circle() {
+export default function Circle(props) {
     const classes = useStyles();
-
+    const {value} = props;
     return (
         <div className={classes.size}>
 
                 <AnimatedProgressProvider
                     valueStart={0}
-                    valueEnd={44}
+                    valueEnd={value}
                     duration={1.4}
                     easingFunction={easeQuadInOut}
 
@@ -40,7 +40,8 @@ export default function Circle() {
                         return (
                             <CircularProgressbar
                                 value={value}
-                                text={`${roundedValue}%`}
+                                maxValue={5}
+                                text={`${roundedValue}`}
                                 styles={buildStyles({ pathTransition: "none" })}
                             />
                         );
