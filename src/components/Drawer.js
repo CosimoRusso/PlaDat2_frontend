@@ -52,6 +52,11 @@ function ResponsiveDrawer(props) {
   //filters
     const [searchText, setSearchText] = React.useState('');
     const [searchLocation, setSearchLocation] = React.useState('');
+    const [partTime, setPartTime] = React.useState(false);
+    const [fullTime, setFullTime] = React.useState(false);
+    const [remote, setRemote] = React.useState(false);
+    const [office, setOffice] = React.useState(false);
+    const [salary, setSalary] = React.useState([0, 3000]);
 
     const applyFilters = () => {
         if (!allJobs || !allJobs.length) return;
@@ -67,6 +72,20 @@ function ResponsiveDrawer(props) {
             regex = new RegExp(searchLocation, 'i');
             out = out.filter(j => j.City && j.City.id && regex.test(j.City.name))
         }
+        // part time / full time
+        if (partTime && !fullTime){
+            out = out.filter(j => j.partTime === true)
+        } else if (fullTime && ! partTime){
+            out = out.filter(j => j.partTime === false)
+        }
+        // remote / office
+        if (remote && !office){
+            out = out.filter(j => j.remote === true)
+        } else if (office && !remote){
+            out = out.filter(j => j.remote === false)
+        }
+        // salary
+        out = out.filter(j => j.salary > salary[0] && j.salary < salary[1]);
         setJobs(out);
     }
 
@@ -91,7 +110,7 @@ function ResponsiveDrawer(props) {
           applyFilters()
       }
 
-  }, [searchText, searchLocation])
+  }, [searchText, searchLocation, partTime, fullTime, remote, office, salary])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -112,8 +131,14 @@ function ResponsiveDrawer(props) {
    <Divider/>
       <div  className={classes.root}>
       <Search searchText={searchText} setSearchText={setSearchText} />
-      <Filters location={searchLocation} setLocation={setSearchLocation}/>
-      <RangeSlider/>
+      <Filters
+          location={searchLocation} setLocation={setSearchLocation}
+          partTime={partTime} setPartTime={setPartTime}
+          fullTime={fullTime} setFullTime={setFullTime}
+          remote={remote} setRemote={setRemote}
+          office={office} setOffice={setOffice}
+      />
+      <RangeSlider salary={salary} setSalary={setSalary}/>
     </div>
     </div>
   );

@@ -67,17 +67,8 @@ const BlueCheckbox = withStyles({
 })((props) => <Checkbox color="default" {...props} />);
 
 function CheckboxLabels(props) {
-    const [state, setState] = React.useState({
-        checkedA: false,
-        checkedB: false,
-        checkedC: false,
-        checkedD: false
-    });
-    const {location, setLocation} = props;
+    const {location, setLocation, partTime, setPartTime, fullTime, setFullTime, remote, setRemote, office, setOffice} = props;
 
-    const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
 
     return (
         <div>
@@ -98,8 +89,8 @@ function CheckboxLabels(props) {
                 <FormControlLabel
                     control={
                         <BlueCheckbox
-                            checked={state.checkedA}
-                            onChange={handleChange}
+                            checked={partTime}
+                            onChange={e => setPartTime(e.target.checked)}
                             name="checkedA"
                             color="primary"
                         />
@@ -109,8 +100,8 @@ function CheckboxLabels(props) {
                 <FormControlLabel
                     control={
                         <BlueCheckbox
-                            checked={state.checkedB}
-                            onChange={handleChange}
+                            checked={fullTime}
+                            onChange={e => setFullTime(e.target.checked)}
                             name="checkedB"
                             color="primary"
                         />
@@ -121,8 +112,8 @@ function CheckboxLabels(props) {
                 <FormControlLabel
                     control={
                         <BlueCheckbox
-                            checked={state.checkedC}
-                            onChange={handleChange}
+                            checked={remote}
+                            onChange={e => setRemote(e.target.checked)}
                             name="checkedC"
                             color="primary"
                         />
@@ -132,8 +123,8 @@ function CheckboxLabels(props) {
                 <FormControlLabel
                     control={
                         <BlueCheckbox
-                            checked={state.checkedD}
-                            onChange={handleChange}
+                            checked={office}
+                            onChange={e => setOffice(e.target.checked)}
                             name="checkedD"
                             color="primary"
                         />
@@ -150,12 +141,12 @@ function valuetext(value) {
     return `${value}$`;
 }
 
-function RangeSlider() {
+function RangeSlider(props) {
     const classes = useStyles();
-    const [value, setValue] = React.useState([200, 2000]);
+    const {salary, setSalary} = props;
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setSalary(newValue);
     };
 
     return (
@@ -164,13 +155,13 @@ function RangeSlider() {
                 Salary
             </Typography>
             <PrettoSlider className={classes.slider}
-                value={value}
+                value={salary}
                 onChange={handleChange}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
                 getAriaValueText={valuetext}
                 step={50}
-                min={200}
+                min={0}
                 max={3000}
             />
         </div>
