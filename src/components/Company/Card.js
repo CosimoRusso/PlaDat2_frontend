@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
-  let { job } = props;
+  let { job, discardJob } = props;
   if (!job) return <div></div>;
   return (
     <Card className={classes.root}>
@@ -50,7 +50,7 @@ export default function RecipeReviewCard(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="clear">
+          <IconButton aria-label="clear" onClick={discardJob}>
             <ClearIcon />
           </IconButton>
         }

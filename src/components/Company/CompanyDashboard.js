@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
     const [jobs, setJobs] = useState([]);
     const [jobsDisplayed, setJobsDisplayed] = useState([]);
 
+    const discardJob = () => {
+        setError('Job delete is not implemented yet');
+    }
+
     const fetchJobs = async () => {
         const companyId = user.userId;
         const companyRes = await get('/company/findOne/' + companyId);
@@ -71,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
         >
             { jobsDisplayed.map(j =>
                 <Grid key={j.id} item lg={4} xl={2}>
-                    <Card job={j}/>
+                    <Card job={j} discardJob={discardJob}/>
                 </Grid>) }
       <Grid item lg={4} xl={2}>
           {/* <CardAddJob/> */}
