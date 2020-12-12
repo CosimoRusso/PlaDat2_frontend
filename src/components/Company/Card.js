@@ -10,10 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ClearIcon from '@material-ui/icons/Clear';
-import Button from '@material-ui/core/Button';
-import ScheduleIcon from '@material-ui/icons/Schedule';
-
-
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import history from './../../history';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
    },
   },
 
+  colorfont: {
+    color: '#03a9f4',
+  },
+
   avatar: {
     backgroundColor: red[500],
   },
@@ -37,31 +39,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
-//   const itemsList = [
-//     {
-//         text: "Wating",
-//         icon: <ScheduleIcon />,
-//         color: '#03a9f4'
-//     },
-//     {
-//         text: "Accepted",
-//         icon: <CheckIcon />,
-//         color: '#00FF00'
-//     },
-//     {
-//         text: "Declined",
-//         icon: <ClearIcon />,
-//         color: '#FF0000'
-//     },
-// ];
-
+  let { job } = props;
+  if (!job) job = { name: 'React Developer', companyId: 1, id: 1, salary: 200, remote: true, company: {name: 'Netflix'} }
   return (
-    <div>
-    <Grid
-    container
-    direction="row"
-    justify= "center"
-  >
     <Card className={classes.root}>
         <Grid item xs>
       <CardHeader
@@ -74,14 +54,14 @@ export default function RecipeReviewCard(props) {
             <ClearIcon />
           </IconButton>
         }
-        title={'React Developer'}
+        title={job.name || 'React Developer'}
         // eslint-disable-next-line
-        subheader={'Netflix'}
+        subheader={job.company && job.company.name || 'Netflix'}
       />
 
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-            {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.'}
+            {job.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.'}
         </Typography>
       </CardContent>
 
@@ -91,32 +71,25 @@ export default function RecipeReviewCard(props) {
        direction="row"
        justify="flex-start"
         >
-            {/* {itemsList.map((item, index) => {
-            const { text, icon, color } = item; */}
-            {/* return ( */}
-                <div style={{display: "flex"}}>
-                <ScheduleIcon />
-                  <Typography variant="subtitle2" style={{marginLeft: 5}}>
-                  Waiting
-                 </Typography>
-                 </div>
-              {/* ); */}
-            {/* })} */}
-
+      <Typography variant="subtitle2" className={classes.colorfont} onClick={() => history.push("/company/job/listofstudents")} >
+          View Students
+        </Typography>
         </Grid>
         <Grid
        container
        direction="row"
        justify="flex-end"
         >
-        <Button size="small" variant="contained" color="primary" className={classes.color}>
-  Read more
-</Button>
+    <AvatarGroup max={3} onClick={() => history.push("/company/job/listofstudents")}>
+              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+              <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
+              <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
+            </AvatarGroup>
 </Grid>
       </CardActions>
       </Grid>
     </Card>
-    </Grid>
-    </div>
   );
 }

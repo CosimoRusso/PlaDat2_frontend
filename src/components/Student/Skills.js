@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../../Theme';
 import { useForm } from "react-hook-form";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 
@@ -29,6 +30,23 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const categories = [
+  { title: 'Programming'},
+  { title: 'Marketing'},
+  { title: 'Economy'},
+  { title: 'Security'},
+
+];
+
+const skills = [
+  { title: 'Java'},
+  { title: 'JavaScript'},
+  { title: 'HTML'},
+  { title: 'CSS'},
+  { title: 'C#'},
+  { title: 'Python'},
+];
+
 export default function SignIn() {
   const classes = useStyles();
   const {register, handleSubmit, errors} = useForm();
@@ -44,18 +62,23 @@ export default function SignIn() {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
 
-        <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({required: true})}
-            required
-            fullWidth
-            id="skillname"
-            label="Skill Name"
-            name="skillname"
-            autoComplete="skillname"
-            autoFocus
-          />
+        <Autocomplete
+      id="categoryname"
+      name="categoryname"
+      options={categories}
+      getOptionLabel={(category) => category.title}
+      renderInput={(params) => <TextField {...params} label="Choose category" variant="outlined" margin="normal" inputRef={register} name="secondaryskill" autoComplete="secondaryskill"
+ />}
+    />
+        <Autocomplete
+      id="skillname"
+      name="skillname"
+      options={skills}
+      getOptionLabel={(skill) => skill.title}
+      renderInput={(params) => <TextField {...params} label="Choose your skill" variant="outlined" margin="normal" inputRef={register} name="secondaryskill" autoComplete="secondaryskill"
+ />}
+    />
+
 
           <TextField
             variant="outlined"
@@ -72,7 +95,7 @@ export default function SignIn() {
           />
 
 
-          {(errors.skillname && <Typography color="error">Skill name is required.</Typography>) || (errors.skillevel && <Typography color="error">Skill level is required.</Typography>)}
+          {(errors.categoryname && <Typography color="error">Category is required.</Typography>) || (errors.skillname && <Typography color="error">Skill name is required.</Typography>) || (errors.skillevel && <Typography color="error">Skill level is required.</Typography>)}
           <Button
             type="submit"
             fullWidth

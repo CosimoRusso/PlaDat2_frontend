@@ -16,7 +16,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -114,18 +113,18 @@ const Drawer = props => {
     {
         text: "General Info",
         icon: <InfoOutlinedIcon/>,
-        onClick: () => history.push('/profile')
+        onClick: () => history.push('/student/profile')
     },
 
     {
         text: "Skills",
         icon: <EditOutlinedIcon />,
-        onClick: () => history.push('/skills')
+        onClick: () => history.push('/student/skills')
     },
     {
         text: "Saved interenships",
         icon: <BookmarkBorderOutlinedIcon />,
-        onClick: () => history.push('/appliedinternships')
+        onClick: () => history.push('/student/appliedinternships')
     },
 ];
   const handleDrawerOpen = () => {
