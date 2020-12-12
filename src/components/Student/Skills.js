@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../../Theme';
 import { useForm } from "react-hook-form";
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import CustomizedSnackbars from "../CustomSnackbar";
 
 
 
@@ -47,10 +48,24 @@ const skills = [
   { title: 'Python'},
 ];
 
-export default function SignIn() {
+export default function SignIn(props) {
   const classes = useStyles();
-  const {register, handleSubmit, errors} = useForm();
-  const onSubmit = data => console.log(data);
+  let {skill, onUpdate} = props;
+  const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+  const setError = message => setShowAlert({type: 'error', message});
+  const {register, handleSubmit, errors} = useForm({
+      categoryname: skill.SkillCategory.name,
+      skillname: skill.name
+  });
+  const onSubmit = async data => {
+      let rating = parseInt(data.skilllevel);
+      if (rating && rating > 0 && rating < 6){
+          await onUpdate(skill.id, data.skilllevel)
+      }else{
+            setError('Rating must be between 1 and 5');
+      }
+
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -62,22 +77,8 @@ export default function SignIn() {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
 
-        <Autocomplete
-      id="categoryname"
-      name="categoryname"
-      options={categories}
-      getOptionLabel={(category) => category.title}
-      renderInput={(params) => <TextField {...params} label="Choose category" variant="outlined" margin="normal" inputRef={register} name="secondaryskill" autoComplete="secondaryskill"
- />}
-    />
-        <Autocomplete
-      id="skillname"
-      name="skillname"
-      options={skills}
-      getOptionLabel={(skill) => skill.title}
-      renderInput={(params) => <TextField {...params} label="Choose your skill" variant="outlined" margin="normal" inputRef={register} name="secondaryskill" autoComplete="secondaryskill"
- />}
-    />
+       <TextField value={skill.SkillCategory.name} disabled fullWidth label="Category" variant="outlined" margin="normal" inputRef={register} name="secondaryskill" autoComplete="secondaryskill"/>
+        <TextField value={skill.name} disabled fullWidth label="Skill" variant="outlined" margin="normal" inputRef={register} name="secondaryskill"/>
 
 
           <TextField
@@ -91,7 +92,7 @@ export default function SignIn() {
             name="skilllevel"
             type="number"
             autoComplete="skilllevel"
-            placeholder="From 1 to 100"
+            placeholder="From 1 to 5"
           />
 
 
@@ -107,6 +108,7 @@ export default function SignIn() {
         </form>
       </div>
       </MuiThemeProvider>
+        <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
     </Container>
   );
 }

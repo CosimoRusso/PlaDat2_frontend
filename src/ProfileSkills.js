@@ -57,18 +57,6 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(category, skillName, level) {
-  return { category, skillName, level };
-}
-
-const rows = [
-  createData('Programming', 'React', <Circle/>),
-  createData('Marketing', 'SEO', <Circle/>),
-  createData('Economy', 'Economic Consultant', <Circle/>),
-  createData('Programming', 'MySQL', <Circle/>),
-  createData('Programming', 'Java', <Circle/>),
-];
-
 export default function BasicTable() {
   const classes = useStyles();
   const {user} = useContext(UserContext);
@@ -90,6 +78,24 @@ export default function BasicTable() {
       const newStudent = JSON.parse(JSON.stringify(student));
       newStudent.skills = newStudent.skills.filter(s => s.id !== skillId);
       setStudent(newStudent);
+  }
+
+  const onSkillUpdate = async (skillId, newRating) => {
+      const updateSkillRes = await post('/student/editCapability', {
+          id: skillId,
+          rating: newRating
+      }, user.jwt);
+      if (updateSkillRes.status !== 201){
+          setError(updateSkillRes.data.message);
+      }else{
+          setSuccess('Skill Updated!');
+          const newStudent = JSON.parse(JSON.stringify(student));
+          newStudent.skills.map(s => {
+              if(s.id === skillId) s.StudentSkill.rating = parseInt(newRating);
+              return s;
+          });
+          setStudent(newStudent);
+      }
   }
 
   const loadData = async () => {
@@ -134,7 +140,7 @@ export default function BasicTable() {
                       <TableCell align="center">{ skill.SkillCategory ? skill.SkillCategory.name : 'No Category'}</TableCell>
                       <TableCell align="center">{skill.name}</TableCell>
                       <TableCell align="center"><Circle value={skill.StudentSkill.rating} /> </TableCell>
-                      <TableCell align="center"><ModalSkills/></TableCell>
+                      <TableCell align="center"><ModalSkills skill={skill} onUpdate={onSkillUpdate} /></TableCell>
                       <TableCell align="center"><DeleteOutlineOutlinedIcon onClick={deleteSkill.bind(null, skill)}/></TableCell>
                   </TableRow>
               ))}

@@ -41,8 +41,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function TransitionsModal() {
+export default function TransitionsModal(props) {
   const classes = useStyles();
+  const {skill, onUpdate} = props;
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -73,7 +74,7 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <Skills/>
+            <Skills skill={skill} onUpdate={onUpdate}/>
           </div>
         </Fade>
       </Modal>
