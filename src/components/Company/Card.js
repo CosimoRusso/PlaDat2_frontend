@@ -80,7 +80,7 @@ export default function RecipeReviewCard(props) {
        direction="row"
        justify="flex-end"
         >
-    <AvatarGroup max={3}>
+    <AvatarGroup max={3} onClick={() => history.push("/company/job/listofstudents")}>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
               <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
               <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />

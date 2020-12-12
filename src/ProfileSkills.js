@@ -24,6 +24,7 @@ const StyledTableCell = withStyles((theme) => ({
 const useStyles = makeStyles({
   table: {
     width: "100%",
+    backgroundColor: "white",
     border: '1px solid lightgrey',
     '@media (min-width:400px)': {
         width: 400,
@@ -36,6 +37,7 @@ const useStyles = makeStyles({
       },
       '@media (min-width:1280px)': {
         width: 1000,
+
       },
       '@media (min-width:1920px)': {
         width: 1400,
@@ -68,14 +70,11 @@ export default function BasicTable() {
   return (
       <div>
 
-
-
            <Grid lg={12} xs={12} md={12} sm={12} container direction="row" justify="center" justifyContent="center" >
            <div className={classes.divTop}>
             <Grid item xs={2} sm={2} md={2} lg={2} >
             <MUIDrawer/>
             </Grid>
-
 
               <Grid item lg={12} xs={10} md={10} sm={10}>
       <Table className={classes.table} aria-label="simple table">

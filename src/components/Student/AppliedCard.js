@@ -54,7 +54,7 @@ export default function RecipeReviewCard(props) {
 //         color: '#FF0000'
 //     },
 // ];
-  let { job, discardJob } = props;
+
   return (
     <div>
     <Grid
