@@ -12,7 +12,8 @@ import { red } from '@material-ui/core/colors';
 import ClearIcon from '@material-ui/icons/Clear';
 import Button from '@material-ui/core/Button';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-
+import CheckIcon from "@material-ui/icons/Check";
+import history from '../../history';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,23 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
-//   const itemsList = [
-//     {
-//         text: "Wating",
-//         icon: <ScheduleIcon />,
-//         color: '#03a9f4'
-//     },
-//     {
-//         text: "Accepted",
-//         icon: <CheckIcon />,
-//         color: '#00FF00'
-//     },
-//     {
-//         text: "Declined",
-//         icon: <ClearIcon />,
-//         color: '#FF0000'
-//     },
-// ];
+  const {job} = props;
 
   return (
     <div>
@@ -69,19 +54,14 @@ export default function RecipeReviewCard(props) {
           <Avatar aria-label="recipe" className={classes.avatar}>
           </Avatar>
         }
-        action={
-          <IconButton aria-label="clear">
-            <ClearIcon />
-          </IconButton>
-        }
-        title={'React Developer'}
+        title={job.Job.name}
         // eslint-disable-next-line
-        subheader={'Netflix'}
+        subheader={job.Job.Company.name}
       />
 
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-            {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.'}
+            {job.Job.description}
         </Typography>
       </CardContent>
 
@@ -91,17 +71,30 @@ export default function RecipeReviewCard(props) {
        direction="row"
        justify="flex-start"
         >
-            {/* {itemsList.map((item, index) => {
-            const { text, icon, color } = item; */}
-            {/* return ( */}
+          {job.declined === null &&
                 <div style={{display: "flex"}}>
                 <ScheduleIcon />
                   <Typography variant="subtitle2" style={{marginLeft: 5}}>
                   Waiting
                  </Typography>
                  </div>
-              {/* ); */}
-            {/* })} */}
+          }
+          {job.declined === true &&
+          <div style={{display: "flex"}}>
+              <ClearIcon />
+              <Typography variant="subtitle2" style={{marginLeft: 5}}>
+                  Declined
+              </Typography>
+          </div>
+          }
+          {job.declined === false &&
+          <div style={{display: "flex"}}>
+              <CheckIcon />
+              <Typography variant="subtitle2" style={{marginLeft: 5}}>
+                  Accepted
+              </Typography>
+          </div>
+          }
 
         </Grid>
         <Grid
@@ -109,9 +102,9 @@ export default function RecipeReviewCard(props) {
        direction="row"
        justify="flex-end"
         >
-        <Button size="small" variant="contained" color="primary" className={classes.color}>
-  Read more
-</Button>
+        <Button onClick={() => history.push(`/viewjob/${job.JobId}`)} size="small" variant="contained" color="primary" className={classes.color}>
+            Read more
+        </Button>
 </Grid>
       </CardActions>
       </Grid>

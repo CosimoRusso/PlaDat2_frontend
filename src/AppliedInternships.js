@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import MUIDrawer from './components/ProfileDrawer';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AppliedCard from './components/Student/AppliedCard';
+import {UserContext} from "./utils/user-context";
+import utils from './utils';
+import CustomizedSnackbars from "./components/CustomSnackbar";
 
+const {get} = utils;
 
 const theme = createMuiTheme();
 
@@ -69,6 +73,29 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GeneralInfo() {
     const classes = useStyles();
+    const {user} = useContext(UserContext);
+    const dataLoaded = useRef(false);
+
+    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+    const setError = message => setShowAlert({type: 'error', message});
+    const setSuccess = message => setShowAlert({type: 'success', message});
+    const  [jobs, setJobs] = useState([]);
+
+    const loadData = async () => {
+        const res = await get('/student/applications', null, user.jwt);
+        if (res.status !== 200){
+            setError(res.data.message);
+            return;
+        }
+        setJobs(res.data);
+    }
+
+    useEffect(() => {
+        if (!dataLoaded.current){
+            dataLoaded.current = true;
+            loadData().then(() => {});
+        }
+    })
 
     return (
         <div className={classes.root}>
@@ -84,18 +111,15 @@ export default function GeneralInfo() {
         </Grid>
                     <ThemeProvider  theme={theme}>
                       <div className={classes.divTop2}/>
-                <Grid item lg={4} xl={2} xs={12} md={4} sm={6}>
-                <AppliedCard/>
-                </Grid>
-                <Grid item lg={4} xl={2} xs={12} md={4} sm={6}>
-                <AppliedCard/>
-                </Grid>
-                <Grid item lg={4} xl={2} xs={12} md={4} sm={6}>
-                <AppliedCard/>
-                </Grid>
+                        {jobs.map(j =>
+                            <Grid key={j.id} item lg={4} xl={2} xs={12} md={4} sm={6}>
+                                <AppliedCard job={j} />
+                            </Grid>
+                        )}
 
-                </ThemeProvider>
-            </Grid>
+                    </ThemeProvider>
+        </Grid>
+        <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
         </div>
     );
 }
