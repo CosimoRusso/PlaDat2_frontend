@@ -27,7 +27,7 @@ export default class Routes extends Component {
                     <Route path="/student/skills" component={ProfileSkills} />
                     <Route path="/student/appliedinternships" component={AppliedInternships} />
                     <Route path="/company/profile" component={CompanyProfile} />
-                    <Route path="/company/job/listofstudents" component={ListOfStudents}/>
+                    <Route path="/company/job/:jobId/listofstudents" component={ListOfStudents}/>
                     <Route path="/company/dashboard" component={CompanyDashboard}/>
                 </Switch>
             </Router>

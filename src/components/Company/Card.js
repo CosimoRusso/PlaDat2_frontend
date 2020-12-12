@@ -71,7 +71,7 @@ export default function RecipeReviewCard(props) {
        direction="row"
        justify="flex-start"
         >
-      <Typography variant="subtitle2" className={classes.colorfont} onClick={() => history.push("/company/job/listofstudents")} >
+      <Typography variant="subtitle2" className={classes.colorfont} onClick={() => history.push(`/company/job/${job.id}/listofstudents`)} >
           View Students
         </Typography>
         </Grid>
