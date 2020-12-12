@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
   let { job } = props;
-  if (!job) job = { name: 'React Developer', companyId: 1, id: 1, salary: 200, remote: true, company: {name: 'Netflix'} }
+  if (!job) return <div></div>;
   return (
     <Card className={classes.root}>
         <Grid item xs>
@@ -56,12 +56,12 @@ export default function RecipeReviewCard(props) {
         }
         title={job.name || 'React Developer'}
         // eslint-disable-next-line
-        subheader={job.company && job.company.name || 'Netflix'}
+        subheader={job.Company && job.Company.name}
       />
 
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-            {job.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas id arcu sit amet placerat. Aliquam erat volutpat. Praesent auctor mattis tortor ac laoreet.'}
+            {job.description}
         </Typography>
       </CardContent>
 
