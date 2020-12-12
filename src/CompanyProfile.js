@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import Navbar from './components/Navbar';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +10,11 @@ import logo from './microsoft.png';
 import Card from './components/Company/Card';
 import ModalAboutUs from './components/Company/ModalAboutUs';
 import ModalCompanyInfo from './components/Company/ModalCompanyInfo';
+import { UserContext } from "./utils/user-context";
+import utils from './utils';
+import CustomizedSnackbars from "./components/CustomSnackbar";
 
+const { get } = utils;
 
 
 const theme = createMuiTheme();
@@ -95,7 +99,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GeneralInfo() {
     const classes = useStyles();
+    const {user} = useContext(UserContext);
+    const companyId = user.userId;
+    const dataLoaded = useRef(false);
+    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+    const [company, setCompany] = useState(null);
 
+    const loadData = async () => {
+        const companyRes = await get(`/company/findOne/${companyId}`);
+        if (companyRes.status !== 200){
+            setShowAlert({type: 'error', message: companyRes.data.message});
+            return;
+        }
+        setCompany(companyRes.data);
+    }
+
+    useEffect(() => {
+        if (!dataLoaded.current){
+            dataLoaded.current = true;
+            loadData().then(() => {});
+        }
+    })
+    if (!company) return <p>Loading...</p>;
     return (
         <div className={classes.root}>
           <div>
@@ -111,21 +136,21 @@ export default function GeneralInfo() {
 >
 <Grid item xl={10} lg={10} md={10} sm={11} xs={10}>
           <Paper className={classes.paper} style={{paddingBottom: 50}}>
-          <Grid container xl={12} lg={12} md={12} sm={12} xs={12} direction="row" justify="flex-end" alignItems="flex-end"><ModalCompanyInfo/></Grid>
+          <Grid container xl={12} lg={12} md={12} sm={12} xs={12} direction="row" justify="flex-end" alignItems="flex-end"><ModalCompanyInfo company={company} setCompany={setCompany} /></Grid>
           <Grid lg={12} md={12} sm={12} xs={12} container spacing={2}>
           <Grid xl={2} lg={2} md={2} sm={2} xs={3} item>
    <Avatar style={{border: "2px solid lightGrey"}} src={logo} className={classes.large}></Avatar>
    </Grid>
 <Grid xl={2} lg={2} md={2} sm={2} xs={3} item>
-    <Typography style={{fontSize: 20, fontWeight: 500, color: '#03a9f4', marginBottom: 10}}>Microsoft</Typography>
+    <Typography style={{fontSize: 20, fontWeight: 500, color: '#03a9f4', marginBottom: 10}}>{company.name}</Typography>
     <Typography color="textSecondary">Country</Typography>
     <Typography color="textSecondary">City</Typography>
     <Typography color="textSecondary">Email</Typography>
 </Grid>
 <Grid style={{marginTop: 45}} xl={3} lg={3} md={3} sm={3} xs={5} item>
-    <Typography variant="subtitle2">USA</Typography>
-    <Typography variant="subtitle2">New York</Typography>
-    <Typography variant="subtitle2">microsoft@gmail.com</Typography>
+    <Typography variant="subtitle2">{company.City && company.City.Country.name}</Typography>
+    <Typography variant="subtitle2">{company.City && company.City.name}</Typography>
+    <Typography variant="subtitle2">{company.email}</Typography>
 </Grid>
 <Grid style={{marginTop: 40}} xl={2} lg={2} md={2} sm={2} xs={6} item>
 <Typography color="textSecondary">Founded</Typography>
@@ -150,11 +175,11 @@ export default function GeneralInfo() {
           <Grid item xl={8} lg={6} md={7} sm={7} xs={9}>
                       <Typography variant="subtitle2" style={{fontSize: 16}}>About Us</Typography>
                       </Grid>
-                      <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end"><ModalAboutUs/></Grid>
+                      <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end"><ModalAboutUs company={company} setCompany={setCompany}/></Grid>
 </Grid>
 <Grid item>
     <br></br>
-<Typography style={{fontSize: 12, textAlign: "justify"}} color="textSecondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam varius, justo malesuada elementum euismod, tellus diam facilisis tortor, eget cursus sapien risus ac tortor. Phasellus lectus nisl, sollicitudin et nibh nec, porttitor semper ipsum. Quisque non pulvinar massa, non sodales felis. Proin ullamcorper arcu fringilla, facilisis erat at, dignissim nulla. Aenean maximus ultrices hendrerit. Praesent eu congue ligula, id pretium augue. Nam eu tempor odio. Donec vestibulum enim id libero tempus convallis. Donec quis molestie neque. Etiam pulvinar leo at auctor dapibus. Phasellus nisl lorem, ultrices nec ornare a, blandit suscipit velit. Nulla rhoncus elit ut elit consequat porta. Mauris aliquet dolor eros, ut facilisis metus venenatis at. Nulla rhoncus risus at urna cursus, vitae tincidunt purus tincidunt. Aenean viverra velit posuere quam finibus ultricies. In eget auctor quam.
+<Typography style={{fontSize: 12, textAlign: "justify"}} color="textSecondary">{company.description}
 </Typography>
 </Grid>
 </Paper>
@@ -166,9 +191,12 @@ export default function GeneralInfo() {
      <Typography variant="subtitle2" style={{fontSize: 16}}>Jobs</Typography>
 </Grid>
 <br></br>
-          <Grid lg={12} md={12} sm={12} xs={12} container spacing={2}>
-<Card/>
-</Grid>
+              {company.Jobs.map(job =>
+                  <Grid key={job.id} lg={12} md={12} sm={12} xs={12} container spacing={2}>
+                      <Card job={job} />
+                  </Grid>
+              )}
+
 </Paper>
     </Grid>
 
@@ -177,6 +205,7 @@ export default function GeneralInfo() {
 
 
     </ThemeProvider>
+            <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={m => setShowAlert({type: showAlert.type, message: m})} />
            </div>
     );
 }

@@ -45,9 +45,10 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function TransitionsModal() {
+export default function TransitionsModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const {company, setCompany} = props;
 
   const handleOpen = () => {
         setOpen(true);
@@ -77,7 +78,7 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <CompanyInfo/>
+            <CompanyInfo company={company} setCompany={setCompany} />
           </div>
         </Fade>
       </Modal>

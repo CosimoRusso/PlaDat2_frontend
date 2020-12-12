@@ -124,8 +124,8 @@ const useStyles = makeStyles((theme) => ({
 export default function GeneralInfo() {
     const classes = useStyles();
     const {user} = useContext(UserContext);
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+    const setError = message => setShowAlert({type: 'error', message});
     const [ userData, setUserData ] = useState({
         firstName: '',
         lastName: '',
@@ -274,7 +274,7 @@ export default function GeneralInfo() {
                      <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end"><ModalEducation/></Grid>
                       <Grid item xl={12} lg={10} md={7} sm={7} xs={9} container >
 
-<Grid item xs xl={4} lg={5} xs={9}>
+<Grid item xl={4} lg={5} xs={9}>
 <Typography color="textSecondary" variant="subtitle1">
     Institution
   </Typography>
@@ -397,8 +397,7 @@ To
 
 
             </div>
-            <CustomizedSnackbars type={"error"} message={error} />
-            <CustomizedSnackbars type={"success"} message={success} />
+            <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={m => setShowAlert({type: showAlert.type, message: m})} />
         </div>
     );
 }

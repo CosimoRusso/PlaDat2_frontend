@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,9 +9,12 @@ import { useForm } from "react-hook-form";
 import Grid from '@material-ui/core/Grid';
 import Theme, {MuiThemeProvider} from '../../Theme';
 import Avatar from '@material-ui/core/Avatar';
-import logo from '../../microsoft.png'
+import logo from '../../microsoft.png';
+import utils from '../../utils';
+import { UserContext } from "../../utils/user-context";
+import CustomizedSnackbars from "../CustomSnackbar";
 
-
+const {post} = utils;
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,10 +40,38 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Edit() {
+export default function Edit(props) {
   const classes = useStyles();
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = data => console.log(data);
+  const {user} = useContext(UserContext);
+  const {company, setCompany} = props;
+  const { register, handleSubmit, errors } = useForm({defaultValues: {
+    name: company.name,
+    email: company.email
+  }});
+  const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+
+
+  const onSubmit = async data => {
+    const changedFields = {};
+    if (data.name !== company.name) changedFields.name = data.name;
+    if (data.email !== company.email) changedFields.email = data.email;
+    if (changedFields.length === 0){
+      setShowAlert({type: 'success', message: 'Nothing changed'});
+      return;
+    }
+    const res = await post(`/company/profile`, changedFields, user.jwt);
+    if (res.status !== 200){
+      setShowAlert({type: 'error', message: res.data.message});
+      return;
+    }
+    setShowAlert({type: 'success', message: 'Company Updated!'});
+    const newCompany = JSON.parse(JSON.stringify(company));
+    for (let key of Object.keys(changedFields)){
+      newCompany[key] = data[key];
+    }
+    setCompany(newCompany);
+  }
+
 
 
   return (
@@ -96,6 +127,7 @@ export default function Edit() {
         </form>
       </div>
       </MuiThemeProvider>
+      <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={m => setShowAlert({type: showAlert.type, message: m})} />
     </Container>
   );
 }

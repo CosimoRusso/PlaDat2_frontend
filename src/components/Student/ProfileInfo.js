@@ -64,8 +64,10 @@ export default function Edit(props) {
   const [country, setCountry] = React.useState(null);
   const [cities, setCities] = React.useState([]);
   const [city, setCity] = React.useState(null);
-  const [error, setError] = React.useState('');
-  const [success, setSuccess] = React.useState('');
+  const [showAlert, setShowAlert] = React.useState({type: 'error', message: ''});
+
+  const setSuccess = message => setShowAlert({type: 'success', message: message});
+  const setError = message => setShowAlert({type: 'error', message: message});
 
   const onSubmit = async () => {
     const fields = ['firstName', 'lastName', 'email', 'dateOfBirth', 'CityId'];
@@ -249,8 +251,7 @@ export default function Edit(props) {
         </form>
       </div>
       </MuiThemeProvider>
-      <CustomizedSnackbars type={"error"} message={error} />
-      <CustomizedSnackbars type={"success"} message={success} />
+      <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={m => setShowAlert({type: showAlert.type, message: m})} />
     </Container>
   );
 }

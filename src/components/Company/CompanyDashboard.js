@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
     const initialFetchDone = useRef(false);
     const {user} = useContext(UserContext);
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+    const setError = (message) => setShowAlert({type: 'error', message})
     const [jobs, setJobs] = useState([]);
     const [jobsDisplayed, setJobsDisplayed] = useState([]);
 
@@ -82,8 +82,7 @@ const useStyles = makeStyles((theme) => ({
           <Card/>
       </Grid>
   </Grid>
-    <CustomizedSnackbars type={"error"} message={error} />
-    <CustomizedSnackbars type={"success"} message={success} />
+        <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={m => setShowAlert({type: showAlert.type, message: m})} />
   </div>
   );
 }

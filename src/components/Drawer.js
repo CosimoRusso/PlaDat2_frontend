@@ -123,7 +123,7 @@ function ResponsiveDrawer(props) {
     <Avatar>{userData && userData.name && userData.name.substr(0,1)}</Avatar>
    <Typography variant="subtitle2" style={{marginLeft: "10px"}}>
        {userData.name}
-  <Typography variant="subtitle2" onClick={() => history.push("/student/profile")} color="primary">
+  <Typography variant="subtitle2" onClick={() => history.push(`/${user.userType}/profile`)} color="primary">
   Profile details
    </Typography>
    </Typography>

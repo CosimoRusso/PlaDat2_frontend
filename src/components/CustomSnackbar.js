@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomizedSnackbars(props) {
     const classes = useStyles();
-    const {type, message} = props;
+    const {type, message, setMessage} = props;
     const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
@@ -30,6 +30,7 @@ export default function CustomizedSnackbars(props) {
             return;
         }
         setOpen(false);
+        setMessage('');
     };
 
     return (

@@ -54,8 +54,9 @@ export default function ChangePassword() {
     const [confirmNewPassword, setConfirmNewPassword] = React.useState('');
     const [showConfirmNewPassword, setShowConfirmNewPassword] = React.useState(false);
 
-    const [success, setSuccess] = React.useState('');
-    const [error, setError] = React.useState('');
+    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+    const setError = (message) => setShowAlert({type: 'error', message});
+    const setSuccess = (message) => setShowAlert({type: 'success', message});
 
     const {user} = useContext(UserContext);
 
@@ -178,8 +179,7 @@ export default function ChangePassword() {
                 </form>
             </div>
             </MuiThemeProvider>
-            <CustomizedSnackbars type={"error"} message={error} />
-            <CustomizedSnackbars type={"success"} message={success} />
+            <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={m => setShowAlert({type: showAlert.type, message: m})} />
         </Container>
     );
 }

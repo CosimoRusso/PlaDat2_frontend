@@ -186,7 +186,7 @@ export default function GeneralInfo(props) {
             </Grid>
             </Container>
             </ThemeProvider>
-            <CustomizedSnackbars type={showAlert.type} message={showAlert.message} />
+            <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={m => setShowAlert({type: showAlert.type, message: m})} />
         </div>
     );
 }
