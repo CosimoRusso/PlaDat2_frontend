@@ -106,6 +106,7 @@ root: {
 
 const Drawer = props => {
   const classes = useStyles();
+  const studentId = props.studentId;
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -113,20 +114,22 @@ const Drawer = props => {
     {
         text: "General Info",
         icon: <InfoOutlinedIcon/>,
-        onClick: () => history.push('/student/profile')
+        onClick: () => history.push('/student/profile/' + (studentId || ''))
     },
 
     {
         text: "Skills",
         icon: <EditOutlinedIcon />,
-        onClick: () => history.push('/student/skills')
-    },
-    {
-        text: "Saved interenships",
-        icon: <BookmarkBorderOutlinedIcon />,
-        onClick: () => history.push('/student/appliedinternships')
+        onClick: () => history.push('/student/skills/' + (studentId || ''))
     },
 ];
+  if (!studentId){
+    itemsList.push({
+      text: "Saved interenships",
+      icon: <BookmarkBorderOutlinedIcon />,
+      onClick: () => history.push('/student/appliedinternships')
+    });
+  }
   const handleDrawerOpen = () => {
     setOpen(true);
   };

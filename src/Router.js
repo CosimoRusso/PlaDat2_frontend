@@ -20,10 +20,12 @@ export default class Routes extends Component {
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/dashboard" exact component={Dashboard} />
-                    <Route path="/student/profile" component={Profile} />
+                    <Route path="/student/profile/:studentId" component={Profile} />
+                    <Route path="/student/profile/" component={Profile} />
                     <Route path="/browsejobs" component={Jobs} />
                     <Route path="/job" component={Job} />
                     <Route path="/viewjob/:jobid" component={ViewJob} />
+                    <Route path="/student/skills/:studentId" component={ProfileSkills} />
                     <Route path="/student/skills" component={ProfileSkills} />
                     <Route path="/student/appliedinternships" component={AppliedInternships} />
                     <Route path="/company/profile" component={CompanyProfile} />

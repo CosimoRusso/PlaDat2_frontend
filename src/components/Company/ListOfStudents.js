@@ -167,6 +167,7 @@ export default function GeneralInfo(props) {
                    <Paper className={classes.paper} style={{textAlign: "center"}}>
                        <Grid container justify="flex-end" alignItems="flex-end">
                            <Menu
+                               student={s}
                                accept={acceptOrRefuseStudent.bind(null, true, s.id)}
                                refuse={acceptOrRefuseStudent.bind(null, false, s.id)} />
                        </Grid>

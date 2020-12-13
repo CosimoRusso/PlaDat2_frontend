@@ -121,8 +121,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function GeneralInfo() {
+export default function GeneralInfo(props) {
     const classes = useStyles();
+    const studentId = props.match.params.studentId;
     const {user} = useContext(UserContext);
     const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
     const setError = message => setShowAlert({type: 'error', message});
@@ -142,7 +143,7 @@ export default function GeneralInfo() {
     }
 
     const loadUser = async () => {
-        const userRes = await get('/student/findOne/' + user.userId);
+        const userRes = await get('/student/findOne/' + (studentId || user.userId));
         if (userRes.status !== 200){
             setError("Error: " + userRes.data.message);
             return;
@@ -166,7 +167,7 @@ export default function GeneralInfo() {
     return (
         <div className={classes.root}>
           <div>
-           <MUIDrawer/>
+           <MUIDrawer studentId={studentId}/>
            </div>
            <div className={classes.divTop}>
 
@@ -184,7 +185,9 @@ export default function GeneralInfo() {
                       <Grid item xl={8} lg={6} md={7} sm={7} xs={9}>
                       <Typography className={classes.margininfo} color="textSecondary">Personal Details</Typography>
                       </Grid>
-                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end"><ModalPersonal updateUser={updateUser} userData={userData}/></Grid>
+                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end">
+                         {!studentId && <ModalPersonal updateUser={updateUser} userData={userData}/>}
+                     </Grid>
 
                     <Grid xl={4} lg={4} md={4} sm={4} xs={5} item>
            <Avatar className={classes.large}>M</Avatar>
@@ -249,16 +252,18 @@ export default function GeneralInfo() {
             </Grid>
             </Paper>
 
-<Paper className={classes.paper}>
+            {!studentId && <Paper className={classes.paper}>
             <Grid lg={12} md={12} sm={12} xs={12} container spacing={2}>
                     <ThemeProvider theme={theme}>
                       <Grid item xl={8} lg={6} md={7} sm={7} xs={9}>
                       <Typography className={classes.margininfo} color="textSecondary">Change Password</Typography>
                       </Grid>
-                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end"><ModalChangePass/></Grid>
+                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end">
+                         { !studentId && <ModalChangePass/>}
+                     </Grid>
                 </ThemeProvider>
             </Grid>
-          </Paper>
+          </Paper>}
         </Grid>
 
         <Grid item xl={4} lg={6}>
@@ -271,7 +276,8 @@ export default function GeneralInfo() {
                       <Grid item xl={8} lg={6} md={7} sm={7} xs={9}>
                       <Typography className={classes.margininfo} color="textSecondary">Education</Typography>
                       </Grid>
-                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end"><ModalEducation/></Grid>
+                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end">
+                         {!studentId && <ModalEducation/>}</Grid>
                       <Grid item xl={12} lg={10} md={7} sm={7} xs={9} container >
 
 <Grid item xl={4} lg={5} xs={9}>
@@ -335,7 +341,8 @@ export default function GeneralInfo() {
                       <Grid item xl={8} lg={6} md={7} sm={7} xs={9}>
                       <Typography className={classes.margininfo} color="textSecondary">Job Experience</Typography>
                       </Grid>
-                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end"><ModalJobExperience/></Grid>
+                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end">
+                         {!studentId && <ModalJobExperience/>}</Grid>
             <Grid item xl={12} lg={10} md={7} sm={7} xs={10} container >
 <Grid item xs xl={4} lg={5} xs={8}>
 <Typography color="textSecondary" variant="subtitle1">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -12,6 +12,10 @@ import { red } from '@material-ui/core/colors';
 import ClearIcon from '@material-ui/icons/Clear';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import history from './../../history';
+import utils from '../../utils';
+import {UserContext} from "../../utils/user-context";
+
+const { get } = utils;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +43,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
+  const {user} = useContext(UserContext);
   let { job, discardJob } = props;
+  const [students, setStudents] = useState([]);
+  const dataLoaded = useRef(false);
+
+  const loadData = async () => {
+      const res = await get(`/company/candidateStudents/${job.id}`, '', user.jwt);
+      if (res.status === 200){
+          setStudents(res.data);
+          console.log(res.data);
+      }
+  }
+
+  useEffect(() => {
+      if (job && job.id && !dataLoaded.current){
+          dataLoaded.current = true;
+          loadData().then(() => {});
+      }
+  });
+
   if (!job) return <div></div>;
   return (
     <Card className={classes.root}>
@@ -80,13 +103,9 @@ export default function RecipeReviewCard(props) {
        direction="row"
        justify="flex-end"
         >
-    <AvatarGroup max={3} onClick={() => history.push("/company/job/listofstudents")}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-              <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-              <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
-            </AvatarGroup>
+    <AvatarGroup max={3} onClick={() => history.push(`/company/job/${job.id}/listofstudents`)}>
+        {students.map(s => <Avatar key={s.id} alt={s.firstName + " " + s.lastName} src={'/img/notExistingImage.jpg'} />)}
+    </AvatarGroup>
 </Grid>
       </CardActions>
       </Grid>

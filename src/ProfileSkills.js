@@ -57,10 +57,11 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BasicTable() {
+export default function BasicTable(props) {
   const classes = useStyles();
   const {user} = useContext(UserContext);
-  const studentId = user.userId;
+  const studentId = props.match.params.studentId || user.userId;
+  const isReadOnly = props.match.params.studentId > 0;
   const [student, setStudent] = useState(null);
   const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
   const setError = message => setShowAlert({type: 'error', message});
@@ -119,7 +120,7 @@ export default function BasicTable() {
            <Grid lg={12} xs={12} md={12} sm={12} container direction="row" justify="center" justifyContent="center" >
            <div className={classes.divTop}>
             <Grid item xs={2} sm={2} md={2} lg={2} >
-            <MUIDrawer/>
+            <MUIDrawer studentId={isReadOnly && studentId}/>
             </Grid>
 
               <Grid item lg={12} xs={10} md={10} sm={10}>
@@ -129,8 +130,8 @@ export default function BasicTable() {
           <StyledTableCell align="center">Category</StyledTableCell>
             <StyledTableCell align="center">Skill</StyledTableCell>
             <StyledTableCell align="center">Level</StyledTableCell>
-            <StyledTableCell align="center">Edit</StyledTableCell>
-            <StyledTableCell align="center">Delete</StyledTableCell>
+              {!isReadOnly && <StyledTableCell align="center">Edit</StyledTableCell>}
+              {!isReadOnly && <StyledTableCell align="center">Delete</StyledTableCell>}
           </TableRow>
         </TableHead>
           {student &&
@@ -140,8 +141,10 @@ export default function BasicTable() {
                       <TableCell align="center">{ skill.SkillCategory ? skill.SkillCategory.name : 'No Category'}</TableCell>
                       <TableCell align="center">{skill.name}</TableCell>
                       <TableCell align="center"><Circle value={skill.StudentSkill.rating} /> </TableCell>
-                      <TableCell align="center"><ModalSkills skill={skill} onUpdate={onSkillUpdate} /></TableCell>
-                      <TableCell align="center"><DeleteOutlineOutlinedIcon onClick={deleteSkill.bind(null, skill)}/></TableCell>
+
+                      {!isReadOnly && <TableCell align="center"><ModalSkills skill={skill} onUpdate={onSkillUpdate}/></TableCell>}
+                      {!isReadOnly && <TableCell align="center"><DeleteOutlineOutlinedIcon
+                          onClick={deleteSkill.bind(null, skill)}/></TableCell>}
                   </TableRow>
               ))}
           </TableBody>

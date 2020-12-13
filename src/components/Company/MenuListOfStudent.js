@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 export default function SimpleMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { accept, refuse } = props;
+  const { student, accept, refuse } = props;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,7 +29,7 @@ export default function SimpleMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => history.push("/student/profile")}><Typography>View Profile</Typography></MenuItem>
+        <MenuItem onClick={() => history.push(`/student/profile/${student.id}`)}><Typography>View Profile</Typography></MenuItem>
         <MenuItem onClick={accept}><CheckIcon style={{color: "green"}}/>Accept</MenuItem>
         <MenuItem onClick={refuse}><ClearIcon color="secondary"/>Decline</MenuItem>
       </Menu>
