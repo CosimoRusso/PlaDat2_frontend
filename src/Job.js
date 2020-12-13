@@ -178,17 +178,16 @@ class CardCarousel extends React.Component {
                           color="primary"
                           label={s.name}
                           href="#chip"
-                          clickable
+                          style={{backgroundColor: '#1076a3', color: 'white'}}
                       />
                   )}
                   {job.optionalSkills.map(s =>
                       <Chip key={'skill-optional' + s.id}
                             className={classes.tag}
                             variant="outlined"
-                            color="primary"
+                            color="secondary"
                             label={s.name}
                             href="#chip"
-                            clickable
                       />
                   )}
               </div>
