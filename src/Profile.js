@@ -14,7 +14,7 @@ import {UserContext} from './utils/user-context';
 import utils from './utils';
 import CustomizedSnackbars from "./components/CustomSnackbar";
 
-const {get, post} = utils;
+const {get} = utils;
 
 
 const theme = createMuiTheme();
@@ -135,7 +135,7 @@ export default function GeneralInfo(props) {
         city: '',
         dateOfBirth: '',
         email: '',
-        phone: ''
+        phone: '+393333333333'
     });
 
     const updateUser = () => {
@@ -190,7 +190,7 @@ export default function GeneralInfo(props) {
                      </Grid>
 
                     <Grid xl={4} lg={4} md={4} sm={4} xs={5} item>
-           <Avatar className={classes.large}>M</Avatar>
+           <Avatar className={classes.large}>{userData.firstName && userData.firstName.substr(0,1)}</Avatar>
            <Typography color="textSecondary" variant="subtitle1">
                   First Name
                 </Typography>

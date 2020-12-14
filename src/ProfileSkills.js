@@ -141,7 +141,7 @@ export default function BasicTable(props) {
                   <Grid item xs={2} sm={2} md={2} lg={2} >
                       <MUIDrawer studentId={isReadOnly && studentId}/>
                   </Grid>
-                  <Grid item lg={12} xs={10} md={10} sm={10}>
+                  {!isReadOnly && <Grid item lg={12} xs={10} md={10} sm={10}>
                       <Table className={classes.table} aria-label='create skill table'>
                           <TableBody>
                               <TableRow>
@@ -175,7 +175,7 @@ export default function BasicTable(props) {
                               </TableRow>
                           </TableBody>
                       </Table>
-                  </Grid>
+                  </Grid>}
                   <Grid item lg={12} xs={10} md={10} sm={10}>
                       <Table className={classes.table} aria-label="simple table">
                           <TableHead className={classes.header}>

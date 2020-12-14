@@ -175,10 +175,10 @@ export default function GeneralInfo(props) {
                            <Avatar className={classes.large} alt="Company logo"><Typography variant="h2" style={{fontSize: 40}}>{s.firstName.substr(0,1)}</Typography></Avatar>
                        </Grid>
                        <Typography style={{marginTop: 5}} className={classes.color}>{s.firstName + " " + s.lastName}</Typography>
-                       <Grid container justify="center">
-                           <Typography style={{fontSize: 13}} color="textSecondary">{s.City && s.City.name}, {s.City.Country.name}</Typography>
+                       {s.City && <Grid container justify="center">
+                           <Typography style={{fontSize: 13}} color="textSecondary">{s.City.name}, {s.City.Country.name}</Typography>
                            <LocationOnIcon className={classes.color} fontSize="small"/>
-                       </Grid>
+                       </Grid>}
                        <Typography style={{fontSize: 15, marginBottom: 12}}>{s.skills && s.skills.map(sk => sk.name).join(', ')}</Typography>
                    </Paper>
                </Grid>

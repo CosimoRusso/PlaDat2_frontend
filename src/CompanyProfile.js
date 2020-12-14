@@ -160,7 +160,7 @@ export default function GeneralInfo() {
 <Grid style={{marginTop: 45}} xl={3} lg={3} md={3} sm={2} xs={6} item>
 <Typography variant="subtitle2">1975</Typography>
     <Typography variant="subtitle2">156 000</Typography>
-    <Typography variant="subtitle2">www.microsoft.com</Typography>
+    <Typography variant="subtitle2">www.{company.name && company.name.toLowerCase()}.com</Typography>
 </Grid>
 
 
