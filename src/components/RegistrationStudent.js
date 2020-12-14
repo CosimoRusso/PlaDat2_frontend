@@ -27,7 +27,6 @@ const env = (field) => {
 const checkEmailAlreadyUsed = async (email) => {
     const { data, status } = await get('/student/findByEmail/' + email);
     if (status !== 200){
-        console.log(data.message);
         return false;
     }
     return (data && data.id);
@@ -106,6 +105,7 @@ export default function HorizontalLabelPositionBelowStepper() {
               if (alreadyExists) e.email = 'Email already used';
           }
       }else if (activeStep === 1){
+          // We do not have the possibility to add skills during registration for now
           if(!primarySkill) e.primarySkill = 'At least the primary skill is required';
       }else if (activeStep === 2){
           const {status, data} = await post('/student/register', {
@@ -122,7 +122,10 @@ export default function HorizontalLabelPositionBelowStepper() {
       }
       setError(e);
       if (Object.keys(e).length === 0){
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          setActiveStep((prevActiveStep) => {
+              if (prevActiveStep === 0) return 2;
+              return prevActiveStep + 1;
+          });
       }
     };
 
