@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
       const {status, data} = await post('/student/jobs/discard/' + jobId, {}, user.jwt);
       if (status === 201){
         setJobs(jobs.filter(j => j.id !== jobId));
+        setJobsDisplayed(jobsDisplayed.filter(j => j.id !== jobId));
       }else{
         alert(data.message);
       }
