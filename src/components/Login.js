@@ -54,16 +54,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const env = (field) => process.env['REACT_APP_' + field.toUpperCase()] || '';
+
 export default function SignIn() {
   const classes = useStyles();
-  const [email, setEmail] = useState(process.env.REACT_APP_EMAIL || "");
-  const [password, setPassword] = useState(process.env.REACT_APP_PASSWORD || "");
+  const [email, setEmail] = useState(env('email'));
+  const [password, setPassword] = useState(env('password'));
   const { setUser } = useContext(UserContext);
   const [usertype, setUserType] = React.useState('student');
 
   const handleChange = (event) => {
     const type = event.target.value;
     setUserType(type);
+    if (type === 'student'){
+      setEmail(env('email'));
+      setPassword(env('password'));
+    }else{
+      setEmail(env('company_email'));
+      setPassword(env('company_password'));
+    }
   };
 
   const onFormSubmit = async (e) => {
