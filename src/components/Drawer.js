@@ -7,7 +7,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import Search from "./Search";
 import Filters, {RangeSlider} from "./Filters";
-import Avatar from '@material-ui/core/Avatar';
+import Popover from '../Notification';
 import { Typography } from '@material-ui/core';
 import {UserContext} from "../utils/user-context";
 import utils from '../utils';
@@ -120,8 +120,8 @@ function ResponsiveDrawer(props) {
 
     <div>
       <div className={classes.align}>
-    <Avatar>{userData && userData.name && userData.name.substr(0,1)}</Avatar>
-   <Typography variant="subtitle2" style={{marginLeft: "10px"}}>
+  <Popover/>
+   <Typography variant="subtitle2" style={{marginLeft: "20px"}}>
        {userData.name}
   <Typography variant="subtitle2" onClick={() => history.push(`/${user.userType}/profile`)} color="primary">
   Profile details
