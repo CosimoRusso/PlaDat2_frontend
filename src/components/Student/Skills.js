@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../../Theme';
 import { useForm } from "react-hook-form";
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import CustomizedSnackbars from "../CustomSnackbar";
 
 
@@ -19,11 +18,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
 
-   color: {
-    background: '#03a9f4',
-  },
-
-
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
@@ -31,22 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const categories = [
-  { title: 'Programming'},
-  { title: 'Marketing'},
-  { title: 'Economy'},
-  { title: 'Security'},
 
-];
-
-const skills = [
-  { title: 'Java'},
-  { title: 'JavaScript'},
-  { title: 'HTML'},
-  { title: 'CSS'},
-  { title: 'C#'},
-  { title: 'Python'},
-];
 
 export default function SignIn(props) {
   const classes = useStyles();

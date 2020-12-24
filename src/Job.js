@@ -10,6 +10,7 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import utils from './utils';
 import {UserContext} from './utils/user-context';
+import ModalViewJob from './components/ModalViewJob';
 
 const {get, post} = utils;
 
@@ -141,6 +142,7 @@ class CardCarousel extends React.Component {
       <Typography variant="h6">{job.Company.name}</Typography>
             </Grid>
             <Grid container xs={12} sm={3} md={3} lg={3} justify="flex-end">
+              <ModalViewJob/>
               <Button
                 size="medium"
                 variant="contained"

@@ -14,6 +14,7 @@ import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import history from './../../history';
 import utils from '../../utils';
 import {UserContext} from "../../utils/user-context";
+import Button from '@material-ui/core/Button';
 
 const { get } = utils;
 
@@ -106,7 +107,11 @@ export default function RecipeReviewCard(props) {
     <AvatarGroup max={3} onClick={() => history.push(`/company/job/${job.id}/listofstudents`)}>
         {students.map(s => <Avatar key={s.id} alt={s.firstName + " " + s.lastName} src={'/img/notExistingImage.jpg'} />)}
     </AvatarGroup>
+
 </Grid>
+<Button size="small" variant="contained" color="primary" onClick={() => history.push("/viewjob/"+job.id)} className={classes.color}>
+  View
+</Button>
       </CardActions>
       </Grid>
     </Card>

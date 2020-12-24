@@ -125,7 +125,7 @@ const Drawer = props => {
 ];
   if (!studentId){
     itemsList.push({
-      text: "Saved interenships",
+      text: "Applied Internships",
       icon: <BookmarkBorderOutlinedIcon />,
       onClick: () => history.push('/student/appliedinternships')
     });

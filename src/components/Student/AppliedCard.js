@@ -6,7 +6,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -14,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import CheckIcon from "@material-ui/icons/Check";
 import history from '../../history';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +28,13 @@ const useStyles = makeStyles((theme) => ({
     background: '#03a9f4',
     '&:hover': {
       background: "#1076a3",
+   },
+  },
+
+  email: {
+    color: 'black',
+    '&:hover': {
+     color: "#1076a3 !important",
    },
   },
 
@@ -93,6 +100,12 @@ export default function RecipeReviewCard(props) {
               <Typography variant="subtitle2" style={{marginLeft: 5}}>
                   Accepted
               </Typography>
+<a className={classes.email} href={"mailto:companyemailfromdatabase"} style={{textDecoration: "none", color: "black", display: "flex"}}>
+<MailOutlineIcon style={{marginLeft: 10}}/>
+<Typography variant="subtitle2" style={{marginLeft: 5}}>
+                 Email
+              </Typography>
+              </a>
           </div>
           }
 
