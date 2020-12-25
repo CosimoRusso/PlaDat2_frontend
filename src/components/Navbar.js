@@ -32,13 +32,6 @@ const useStyles = makeStyles((theme) => ({
  }
   },
 
-  login: {
-    margin: theme.spacing(3),
-    '&:hover': {
-      color: 'black',
-
-   }
-  },
 
   menuButton: {
     marginRight: theme.spacing(2),

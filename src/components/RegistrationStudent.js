@@ -150,7 +150,6 @@ function getStepContent(stepIndex) {
       onChange={e => setName(e.target.value)}
       autoFocus
     />
-       {error.name && <p>{error.name}</p>}
     <TextField
       variant="outlined"
       margin="normal"
@@ -163,7 +162,6 @@ function getStepContent(stepIndex) {
       name="surname"
       autoComplete="surname"
     />
-     {error.surname && <p>{error.surname}</p>}
           <TextField
       variant="outlined"
       margin="normal"
@@ -176,7 +174,6 @@ function getStepContent(stepIndex) {
       name="email"
       autoComplete="email"
     />
-       {error.email && <p>{error.email}</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -190,7 +187,7 @@ function getStepContent(stepIndex) {
             id="password"
             autoComplete="password"
           />
-       {error.password && <p>{error.password}</p>}
+       {(error.name && <Typography color="error">Name is required.</Typography>) || (error.surname && <Typography color="error">Surname is required.</Typography>) || (error.email && <Typography color="error">Email is required.</Typography>) || (error.password && <Typography color="error">Password must be atleast 8 characters long.</Typography>)}
     </div>;
     case 1:
       return <div>
@@ -203,7 +200,6 @@ function getStepContent(stepIndex) {
       getOptionLabel={(skill) => skill.name}
       renderInput={(params) => <TextField {...params} label="Choose your primary skill" variant="outlined" required margin="normal" autoFocus name="primaryskill" autoComplete="primaryskill" />}
     />
-      {error.primarySkill && <p>{error.primarySkill}</p>}
     <Autocomplete
       id="secondskill"
       options={skills}
@@ -212,7 +208,7 @@ function getStepContent(stepIndex) {
       getOptionLabel={(skill) => skill.name}
       renderInput={(params) => <TextField {...params} label="Choose your secondary skill (optional)" variant="outlined" margin="normal" name="secondaryskill" autoComplete="secondaryskill" />}
     />
-
+      {error.primarySkill && <p>{error.primarySkill}</p>}
     </div>;
     case 2:
       return <div>
