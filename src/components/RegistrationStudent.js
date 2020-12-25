@@ -234,7 +234,7 @@ function getStepContent(stepIndex) {
               onChange={(e, newVal) => setCity(newVal)}
               renderInput={(params) => <TextField {...params} label="Choose your City" variant="outlined" margin="normal" name="city" autoComplete="city" />}
           />
-       <DateComponent value={birthDate} onChange={d => setBirthDate(d) }/>
+       <DateComponent name="Date of birth (optional)" value={birthDate} onChange={d => setBirthDate(d) }/>
        <p>{error.finalMessage}</p>
        </div>;
     default:

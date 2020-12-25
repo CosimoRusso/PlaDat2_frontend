@@ -22,7 +22,7 @@ export default function MaterialUIPickers(props) {
           format="dd/MM/yyyy"
           margin="normal"
           id="date-picker"
-          label="Date of birth (optional)"
+          label={props.name}
           value={value}
           onChange={onChange}
           KeyboardButtonProps={{
