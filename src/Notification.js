@@ -3,9 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import Badge from '@material-ui/core/Badge';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import Button from '@material-ui/core/Button';
+import ModalMessage from "./components/ModalMessage";
 import utils from "./utils";
 import {UserContext} from "./utils/user-context";
+import IconButton from '@material-ui/core/IconButton';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const {get} = utils;
 
@@ -71,7 +73,10 @@ export default function SimplePopover() {
           {
               notifications.map((n, i) =>
                   <div><p className={classes.typography}>{n.Job.Company.name} {n.declined === false ? "accepted" : "refused"} you for an internship as {n.Job.name}
-                      {n.declined === false && <Button href={"mailto:companyemailfromdatabase"}  variant="contained" size="small" style={{backgroundColor: "#03a9f4", color: "white", marginLeft: "10px"}}>Contact</Button>}
+                      {n.declined === false && <ModalMessage/>}
+                      {n.declined === true &&  <IconButton aria-label="clear">
+            <ClearIcon style={{color: "red"}} />
+          </IconButton>}
                   </p>
                       {i < notifications.length-1 && <hr></hr>}</div>)
           }
