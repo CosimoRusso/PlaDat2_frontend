@@ -24,10 +24,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
 
-  color: {
-    background: '#03a9f4',
-  },
-
   form: {
     width: '100%',
     marginTop: theme.spacing(1),

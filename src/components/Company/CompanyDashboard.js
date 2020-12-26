@@ -7,6 +7,9 @@ import Card from './Card';
 import { UserContext } from "../../utils/user-context";
 import utils from '../../utils';
 import CustomizedSnackbars from "../CustomSnackbar";
+import Typography from '@material-ui/core/Typography';
+import ModalAddJob from './ModalAddJob';
+
 
 const {get} = utils;
 
@@ -68,11 +71,20 @@ const useStyles = makeStyles((theme) => ({
     <div className={classes.root}>
         <Navbar/>
         <Drawer allJobs={jobs} jobs={jobsDisplayed} setJobs={setJobsDisplayed} />
+
         <Grid className={classes.margin}
             container
             direction="row"
             justify= "center"
         >
+            <Grid container lg={4} xs={6} direction="row" >
+                <Typography variant="h5">Total number of jobs: 2</Typography>
+            </Grid>
+            <Grid container justify="flex-end"
+             lg={7} xs={5} style={{marginBottom: 30}}>
+                    <ModalAddJob/>
+             </Grid>
+
             { jobsDisplayed.map(j =>
                 <Grid key={j.id} item lg={4} xl={2}>
                     <Card job={j} discardJob={discardJob}/>

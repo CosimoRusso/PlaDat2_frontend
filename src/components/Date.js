@@ -2,7 +2,7 @@ import 'date-fns';
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
-import { useForm } from "react-hook-form";
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -22,7 +22,7 @@ export default function MaterialUIPickers(props) {
           format="dd/MM/yyyy"
           margin="normal"
           id="date-picker"
-          label="Date of birth (optional)"
+          label={props.name}
           value={value}
           onChange={onChange}
           KeyboardButtonProps={{

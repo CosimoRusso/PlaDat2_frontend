@@ -29,19 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
   divline: {
       display: 'inline-block',
-
   },
-  color: {
-    background: '#03a9f4',
-  },
-
-  line: {
-    margin: theme.spacing(3),
-    '&:hover': {
-     color: 'black',
-
-  }
-   },
 
 }));
 

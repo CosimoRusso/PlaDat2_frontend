@@ -14,11 +14,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  fontAlign: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
+
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: '1px groove grey',
@@ -31,17 +27,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'inline-block',
 
   },
-  color: {
-    background: '#03a9f4',
-  },
 
-  line: {
-    margin: theme.spacing(3),
-    '&:hover': {
-     color: 'black',
-
-  }
-   },
 
 }));
 
