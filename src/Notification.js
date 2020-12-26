@@ -27,6 +27,7 @@ export default function SimplePopover() {
       const res = await get("/student/jobs/getNotifications", null, user.jwt);
       if (res.status === 200){
           setNotifications(res.data);
+          console.log(res.data);
       }
   }
 
@@ -68,10 +69,15 @@ export default function SimplePopover() {
           horizontal: 'center',
         }}
       >
-        <p className={classes.typography}>Apple accepted you for an internship as Database Developer <Button href={"mailto:companyemailfromdatabase"}  variant="contained" size="small"
-            style={{backgroundColor: "#03a9f4", color: "white"}}>Contact</Button></p>
-        <hr></hr>
-        <p className={classes.typography}>Microsoft denied you for an internship as Web Developer</p>
+          {
+              notifications.map((n, i) =>
+                  <div><p className={classes.typography}>{n.Job.Company.name} {n.declined === false ? "accepted" : "refused"} you for an internship as {n.Job.name}
+                      {n.declined === false && <Button href={"mailto:companyemailfromdatabase"}  variant="contained" size="small" style={{backgroundColor: "#03a9f4", color: "white", marginLeft: "10px"}}>Contact</Button>}
+                  </p>
+                      {i < notifications.length-1 && <hr></hr>}</div>)
+          }
+
+
 
       </Popover>
     </div>
