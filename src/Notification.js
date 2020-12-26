@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import Badge from '@material-ui/core/Badge';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Button from '@material-ui/core/Button';
+import utils from "./utils";
+import {UserContext} from "./utils/user-context";
 
+const {get} = utils;
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -16,6 +19,23 @@ const useStyles = makeStyles((theme) => ({
 export default function SimplePopover() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [notifications, setNotifications] = useState([]);
+  const dataLoaded = useRef(false);
+  const {user} = useContext(UserContext);
+
+  const loadData = async () => {
+      const res = await get("/student/jobs/getNotifications", null, user.jwt);
+      if (res.status === 200){
+          setNotifications(res.data);
+      }
+  }
+
+  useEffect(() => {
+      if (dataLoaded.current === false){
+          dataLoaded.current = true;
+          loadData().then(() => {});
+      }
+  });
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,7 +50,7 @@ export default function SimplePopover() {
 
   return (
     <div>
-      <Badge aria-describedby={id} onClick={handleClick} badgeContent={2} color="primary">
+      <Badge aria-describedby={id} onClick={handleClick} badgeContent={notifications.length} color="primary">
         <MailOutlineIcon fontSize="large" />
       </Badge>
       <Popover
