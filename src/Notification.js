@@ -76,9 +76,6 @@ export default function SimplePopover() {
                   </p>
                       {i < notifications.length-1 && <hr></hr>}</div>)
           }
-
-
-
       </Popover>
     </div>
   );
