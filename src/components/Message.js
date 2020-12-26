@@ -15,18 +15,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-   color: {
-    background: '#03a9f4',
-  },
-  large: {
-    width: 80,
-    height: 80,
-
-  },
 
   form: {
     width: '100%',
