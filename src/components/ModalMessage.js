@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function TransitionsModal() {
+export default function TransitionsModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -61,7 +61,7 @@ Contact
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <Message/>
+            <Message notification={props.notification} onMessageSent={props.onMessageSent}/>
           </div>
         </Fade>
       </Modal>

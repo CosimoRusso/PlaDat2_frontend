@@ -9,7 +9,7 @@ import {UserContext} from "./utils/user-context";
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 
-const {get} = utils;
+const {get, post} = utils;
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -47,6 +47,13 @@ export default function SimplePopover() {
     setAnchorEl(null);
   };
 
+  const discard = (applicationId) => async () => {
+      const res = await post("/student/jobs/markApplicationAsSeen/"+applicationId, {}, user.jwt);
+      if (res.status === 201){
+          await loadData();
+      }
+  }
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -73,8 +80,8 @@ export default function SimplePopover() {
           {
               notifications.map((n, i) =>
                   <div><p className={classes.typography}>{n.Job.Company.name} {n.declined === false ? "accepted" : "refused"} you for an internship as {n.Job.name}
-                      {n.declined === false && <ModalMessage/>}
-                      {n.declined === true &&  <IconButton aria-label="clear">
+                      {n.declined === false && <ModalMessage notification={n} onMessageSent={loadData} />}
+                      {n.declined === true &&  <IconButton onClick={discard(n.id)} aria-label="clear">
             <ClearIcon style={{color: "red"}} />
           </IconButton>}
                   </p>

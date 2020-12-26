@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,7 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../Theme';
 import { useForm } from "react-hook-form";
+import { UserContext } from "../utils/user-context";
+import { useSnackbar } from "notistack";
+import utils from "../utils";
 
+const {post} = utils;
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -24,10 +28,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Message() {
-  const classes = useStyles();
-  const {register, handleSubmit, errors} = useForm();
-  const onSubmit = data => console.log(data);
+export default function Message(props) {
+    const classes = useStyles();
+    const {register, handleSubmit, errors} = useForm();
+    const {user} = useContext(UserContext);
+    const {enqueueSnackbar} = useSnackbar();
+    const onSuccess = (message) => enqueueSnackbar(message, {variant: "success"});
+    const onError = (message) => enqueueSnackbar(message, {variant: "error"});
+    const [messageSent, setMessageSent] = useState(false);
+
+    const onSubmit = async data => {
+        setMessageSent(true);
+        const {subject, message} = data;
+        const companyEmail = props.notification.Job.Company.email;
+        const applicationId = props.notification.id;
+        const sendMailRes = await post("/student/sendMail", {
+            subject,
+            message,
+            companyEmail
+        }, user.jwt);
+        if (sendMailRes.status === 200){
+            onSuccess("Message sent!");
+            const removeNotificationRes = await post("/student/jobs/markApplicationAsSeen/" + applicationId, {}, user.jwt);
+            if (removeNotificationRes.status !== 201){
+                onError(removeNotificationRes.data.message);
+            }
+            props.onMessageSent();
+        }else{
+            onError(sendMailRes.data.message);
+            setMessageSent(false);
+        }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -69,6 +100,7 @@ export default function Message() {
             fullWidth
             variant="contained"
             color="primary"
+            disabled={messageSent}
           >
            Send Message
           </Button>
