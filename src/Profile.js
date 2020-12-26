@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -137,6 +137,7 @@ export default function GeneralInfo(props) {
         email: '',
         phone: '+393333333333'
     });
+    const dataLoaded = useRef(false);
 
     const updateUser = () => {
         loadUser().then(() => {});
@@ -147,8 +148,6 @@ export default function GeneralInfo(props) {
         if (userRes.status !== 200){
             setError("Error: " + userRes.data.message);
             return;
-        }else{
-            setError('');
         }
         if (userRes.data.CityId){
             const cityRes = await get('/cities/findOne/' + userRes.data.CityId);
@@ -161,8 +160,11 @@ export default function GeneralInfo(props) {
     }
 
     useEffect(() => {
-        loadUser().then(() => {});
-    }, []);
+        if(dataLoaded.current === false){
+            dataLoaded.current = true;
+            loadUser().then(() => {});
+        }
+    });
 
     return (
         <div className={classes.root}>
@@ -344,7 +346,7 @@ export default function GeneralInfo(props) {
                      <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end">
                          {!studentId && <ModalJobExperience/>}</Grid>
             <Grid item xl={12} lg={10} md={7} sm={7} xs={10} container >
-<Grid item xs xl={4} lg={5} xs={8}>
+<Grid item xl={4} lg={5} xs={8}>
 <Typography color="textSecondary" variant="subtitle1">
 Company
 </Typography>

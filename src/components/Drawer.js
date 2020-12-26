@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ResponsiveDrawer(props) {
   const { window } = props;
-  const {allJobs, jobs, setJobs} = props;
+  const {allJobs, setJobs} = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -111,6 +111,7 @@ function ResponsiveDrawer(props) {
           applyFilters()
       }
 
+      // eslint-disable-next-line
   }, [searchText, searchLocation, partTime, fullTime, remote, office, salary])
 
   const handleDrawerToggle = () => {

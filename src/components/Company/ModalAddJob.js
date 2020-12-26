@@ -46,7 +46,7 @@ export default function TransitionsModal(props) {
 
     <div className={classes.divline}>
   <Grid item  onClick={handleOpen}>
- <Button style={{marginLeft: 20}} variant="contained" style={{backgroundColor: "#03a9f4", color: "white"}}>Add New Job</Button></Grid>
+ <Button variant="contained" style={{backgroundColor: "#03a9f4", color: "white", marginLeft: 20}}>Add New Job</Button></Grid>
 
       <Modal
         aria-labelledby="transition-modal-title"
