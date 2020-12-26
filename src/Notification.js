@@ -27,7 +27,6 @@ export default function SimplePopover() {
       const res = await get("/student/jobs/getNotifications", null, user.jwt);
       if (res.status === 200){
           setNotifications(res.data);
-          console.log(res.data);
       }
   }
 
