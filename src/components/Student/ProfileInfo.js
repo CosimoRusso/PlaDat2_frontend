@@ -20,7 +20,7 @@ import Theme, {MuiThemeProvider} from '../../Theme';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import utils from '../../utils';
 import {UserContext} from "../../utils/user-context";
-import CustomizedSnackbars from "../CustomSnackbar";
+import { useSnackbar } from "notistack";
 
 const {get, post} = utils;
 const BlueRadio = withStyles({
@@ -60,10 +60,10 @@ export default function Edit(props) {
   const [country, setCountry] = React.useState(null);
   const [cities, setCities] = React.useState([]);
   const [city, setCity] = React.useState(null);
-  const [showAlert, setShowAlert] = React.useState({type: 'error', message: ''});
+  const {enqueueSnackbar} = useSnackbar();
 
-  const setSuccess = message => setShowAlert({type: 'success', message: message});
-  const setError = message => setShowAlert({type: 'error', message: message});
+  const setSuccess = message => enqueueSnackbar(message, {variant: 'success'});
+  const setError = message => enqueueSnackbar(message, {variant: 'error'});
 
   const onSubmit = async () => {
     const fields = ['firstName', 'lastName', 'email', 'dateOfBirth', 'CityId'];
@@ -247,7 +247,6 @@ export default function Edit(props) {
         </form>
       </div>
       </MuiThemeProvider>
-      <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
     </Container>
   );
 }

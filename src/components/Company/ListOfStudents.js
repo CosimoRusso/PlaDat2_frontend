@@ -11,7 +11,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Container from '@material-ui/core/Container';
 import {UserContext} from "../../utils/user-context";
 import utils from '../../utils'
-import CustomizedSnackbars from "../CustomSnackbar";
+import { useSnackbar } from "notistack";
 
 const { get, post } = utils;
 
@@ -104,7 +104,9 @@ export default function GeneralInfo(props) {
     const jobId = parseInt(props.match.params.jobId);
     const {user} = useContext(UserContext);
     const dataFetched = useRef(false);
-    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+    const {enqueueSnackbar} = useSnackbar();
+    const onSuccess = (message) => enqueueSnackbar(message, {variant: "success"});
+    const onError = (message) => enqueueSnackbar(message, {variant: "error"});
     const [students, setStudents] = useState([]);
     const [job, setJob] = useState(null);
 
@@ -112,24 +114,24 @@ export default function GeneralInfo(props) {
         const str = isAccept ? 'accept' : 'discard';
         const res = await post(`/company/jobs/${jobId}/${str}/${studentId}`, {}, user.jwt);
         if (res.status !== 201){
-            setShowAlert({type: 'error', message: res.data.message});
+            onError(res.data.message);
             return;
         }
-        setShowAlert({type: 'success', message: "Success!"});
+        onSuccess("Success!");
         setStudents(students.filter(s => s.id !== studentId));
     }
 
     const fetchData = async () => {
         const jobRes = await get(`/jobs/findOne/${jobId}`);
         if (jobRes.status !== 200){
-            setShowAlert({type: 'error', message: 'Error while fetching job: ' + jobRes.data.message});
+            onError('Error while fetching job: ' + jobRes.data.message);
             return;
         }
         setJob(jobRes.data);
 
         const studentsRes = await get('/company/candidateStudents/'+jobId, '', user.jwt);
         if (studentsRes.status !== 200){
-            setShowAlert({type: 'error', message: 'Error while fetching users: ' + studentsRes.data.message});
+            onError('Error while fetching users: ' + studentsRes.data.message);
             return;
         }
         const studentsList = await Promise.all(studentsRes.data.map(async s => {
@@ -187,7 +189,6 @@ export default function GeneralInfo(props) {
             </Grid>
             </Container>
             </ThemeProvider>
-            <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
         </div>
     );
 }

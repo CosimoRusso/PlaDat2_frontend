@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,8 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../../Theme';
 import { useForm } from "react-hook-form";
-import CustomizedSnackbars from "../CustomSnackbar";
-
+import { useSnackbar } from "notistack";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn(props) {
   const classes = useStyles();
   let {skill, onUpdate} = props;
-  const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
-  const setError = message => setShowAlert({type: 'error', message});
+  const {enqueueSnackbar} = useSnackbar();
+  const setError = message => enqueueSnackbar(message, {variant: 'error'});
   const {register, handleSubmit, errors} = useForm({
       categoryname: skill.SkillCategory.name,
       skillname: skill.name
@@ -87,7 +86,6 @@ export default function SignIn(props) {
         </form>
       </div>
       </MuiThemeProvider>
-        <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
     </Container>
   );
 }

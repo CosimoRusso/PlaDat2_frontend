@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import ModalSkills from './components/Student/ModalSkills';
 import {UserContext} from "./utils/user-context";
 import utils from './utils';
-import CustomizedSnackbars from "./components/CustomSnackbar";
+import { useSnackbar } from "notistack";
 import {Button, TextField} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
@@ -60,18 +60,20 @@ const useStyles = makeStyles({
 });
 
 export default function BasicTable(props) {
-  const classes = useStyles();
-  const {user} = useContext(UserContext);
-  const studentId = props.match.params.studentId || user.userId;
-  const isReadOnly = props.match.params.studentId > 0;
-  const [student, setStudent] = useState(null);
-  const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
-  const setError = message => setShowAlert({type: 'error', message});
-  const setSuccess = message => setShowAlert({type: 'success', message});
-  const dataLoaded = useRef(false);
-  const [newSkill, setNewSkill] = useState(null);
-  const [newSkillList, setNewSkillList] = useState([]);
-  const [newSkillRating, setNewSkillRating] = useState(3);
+    const classes = useStyles();
+    const {user} = useContext(UserContext);
+    const studentId = props.match.params.studentId || user.userId;
+    const isReadOnly = props.match.params.studentId > 0;
+    const [student, setStudent] = useState(null);
+
+
+    const dataLoaded = useRef(false);
+    const [newSkill, setNewSkill] = useState(null);
+    const [newSkillList, setNewSkillList] = useState([]);
+    const [newSkillRating, setNewSkillRating] = useState(3);
+    const {enqueueSnackbar} = useSnackbar();
+    const setError = message => enqueueSnackbar(message, {variant: 'error'});
+    const setSuccess = message => enqueueSnackbar(message, {variant: 'success'});
 
   const createSkillSubmit = async () => {
       if (!newSkill) return setError('Please insert the value for the skill');
@@ -206,7 +208,6 @@ export default function BasicTable(props) {
                   </Grid>
               </div>
           </Grid>
-          <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
       </div>
   );
 }

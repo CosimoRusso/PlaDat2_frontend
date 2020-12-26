@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Drawer from "./components/Drawer";
 import {UserContext} from "./utils/user-context";
 import utils from './utils';
+import { useSnackbar } from "notistack";
 
 const { post } = utils;
 
@@ -29,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
     const { user } = useContext(UserContext);
     const [jobs, setJobs] = useState([]);
     const [jobsDisplayed, setJobsDisplayed] = useState([]);
+    const { enqueueSnackbar } = useSnackbar();
+    const onError = (text) => enqueueSnackbar(text, {variant: "error"});
 
     const discardJob = async (jobId) => {
       const {status, data} = await post('/student/jobs/discard/' + jobId, {}, user.jwt);
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
         setJobs(jobs.filter(j => j.id !== jobId));
         setJobsDisplayed(jobsDisplayed.filter(j => j.id !== jobId));
       }else{
-        alert(data.message);
+        onError(data.message);
       }
     }
 
@@ -45,9 +48,9 @@ const useStyles = makeStyles((theme) => ({
         const { status, data } = await utils.get('/student/jobs/search', null, user.jwt);
         if (status !== 200) {
           if (data.message)
-            alert('Error: ' + data.message);
+            onError(data.message);
           else
-            alert('Server is currently offline, please try again later');
+            onError('Server is currently offline, please try again later');
           return;
         }
         for (let job of data){

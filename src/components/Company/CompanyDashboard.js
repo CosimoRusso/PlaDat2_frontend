@@ -6,7 +6,7 @@ import Drawer from "./../Drawer";
 import Card from './Card';
 import { UserContext } from "../../utils/user-context";
 import utils from '../../utils';
-import CustomizedSnackbars from "../CustomSnackbar";
+import { useSnackbar } from "notistack";
 import Typography from '@material-ui/core/Typography';
 import ModalAddJob from './ModalAddJob';
 
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
     const initialFetchDone = useRef(false);
     const {user} = useContext(UserContext);
-    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
-    const setError = (message) => setShowAlert({type: 'error', message})
+    const {enqueueSnackbar} = useSnackbar();
+    const setError = (message) => enqueueSnackbar(message, {variant: "error"})
     const [jobs, setJobs] = useState([]);
     const [jobsDisplayed, setJobsDisplayed] = useState([]);
 
@@ -94,7 +94,6 @@ const useStyles = makeStyles((theme) => ({
           <Card/>
       </Grid>
   </Grid>
-        <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
   </div>
   );
 }

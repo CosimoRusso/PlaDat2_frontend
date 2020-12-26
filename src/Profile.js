@@ -12,7 +12,7 @@ import ModalChangePass from './components/Student/ModalChangePass';
 import Avatar from '@material-ui/core/Avatar';
 import {UserContext} from './utils/user-context';
 import utils from './utils';
-import CustomizedSnackbars from "./components/CustomSnackbar";
+import { useSnackbar } from "notistack";
 
 const {get} = utils;
 
@@ -125,8 +125,8 @@ export default function GeneralInfo(props) {
     const classes = useStyles();
     const studentId = props.match.params.studentId;
     const {user} = useContext(UserContext);
-    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
-    const setError = message => setShowAlert({type: 'error', message});
+    const {enqueueSnackbar} = useSnackbar();
+    const setError = message => enqueueSnackbar(message, {variant: 'error'});
     const [ userData, setUserData ] = useState({
         firstName: '',
         lastName: '',
@@ -404,7 +404,6 @@ To
 
 
             </div>
-            <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
         </div>
     );
 }

@@ -7,7 +7,7 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AppliedCard from './components/Student/AppliedCard';
 import {UserContext} from "./utils/user-context";
 import utils from './utils';
-import CustomizedSnackbars from "./components/CustomSnackbar";
+import { useSnackbar } from "notistack";
 
 const {get} = utils;
 
@@ -76,9 +76,8 @@ export default function GeneralInfo() {
     const {user} = useContext(UserContext);
     const dataLoaded = useRef(false);
 
-    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
-    const setError = message => setShowAlert({type: 'error', message});
-    const setSuccess = message => setShowAlert({type: 'success', message});
+    const {enqueueSnackbar} = useSnackbar();
+    const setError = message => enqueueSnackbar(message, {variant: 'error'});
     const  [jobs, setJobs] = useState([]);
 
     const loadData = async () => {
@@ -119,7 +118,6 @@ export default function GeneralInfo() {
 
                     </ThemeProvider>
         </Grid>
-        <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
         </div>
     );
 }

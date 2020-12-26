@@ -15,7 +15,7 @@ import utils from '../utils';
 import {UserContext} from "../utils/user-context";
 import MenuItem from '@material-ui/core/MenuItem';
 import ModalUser from "./ModalUser";
-
+import { useSnackbar } from "notistack";
 
 const { post } = utils;
 
@@ -62,6 +62,7 @@ export default function SignIn() {
   const [password, setPassword] = useState(env('password'));
   const { setUser } = useContext(UserContext);
   const [usertype, setUserType] = React.useState('student');
+  const {enqueueSnackbar} = useSnackbar();
 
   const handleChange = (event) => {
     const type = event.target.value;
@@ -82,7 +83,7 @@ export default function SignIn() {
     }
     const { status, data } = await post(`/${usertype}/login`, { email, password });
     if (status !== 200) {
-      alert("Error: " + data.message);
+      enqueueSnackbar(data.message, {variant: "error"});
     }else{
       const userData = { jwt: data.jwt, userId: data.id, userType: usertype};
       utils.setSessionCookies(userData.jwt, userData.userId, userData.userType);

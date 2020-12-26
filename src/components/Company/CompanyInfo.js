@@ -12,7 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 import logo from '../../microsoft.png';
 import utils from '../../utils';
 import { UserContext } from "../../utils/user-context";
-import CustomizedSnackbars from "../CustomSnackbar";
+import { useSnackbar } from "notistack";
 
 const {post} = utils;
 
@@ -44,7 +44,9 @@ export default function Edit(props) {
     name: company.name,
     email: company.email
   }});
-  const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+  const {enqueueSnackbar} = useSnackbar();
+  const onSuccess = (message) => enqueueSnackbar(message, {variant: "success"});
+  const onError = (message) => enqueueSnackbar(message, {variant: "error"});
 
 
   const onSubmit = async data => {
@@ -52,15 +54,15 @@ export default function Edit(props) {
     if (data.name !== company.name) changedFields.name = data.name;
     if (data.email !== company.email) changedFields.email = data.email;
     if (changedFields.length === 0){
-      setShowAlert({type: 'success', message: 'Nothing changed'});
+      onSuccess("Nothing changed")
       return;
     }
     const res = await post(`/company/profile`, changedFields, user.jwt);
     if (res.status !== 200){
-      setShowAlert({type: 'error', message: res.data.message});
+      onError(res.data.message);
       return;
     }
-    setShowAlert({type: 'success', message: 'Company Updated!'});
+    onSuccess('Company Updated!');
     const newCompany = JSON.parse(JSON.stringify(company));
     for (let key of Object.keys(changedFields)){
       newCompany[key] = data[key];
@@ -123,7 +125,6 @@ export default function Edit(props) {
         </form>
       </div>
       </MuiThemeProvider>
-      <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
     </Container>
   );
 }

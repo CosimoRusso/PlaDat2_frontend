@@ -12,7 +12,7 @@ import ModalAboutUs from './components/Company/ModalAboutUs';
 import ModalCompanyInfo from './components/Company/ModalCompanyInfo';
 import { UserContext } from "./utils/user-context";
 import utils from './utils';
-import CustomizedSnackbars from "./components/CustomSnackbar";
+import { useSnackbar } from "notistack";
 
 const { get } = utils;
 
@@ -102,13 +102,13 @@ export default function GeneralInfo() {
     const {user} = useContext(UserContext);
     const companyId = user.userId;
     const dataLoaded = useRef(false);
-    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
+    const {enqueueSnackbar} = useSnackbar();
     const [company, setCompany] = useState(null);
 
     const loadData = async () => {
         const companyRes = await get(`/company/findOne/${companyId}`);
         if (companyRes.status !== 200){
-            setShowAlert({type: 'error', message: companyRes.data.message});
+            enqueueSnackbar(companyRes.data.message, {variant: 'error'});
             return;
         }
         setCompany(companyRes.data);
@@ -205,7 +205,6 @@ export default function GeneralInfo() {
 
 
     </ThemeProvider>
-            <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
            </div>
     );
 }

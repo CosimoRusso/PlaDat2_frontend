@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 const {UserContext} = require('./utils/user-context');
 
-const Home = props => {
+const Home = () => {
   const { user } = useContext(UserContext);
 
   if(user) {

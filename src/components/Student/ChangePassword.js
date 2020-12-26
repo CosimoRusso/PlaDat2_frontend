@@ -16,7 +16,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Theme, {MuiThemeProvider} from '../../Theme';
 import utils from '../../utils';
 import {UserContext} from '../../utils/user-context'
-import CustomizedSnackbars from "../CustomSnackbar";
+import { useSnackbar } from "notistack";
 
 const {post} = utils;
 
@@ -49,10 +49,10 @@ export default function ChangePassword() {
     const [showNewPassword, setShowNewPassword] = React.useState(false);
     const [confirmNewPassword, setConfirmNewPassword] = React.useState('');
     const [showConfirmNewPassword, setShowConfirmNewPassword] = React.useState(false);
+    const {enqueueSnackbar} = useSnackbar();
 
-    const [showAlert, setShowAlert] = useState({type: 'error', message: ''});
-    const setError = (message) => setShowAlert({type: 'error', message});
-    const setSuccess = (message) => setShowAlert({type: 'success', message});
+    const setError = (message) => enqueueSnackbar(message, {variant: "error"});
+    const setSuccess = (message) => enqueueSnackbar(message, {variant: "success"});
 
     const {user} = useContext(UserContext);
 
@@ -175,7 +175,6 @@ export default function ChangePassword() {
                 </form>
             </div>
             </MuiThemeProvider>
-            <CustomizedSnackbars type={showAlert.type} message={showAlert.message} setMessage={setShowAlert} />
         </Container>
     );
 }
