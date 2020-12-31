@@ -44,7 +44,7 @@ export default function TransitionsModal(props) {
   return (
 
     <div className={classes.divline}>
-      <Button variant="contained" size="small" style={{backgroundColor: "#03a9f4", color: "white", marginLeft: "10px"}} onClick={handleOpen}>
+      <Button variant="contained" size="small" style={{backgroundColor: "#03a9f4", color: "white", marginLeft: "10px"}} onClick={handleOpen} >
 Contact
 </Button>
       <Modal

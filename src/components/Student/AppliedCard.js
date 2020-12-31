@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import CheckIcon from "@material-ui/icons/Check";
 import history from '../../history';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import ModalMessage from "../ModalMessage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const {job} = props;
+  const [showContactBtn, setShowContactBtn] = useState(job.alreadyNotified === false);
 
   return (
     <div>
@@ -100,12 +101,7 @@ export default function RecipeReviewCard(props) {
               <Typography variant="subtitle2" style={{marginLeft: 5}}>
                   Accepted
               </Typography>
-<a className={classes.email} href={"mailto:companyemailfromdatabase"} style={{textDecoration: "none", color: "black", display: "flex"}}>
-<MailOutlineIcon style={{marginLeft: 10}}/>
-<Typography variant="subtitle2" style={{marginLeft: 5}}>
-                 Email
-              </Typography>
-              </a>
+              { showContactBtn && <ModalMessage notification={job} onMessageSent={() => {setShowContactBtn(false)}} />}
           </div>
           }
 
