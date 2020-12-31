@@ -139,7 +139,7 @@ export default function GeneralInfo() {
           <Grid container xl={12} lg={12} md={12} sm={12} xs={12} direction="row" justify="flex-end" alignItems="flex-end"><ModalCompanyInfo company={company} setCompany={setCompany} /></Grid>
           <Grid lg={12} md={12} sm={12} xs={12} container spacing={2}>
           <Grid xl={2} lg={2} md={2} sm={2} xs={3} item>
-   <Avatar style={{border: "2px solid lightGrey"}} src={logo} className={classes.large}></Avatar>
+   <Avatar style={{border: "2px solid lightGrey"}} src={company.profile || logo} className={classes.large} />
    </Grid>
 <Grid xl={2} lg={2} md={2} sm={2} xs={3} item>
     <Typography style={{fontSize: 20, fontWeight: 500, color: '#03a9f4', marginBottom: 10}}>{company.name}</Typography>

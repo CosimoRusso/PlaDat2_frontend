@@ -94,10 +94,10 @@ function ResponsiveDrawer(props) {
       const fetchData = async () => {
           if(!(user && user.userId)) return;
           const {data, status, message} = await get(`/${user.userType}/findOne/${user.userId}`);
-
           if (status === 200){
               const obj = {
-                  name: user.userType === "student" ? data.firstName + ' ' + data.lastName : data.name
+                  name: user.userType === "student" ? data.firstName + ' ' + data.lastName : data.name,
+                  picture: user.userType === "company" ? data.picture : ""
               }
               setUserData(obj);
           }else{
@@ -123,7 +123,7 @@ function ResponsiveDrawer(props) {
     <div>
       <div className={classes.align}>
           {user.userType === "student" && <Popover /> }
-          {user.userType === "company" && <Avatar src={logo} /> }
+          {user.userType === "company" && <Avatar src={userData.picture || logo} /> }
    <Typography variant="subtitle2" style={{marginLeft: "20px"}}>
        {userData.name}
   <Typography variant="subtitle2" onClick={() => history.push(`/${user.userType}/profile`)} color="primary">

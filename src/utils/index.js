@@ -30,6 +30,25 @@ const out = {
 
         return { status: req.status, data: res };
     },
+    postFile : async (path, data, jwt = null) => {
+        const options = {
+            method: 'POST',
+            headers: {},
+            body: data
+        }
+        if (jwt)
+            options.headers["Authorization"] = 'Bearer ' + jwt;
+        const url = out.api(path);
+        let req = null, res = null;
+        try{
+            req = await fetch(url, options);
+        } catch (e) { console.log(e); return {status: 500, data: 'Unexpected error, please check console'} }
+        try{
+            res = await req.json();
+        }catch(e){ console.log(e); }
+
+        return { status: req.status, data: res };
+    },
     get : async (path, query, jwt = null) => {
         let queryString = '';
         if (query){

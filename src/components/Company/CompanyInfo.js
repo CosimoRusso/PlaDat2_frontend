@@ -14,7 +14,7 @@ import utils from '../../utils';
 import { UserContext } from "../../utils/user-context";
 import { useSnackbar } from "notistack";
 
-const {post} = utils;
+const {post, postFile} = utils;
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,7 +70,20 @@ export default function Edit(props) {
     setCompany(newCompany);
   }
 
-
+  const onPictureChange = async e => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    const result = await postFile("/company/imageUpload", formData, user.jwt);
+    if (result.status === 200){
+      const newCompany = JSON.parse(JSON.stringify(company));
+      newCompany.profile = result.data.picture;
+      setCompany(newCompany);
+      onSuccess("Image updated");
+    }else{
+      onError(result.data.message);
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -80,12 +93,15 @@ export default function Edit(props) {
         <Typography component="h1" variant="h5">
           Edit Company Information
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
 
           <Grid container justify="center">
-          <Avatar style={{border: "2px solid lightGrey"}} src={logo} className={classes.large}></Avatar>
+          <Avatar style={{border: "2px solid lightGrey"}} src={company.profile || logo} className={classes.large}></Avatar>
         </Grid>
-        <Typography inputRef={register({required: true})} style={{textAlign: "center", fontSize: 16, color: "#03a9f4"}}>Upload image</Typography>
+          <label htmlFor="upload-photo" >
+            <TextField id="upload-photo" name="upload-photo" type="file" style={{display: "none"}} onChange={onPictureChange}/>
+            <Button component="span">Upload Image</Button>
+          </label>
+        <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
         <TextField
             variant="outlined"
             margin="normal"
