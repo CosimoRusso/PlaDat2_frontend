@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,120 +7,272 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../Theme';
 import { useForm } from "react-hook-form";
+import utils from "../utils";
+import {Autocomplete} from "@material-ui/lab";
+import {useSnackbar} from "notistack";
+import {Chip, FormControlLabel, FormGroup, Switch} from "@material-ui/core";
+import {UserContext} from "../utils/user-context";
 
+const {get, post} = utils;
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
+    paper: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
 
-  color: {
-    background: '#03a9f4',
-  },
+    color: {
+        background: '#03a9f4',
+    },
 
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-  },
+    form: {
+        width: '100%',
+        marginTop: theme.spacing(1),
+    },
 
 
 }));
 
-export default function EditViewJob() {
-  const classes = useStyles();
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = data => console.log(data);
+export default function EditViewJob(props) {
+    const {job, setJob} = props;
+    const [cities, setCities] = useState([]);
+    const [skills, setSkills] = useState([]);
 
-  return (
-    <Container component="main" maxWidth="xs">
-       <MuiThemeProvider theme={Theme}>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Edit Job
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+    const [remote, setRemote] = useState(job.remote);
+    const [partTime, setPartTime] = useState(job.partTime);
 
-        <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({required: true})}
-            required
-            fullWidth
-            id="name"
-            label="Job Name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-          />
+    const [city, setCity] = useState(null);
+    const [reqSkill, setReqSkill] = useState(null);
+    const [optSkill, setOptSkill] = useState(null);
+    const {user} = useContext(UserContext);
+    const classes = useStyles();
+    const { register, handleSubmit } = useForm();
+    const {enqueueSnackbar} = useSnackbar();
+    const setError = message => enqueueSnackbar(message, {variant: 'error'});
+    const setSuccess = message => enqueueSnackbar(message, {variant: 'success'});
+    const dataLoaded = useRef(false);
 
-<TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({required: true})}
-            required
-            fullWidth
-            type="number"
-            id="salary"
-            label="Salary"
-            name="salary"
-            autoComplete="salary"
-          />
+    const getCopyOfJob = () => JSON.parse(JSON.stringify(job));
 
-<TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({required: true})}
-            required
-            fullWidth
-            id="location"
-            label="Location"
-            name="location"
-            autoComplete="location"
-          />
+    const onSubmit = async data => {
+        data.jobId = job.id;
+        if (data.city) data.CityId = cities.find(c => c.name === data.city).id;
+        const result = await post('/jobs/update', data, user.jwt);
+        if (result.status === 200){
+            const res = await get('/jobs/findOne/' + job.id);
+            if (res.status === 200){
+                setJob(res.data);
+                setSuccess('Job Updated!');
+            }else{
+                setSuccess('Job Updated! Please reload the page');
+            }
+        }else{
+            setError(result.data.message);
+        }
+    }
+    const init = async () => {
+        let res = await get("/cities");
+        if (res.status === 200){
+            setCities(res.data);
+            if (job && job.City){
+                setCity(res.data.find(c => c.id === job.CityId));
+            }
+        }else{
+            setError("Unable to load cities: " + res.data.message);
+        }
+        res = await get('/skills');
+        if (res.status === 200){
+            setSkills(res.data);
+        }else{
+            setError("Unable to load skills: " + res.data.message);
+        }
+    }
 
-<TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({required: true})}
-            required
-            fullWidth
-            id="city"
-            label="City"
-            name="city"
-            autoComplete="city"
-          />
+    const addSkill = async (skill, required) =>{
+        if (!skill) return;
+        const skillType = required ? 'Req' : 'Opt'
+        let result = await post(`/jobs/update/${job.id}/add${skillType}/${skill.id}`, {}, user.jwt);
+        if (result.status === 200) {
+            setSuccess("Skill added");
+            const newJob = getCopyOfJob();
+            if (required) newJob.requiredSkills.push(skill);
+            else newJob.optionalSkills.push(skill);
+            setJob(newJob);
+            setReqSkill(null);
+            setOptSkill(null);
+        }
+        else {
+            setError('Cannot add skill: ' + result.data.message);
+        }
+    }
+    const removeSkill = async (skillId, required) => {
+        const skillType = required ? 'Req' : 'Opt'
+        let result = await post(`/jobs/update/${job.id}/remove${skillType}/${skillId}`, {}, user.jwt);
+        if (result.status === 200){
+            setSuccess("Skill removed");
+            const newJob = getCopyOfJob();
+            newJob.requiredSkills = newJob.requiredSkills.filter(s => s.id !== skillId);
+            setJob(newJob);
+        }else{
+            setError('Cannot remove skill: ' + result.data.message);
+        }
+    }
 
-<TextField
-                variant="outlined"
-                margin="normal"
-                multiline
-                rows={8}
-                fullWidth
-                inputRef={register({ required: true })}
-                required
-                id="description"
-                label="Description"
-                placeholder="Description"
-                name="description"
-              />
+    useEffect(() => {
+        if (dataLoaded.current === false){
+            dataLoaded.current = true;
+            init().then(() => {});
+        }
+    })
+
+    return (
+        <Container component="main" maxWidth="xs">
+            <MuiThemeProvider theme={Theme}>
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Typography component="h1" variant="h5">
+                        Edit Job
+                    </Typography>
+                    <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            inputRef={register()}
+                            fullWidth
+                            id="name"
+                            label="Job Name"
+                            name="name"
+                            autoComplete="name"
+                            autoFocus
+                            defaultValue={job.name}
+                        />
+
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            inputRef={register()}
+                            fullWidth
+                            type="number"
+                            id="salary"
+                            label="Salary"
+                            name="salary"
+                            autoComplete="salary"
+                            defaultValue={job.salary}
+                        />
+                        <Autocomplete
+                            options={cities}
+                            getOptionLabel={c => c.name}
+                            value={city}
+                            onChange={(e, newVal) => setCity(newVal)}
+                            renderInput={params => <TextField {...params}
+                                                              variant="outlined"
+                                                              margin="normal"
+                                                              inputRef={register()}
+                                                              defaultValue={cities.length && cities[0].name}
+                                                              fullWidth
+                                                              id="city"
+                                                              label="City"
+                                                              name="city"
+                                                              autoComplete="city"
+                            />}
+                        />
+
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            multiline
+                            rows={8}
+                            fullWidth
+                            inputRef={register()}
+                            id="description"
+                            label="Description"
+                            placeholder="Description"
+                            name="description"
+                            defaultValue={job.description}
+                        />
+
+                        <FormGroup row>
+                            <FormControlLabel
+                                control={<Switch
+                                    checked={remote}
+                                    onChange={e => setRemote(e.target.checked)}
+                                    inputRef={register()}
+                                    name="remote" /> }
+                                label="Remote"
+                            />
+                            <FormControlLabel
+                                control={<Switch
+                                    checked={partTime}
+                                    onChange={e => setPartTime(e.target.checked)}
+                                    inputRef={register()}
+                                    name="partTime" /> }
+                                label="Part Time"
+                            />
+                        </FormGroup>
+                        <Autocomplete
+                            options={skills}
+                            getOptionLabel={c => c.name}
+                            value={reqSkill}
+                            onChange={(e, newVal) => addSkill(newVal, true)}
+                            renderInput={params => <TextField {...params}
+                                                              variant="outlined"
+                                                              margin="normal"
+                                                              fullWidth
+                                                              id="requiredSkills"
+                                                              label="Required Skills"
+                                                              name="requiredSkills"
+                            />}
+                        />
+                        {
+                            job.requiredSkills.map(s =>
+                                <Chip
+                                    color='primary'
+                                    style={{marginRight: '10px'}}
+                                    key={s.id}
+                                    label={s.name}
+                                    onDelete={() => removeSkill(s.id, true)}
+                                />)
+                        }
+
+                        <Autocomplete
+                            options={skills}
+                            getOptionLabel={c => c.name}
+                            value={optSkill}
+                            onChange={(e, newVal) => addSkill(newVal, false)}
+                            renderInput={params => <TextField {...params}
+                                                              variant="outlined"
+                                                              margin="normal"
+                                                              fullWidth
+                                                              id="requiredSkills"
+                                                              label="Optional Skills"
+                                                              name="optionalSkills"
+                            />}
+                        />
+                        {
+                            job.optionalSkills.map(s =>
+                                <Chip
+                                    color='primary'
+                                    style={{marginRight: '10px'}}
+                                    key={s.id}
+                                    label={s.name}
+                                    onDelete={() => removeSkill(s.id, false)}
+                                />)
+                        }
 
 
-{(errors.name && <Typography color="error">Job name is required.</Typography>) || (errors.salary && <Typography color="error">Salary is required.</Typography>) || (errors.location && <Typography color="error">Location is required.</Typography>) || (errors.city && <Typography color="error">City is required.</Typography>) || (errors.description && <Typography color="error">Description is required.</Typography>)}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Save changes
-          </Button>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                        >
+                            Save changes
+                        </Button>
 
-        </form>
-      </div>
-      </MuiThemeProvider>
-    </Container>
-  );
+                    </form>
+                </div>
+            </MuiThemeProvider>
+        </Container>
+    );
 }

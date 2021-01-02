@@ -39,7 +39,7 @@ export default function TransitionsModal(props) {
         setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (props) => {
     setOpen(false);
   };
 
@@ -63,7 +63,7 @@ export default function TransitionsModal(props) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <EditViewJob/>
+            <EditViewJob job={props.job} setJob={props.setJob}/>
           </div>
         </Fade>
       </Modal>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,9 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Theme, {MuiThemeProvider} from '../../Theme';
 import { useForm } from "react-hook-form";
-import Chip from '@material-ui/core/Chip';
-import Date from '../Date';
+import utils from '../../utils';
+import {UserContext} from "../../utils/user-context";
+import {useSnackbar} from "notistack";
+import history from "../../history";
 
+const { post } = utils;
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,8 +35,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditViewJob() {
   const classes = useStyles();
+  const {user} = useContext(UserContext);
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = data => console.log(data);
+  const {enqueueSnackbar} = useSnackbar();
+  const onSuccess = (message) => enqueueSnackbar(message, {variant: "success"});
+  const onError = (message) => enqueueSnackbar(message, {variant: "error"});
+  const onSubmit = async data => {
+    const res = await post('/jobs', data, user.jwt);
+    if (res.status === 200){
+        onSuccess("Job Created");
+        history.push("/viewjob/"+res.data.id);
+    }else{
+        onError(res.data.message);
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -57,82 +72,20 @@ export default function EditViewJob() {
             autoComplete="name"
             autoFocus
           />
-
-<TextField
+        <TextField
             variant="outlined"
             margin="normal"
-            inputRef={register({required: true})}
+            inputRef={register()}
             fullWidth
-            required
-            id="primaryskill"
-            label="Primary skill"
-            name="primaryskill"
-            autoComplete="primaryskill"
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            id="secondaryskill"
-            label="Secondary skill"
-            name="secondaryskill"
-            autoComplete="secondaryskill"
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            style={{float: "right"}}
-            id="optionalskills"
-            label="Optional skills"
-            name="optionalskills"
-            autoComplete="optionalskills"
-          />
-<div>
-<Chip label="Java"  />
-</div>
-          <Date name="Job Starting Date"/>
+            id="name"
+            label="Description"
+            name="description"
+            autoComplete="description"
+            autoFocus
+        />
 
 
-<TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({required: true})}
-            required
-            type="number"
-            id="salary"
-            label="Salary"
-            name="salary"
-            autoComplete="salary"
-          />
-
-<TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register({required: true})}
-            required
-            style={{float: "right"}}
-            id="location"
-            label="Location"
-            name="location"
-            autoComplete="location"
-          />
-
-
-<TextField
-                variant="outlined"
-                margin="normal"
-                multiline
-                rows={4}
-                fullWidth
-                inputRef={register({ required: true })}
-                required
-                id="description"
-                label="Description"
-                placeholder="Description"
-                name="description"
-              />
-
-
-{(errors.name && <Typography color="error">Job name is required.</Typography>) || (errors.primaryskill && <Typography color="error">Primary skill is required.</Typography>)  || (errors.salary && <Typography color="error">Salary is required.</Typography>) || (errors.location && <Typography color="error">Location is required.</Typography>) || (errors.city && <Typography color="error">City is required.</Typography>) || (errors.description && <Typography color="error">Description is required.</Typography>)}
+{(errors.name && <Typography color="error">Job name is required.</Typography>)}
             <Button
               type="submit"
               fullWidth

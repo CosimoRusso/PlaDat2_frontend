@@ -17,7 +17,7 @@ const {get, post} = utils;
 
 const useStyles = theme => ({
     root: {
-      width: '90%',
+        width: '90%',
         flexGrow: 1,
         margin: 'auto',
         marginTop: 20,
@@ -35,14 +35,14 @@ const useStyles = theme => ({
     },
 
     shadow:{
-      boxShadow: '2px 3px 9px -8px #000000',
+        boxShadow: '2px 3px 9px -8px #000000',
     },
 
     color: {
-      background: '#03a9f4',
-      '&:hover': {
-        background: "#1076a3",
-     },
+        background: '#03a9f4',
+        '&:hover': {
+            background: "#1076a3",
+        },
     },
 
     tags: {
@@ -50,13 +50,13 @@ const useStyles = theme => ({
         justifyContent: 'center',
         flexWrap: 'wrap',
         '& > *': {
-          margin: theme.spacing(0.5),
+            margin: theme.spacing(0.5),
         },
     },
 
     tag:{
-      border: '1.5px solid #1076a3',
-      color: '#1076a3',
+        border: '1.5px solid #1076a3',
+        color: '#1076a3',
     }
 
 });
@@ -114,97 +114,99 @@ class CardCarousel extends React.Component {
         });
     }
 
-  render() {
-    const { classes } = this.props;
-    const {job} = this.props;
-    if (!job)return (<p>Loading...</p>);
-    const cityName = job.City ? job.City.name : "Los angeles"
-    const countryName = (job.City && job.City.Country) ? job.City.Country.name : "USA"
+    render() {
+        const { classes } = this.props;
+        const {job, setJob} = this.props;
+        if (!job)return (<p>Loading...</p>);
+        const cityName = job.City ? job.City.name : "Los angeles"
+        const countryName = (job.City && job.City.Country) ? job.City.Country.name : "USA"
 
 
-      return (
-      <div>
-        <div className={`${classes.root} ${classes.shadow}`}>
-          <Grid container spacing={3} alignItems="center">
-            <Grid
-              container
-              item
-              xs={3}
-              sm={2}
-              md={2}
-              lg={1}
-              justify="flex-start"
-            >
-              <Avatar className={classes.avatarStyle} />
-            </Grid>
-            <Grid item xs={9} sm={7} md={7} lg={8} justify="flex-start">
-            <Typography variant="h5">{job.name}</Typography>
-      <Typography variant="h6">{job.Company.name}</Typography>
-            </Grid>
-            <Grid container xs={12} sm={3} md={3} lg={3} justify="flex-end">
-              <ModalViewJob/>
-              <Button
-                size="medium"
-                variant="contained"
-                color="primary"
-                className={classes.color}
-                onClick={() => this.applyToJob(job.id)}
-                disabled={this.state.applied}
-              >
-                  {this.state.applied ? 'Applied!' : 'Apply now'}
-              </Button>
-            </Grid>
-          </Grid>
+        return (
+            <div>
+                <div className={`${classes.root} ${classes.shadow}`}>
+                    <Grid container spacing={3} alignItems="center">
+                        <Grid
+                            container
+                            item
+                            xs={3}
+                            sm={2}
+                            md={2}
+                            lg={1}
+                            justify="flex-start"
+                        >
+                            <Avatar className={classes.avatarStyle} />
+                        </Grid>
+                        <Grid item xs={7} sm={7} md={7} lg={8}>
+                            <Typography variant="h5">{job.name}</Typography>
+                            <Typography variant="h6">{job.Company.name}</Typography>
+                        </Grid>
+                        <Grid container xs={2} sm={3} md={3} lg={3} justify="flex-end">
+                            <ModalViewJob job={job} setJob={setJob} />
+                            <Button
+                                size="medium"
+                                variant="contained"
+                                color="primary"
+                                className={classes.color}
+                                onClick={() => this.applyToJob(job.id)}
+                                disabled={this.state.applied}
+                            >
+                                {this.state.applied ? 'Applied!' : 'Apply now'}
+                            </Button>
+                        </Grid>
+                    </Grid>
 
-          <Grid container spacing={3}>
-            <Grid container item xs={12} md={12} lg={12} justify="flex-start">
-              <Grid>
-                <Typography variant="subtitle1">{cityName} | {countryName} | {job.remote ? 'Remote' : 'In Place'} | {job.salary || 500}€</Typography>
-                <Grid container>
-              <Typography variant="subtitle1">
-                Category: IT
-              </Typography>
-              </Grid>
-                <Typography variant="h6">Description</Typography>
-              </Grid>
-              <p>
-                  {job.description || placeHolderText}
-              </p>
+                    <Grid container spacing={3}>
+                        <Grid container item xs={12} md={12} lg={12} justify="flex-start">
+                            <Grid>
+                                <Typography variant="subtitle1">{cityName} | {countryName} | {job.remote ? 'Remote' : 'In Place'} | {job.salary || 500}€</Typography>
+                                <Grid container>
+                                    <Typography variant="subtitle1">
+                                        Category: IT
+                                    </Typography>
+                                </Grid>
+                                <Typography variant="h6">Description</Typography>
+                                <p>
+                                    {job.description || placeHolderText}
+                                </p>
+                            </Grid>
 
 
-              <div className={classes.tags}>
-                  {job.requiredSkills.map(s =>
-                      <Chip key={'skill-required-' + s.id}
-                          className={classes.tag}
-                          variant="outlined"
-                          color="primary"
-                          label={s.name}
-                          href="#chip"
-                          style={{backgroundColor: '#1076a3', color: 'white'}}
-                      />
-                  )}
-                  {job.optionalSkills.map(s =>
-                      <Chip key={'skill-optional' + s.id}
-                            className={classes.tag}
-                            variant="outlined"
-                            color="secondary"
-                            label={s.name}
-                            href="#chip"
-                      />
-                  )}
-              </div>
-            </Grid>
-          </Grid>
-        </div>
-        <Grid container justify="center" lg={12}>
-          <h2>Similar internships</h2>
-        </Grid>
-        <Carousel breakPoints={breakPoints} className={classes.topMargin}>
-            {this.state.similarJobs.map(j => <Card key={'similarJob-'+j.id} job={j} discardJob={() => {}} />)}
-        </Carousel>
-      </div>
-    );
-}
+                            <Grid xs={12} item>
+                                <div className={classes.tags} style={{justifyContent: "left"}}>
+                                    {job.requiredSkills.map(s =>
+                                        <Chip key={'skill-required-' + s.id}
+                                              className={classes.tag}
+                                              variant="outlined"
+                                              color="primary"
+                                              label={s.name}
+                                              href="#chip"
+                                              style={{backgroundColor: '#1076a3', color: 'white'}}
+                                        />
+                                    )}
+                                    {job.optionalSkills.map(s =>
+                                        <Chip key={'skill-optional' + s.id}
+                                              className={classes.tag}
+                                              variant="outlined"
+                                              color="secondary"
+                                              label={s.name}
+                                              href="#chip"
+                                        />
+                                    )}
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </div>
+                <Grid container justify="center" lg={12}>
+                    <h2>Similar internships</h2>
+                </Grid>
+                <Carousel breakPoints={breakPoints} className={classes.topMargin}>
+                    {this.state.similarJobs.map(j => <Card key={'similarJob-'+j.id} job={j} discardJob={() => {}} />)}
+                </Carousel>
+            </div>
+        );
+    }
 }
 
 export default withStyles(useStyles)(CardCarousel)

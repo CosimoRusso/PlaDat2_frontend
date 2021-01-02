@@ -38,7 +38,7 @@ class JobsList extends React.Component {
   return (
       <div>
     <Navbar/>
-    <Job job={this.state.job}/>
+    <Job job={this.state.job} setJob={job => this.setState({job})}/>
     </div>
   )
 }
