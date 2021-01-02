@@ -15,15 +15,10 @@ export default function MaterialUIPickers(props) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around">
-        <KeyboardDatePicker fullWidth
-          name="dateofbirth"
-          disableToolbar
+        <KeyboardDatePicker fullWidth {...props}
           variant="inline"
           format="dd/MM/yyyy"
           margin="normal"
-          id="date-picker"
-          label={props.name}
-          value={value}
           onChange={onChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',

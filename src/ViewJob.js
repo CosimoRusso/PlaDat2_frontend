@@ -35,13 +35,13 @@ class JobsList extends React.Component {
     }
 
     render() {
-  return (
-      <div>
-    <Navbar/>
-    <Job job={this.state.job} setJob={job => this.setState({job})}/>
-    </div>
-  )
-}
+        return (
+            <div>
+                <Navbar/>
+                <Job job={this.state.job} setJob={job => this.setState({job})}/>
+            </div>
+        )
+    }
 };
 
 

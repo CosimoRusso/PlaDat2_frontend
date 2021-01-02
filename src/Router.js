@@ -6,6 +6,7 @@ import Profile from "./Profile";
 import Jobs from "./Jobs";
 import Job from "./Job";
 import ViewJob from "./ViewJob";
+import EditJob from "./EditJob";
 import history from './history';
 import ProfileSkills from "./ProfileSkills";
 import AppliedInternships from "./AppliedInternships";
@@ -25,6 +26,7 @@ export default class Routes extends Component {
                     <Route path="/browsejobs" component={Jobs} />
                     <Route path="/job" component={Job} />
                     <Route path="/viewjob/:jobid" component={ViewJob} />
+                    <Route path="/editjob/:jobid" component={EditJob} />
                     <Route path="/student/skills/:studentId" component={ProfileSkills} />
                     <Route path="/student/skills" component={ProfileSkills} />
                     <Route path="/student/appliedinternships" component={AppliedInternships} />

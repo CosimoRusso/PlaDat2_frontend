@@ -12,6 +12,7 @@ import {Autocomplete} from "@material-ui/lab";
 import {useSnackbar} from "notistack";
 import {Chip, FormControlLabel, FormGroup, Switch} from "@material-ui/core";
 import {UserContext} from "../utils/user-context";
+import Date from './Date';
 
 const {get, post} = utils;
 
@@ -41,6 +42,7 @@ export default function EditViewJob(props) {
 
     const [remote, setRemote] = useState(job.remote);
     const [partTime, setPartTime] = useState(job.partTime);
+    const [timeLimit, setTimeLimit] = useState(job.timeLimit);
 
     const [city, setCity] = useState(null);
     const [reqSkill, setReqSkill] = useState(null);
@@ -57,6 +59,7 @@ export default function EditViewJob(props) {
 
     const onSubmit = async data => {
         data.jobId = job.id;
+        data.timeLimit=timeLimit;
         if (data.city) data.CityId = cities.find(c => c.name === data.city).id;
         const result = await post('/jobs/update', data, user.jwt);
         if (result.status === 200){
@@ -127,12 +130,12 @@ export default function EditViewJob(props) {
     })
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" style={{marginTop: '30px', marginBottom: '30px'}}>
             <MuiThemeProvider theme={Theme}>
                 <CssBaseline />
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h5">
-                        Edit Job
+                        Edit Job <b>{job.name}</b>
                     </Typography>
                     <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                         <TextField
@@ -199,7 +202,7 @@ export default function EditViewJob(props) {
                                     onChange={e => setRemote(e.target.checked)}
                                     inputRef={register()}
                                     name="remote" /> }
-                                label="Remote"
+                                label={remote ? "Remote" : "In Place"}
                             />
                             <FormControlLabel
                                 control={<Switch
@@ -207,7 +210,7 @@ export default function EditViewJob(props) {
                                     onChange={e => setPartTime(e.target.checked)}
                                     inputRef={register()}
                                     name="partTime" /> }
-                                label="Part Time"
+                                label={partTime ? "Part Time" : "Full Time"}
                             />
                         </FormGroup>
                         <Autocomplete
@@ -259,6 +262,17 @@ export default function EditViewJob(props) {
                                     onDelete={() => removeSkill(s.id, false)}
                                 />)
                         }
+                        <Date
+                            value={timeLimit}
+                            onChange={setTimeLimit}
+                            variant="outlined"
+                            margin="normal"
+                            rows={8}
+                            fullWidth
+                            id="timeLimit"
+                            label="Time Limit"
+                            name="timeLimit"
+                        />
 
 
                         <Button
@@ -266,6 +280,7 @@ export default function EditViewJob(props) {
                             fullWidth
                             variant="contained"
                             color="primary"
+                            style={{marginTop: '30px'}}
                         >
                             Save changes
                         </Button>

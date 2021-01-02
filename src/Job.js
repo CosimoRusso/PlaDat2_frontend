@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import utils from './utils';
 import {UserContext} from './utils/user-context';
 import ModalViewJob from './components/ModalViewJob';
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import history from "./history";
 
 const {get, post} = utils;
 
@@ -142,6 +144,7 @@ class CardCarousel extends React.Component {
                             <Typography variant="h6">{job.Company.name}</Typography>
                         </Grid>
                         <Grid container xs={2} sm={3} md={3} lg={3} justify="flex-end">
+                            <EditOutlinedIcon onClick={() => history.push('/editjob/'+job.id)}/>
                             <ModalViewJob job={job} setJob={setJob} />
                             <Button
                                 size="medium"
