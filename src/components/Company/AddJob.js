@@ -44,7 +44,7 @@ export default function EditViewJob() {
     const res = await post('/jobs', data, user.jwt);
     if (res.status === 200){
         onSuccess("Job Created");
-        history.push("/viewjob/"+res.data.id);
+        history.push("/editjob/"+res.data.id);
     }else{
         onError(res.data.message);
     }
