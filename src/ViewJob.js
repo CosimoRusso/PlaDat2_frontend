@@ -37,7 +37,7 @@ class JobsList extends React.Component {
     render() {
   return (
       <div>
-    <Navbar/>
+    <Navbar color="#29B3FF"/>
     <Job job={this.state.job}/>
     </div>
   )

@@ -82,7 +82,7 @@ const Header = props => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={`${classes.color} ${classes.appBar}`}>
+      <AppBar position="static" style={{backgroundColor: props.color}} className={classes.appBar}>
         <Toolbar>
           <Typography variant="h5" className={classes.title}>
             PlaDat

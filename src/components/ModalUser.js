@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import Slide from 'react-reveal/Slide';
 import Typography from "@material-ui/core/Typography";
 import UserType from './UserType'
 
@@ -68,11 +68,11 @@ export default function TransitionsModal() {
           timeout: 500,
         }}
       >
-        <Fade in={open}>
+        <Slide in={open}>
           <div className={classes.paper}>
             <UserType/>
           </div>
-        </Fade>
+        </Slide>
       </Modal>
     </div>
   );

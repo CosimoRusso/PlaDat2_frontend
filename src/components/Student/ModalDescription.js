@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Grid from '@material-ui/core/Grid';
-import Education from './Education';
+import Description from './Description';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 
@@ -61,7 +61,7 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <Education/>
+            <Description/>
           </div>
         </Fade>
       </Modal>

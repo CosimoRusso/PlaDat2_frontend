@@ -6,13 +6,13 @@ import Paper from '@material-ui/core/Paper';
 import MUIDrawer from './components/ProfileDrawer';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import ModalPersonal from './components/Student/ModalPersonal';
-import ModalEducation from './components/Student/ModalEducation';
-import ModalJobExperience from './components/Student/ModalJobExperience';
+import ModalDescription from './components/Student/ModalDescription';
 import ModalChangePass from './components/Student/ModalChangePass';
 import Avatar from '@material-ui/core/Avatar';
 import {UserContext} from './utils/user-context';
 import utils from './utils';
 import { useSnackbar } from "notistack";
+import TextField from '@material-ui/core/TextField';
 
 const {get} = utils;
 
@@ -209,12 +209,6 @@ export default function GeneralInfo(props) {
                     <Grid item xl={8} lg={8} md={7} sm={7} xs={7} container >
 
               <Grid item xs xl={5} lg={6}>
-              <Typography color="textSecondary" variant="subtitle1">
-                  Gender
-                </Typography>
-              <Typography variant="subtitle2" gutterBottom>
-                  {userData.gender}
-                </Typography>
                 <Typography color="textSecondary" variant="subtitle1">
                   Country
                 </Typography>
@@ -276,58 +270,16 @@ export default function GeneralInfo(props) {
           <Grid lg={12} md={12} sm={12} xs={12} container spacing={2}>
                     <ThemeProvider theme={theme}>
                       <Grid item xl={8} lg={6} md={7} sm={7} xs={9}>
-                      <Typography className={classes.margininfo} color="textSecondary">Education</Typography>
+                      <Typography className={classes.margininfo} color="textSecondary">Description</Typography>
                       </Grid>
                      <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end">
-                         {!studentId && <ModalEducation/>}</Grid>
+                         {!studentId && <ModalDescription/>}</Grid>
                       <Grid item xl={12} lg={10} md={7} sm={7} xs={9} container >
 
-<Grid item xl={4} lg={5} xs={9}>
-<Typography color="textSecondary" variant="subtitle1">
-    Institution
-  </Typography>
-<Typography variant="subtitle2" gutterBottom>
-    Cambridge
-  </Typography>
-  <Typography color="textSecondary" variant="subtitle1">
-    Field
-  </Typography>
-  <Typography variant="subtitle2" gutterBottom>
-    Engineer
-  </Typography>
+<Grid item xl={12} lg={12} xs={12}>
+<p>Description here</p>
 </Grid>
-<Grid item   xl={5} lg={5} xs={2}>
-<Typography color="textSecondary" variant="subtitle1">
-    City
-  </Typography>
-  <Typography variant="subtitle2" gutterBottom>
-    Cambridgeshire
-  </Typography>
-  <Typography color="textSecondary" variant="subtitle1">
-    Country
-  </Typography>
-  <Typography variant="subtitle2" gutterBottom>
-    England
-  </Typography>
 </Grid>
-
-<Grid item   xl={3} lg={2} xs={4}>
-  <Typography color="textSecondary" variant="subtitle1">
-    From
-  </Typography>
-  <Typography variant="subtitle2">
-   12/09/2016
-  </Typography>
-  <Typography color="textSecondary" variant="subtitle1">
-    To
-  </Typography>
-  <Typography variant="subtitle2">
-   12/06/2020
-  </Typography>
-  </Grid>
-</Grid>
-
-
 
                       </ThemeProvider>
                       </Grid>
@@ -335,68 +287,7 @@ export default function GeneralInfo(props) {
         </Grid>
 
 
-        <Grid item xl={4} lg={3}>
 
-<Paper className={classes.paper}>
-<Grid lg={12} md={12} sm={12} xs={12} container spacing={2}>
-                    <ThemeProvider theme={theme}>
-                      <Grid item xl={8} lg={6} md={7} sm={7} xs={9}>
-                      <Typography className={classes.margininfo} color="textSecondary">Job Experience</Typography>
-                      </Grid>
-                     <Grid container xl={4} lg={6} md={5} sm={5} xs={3} direction="row" justify="flex-end" alignItems="flex-end">
-                         {!studentId && <ModalJobExperience/>}</Grid>
-            <Grid item xl={12} lg={10} md={7} sm={7} xs={10} container >
-<Grid item xl={4} lg={5} xs={8}>
-<Typography color="textSecondary" variant="subtitle1">
-Company
-</Typography>
-<Typography variant="subtitle2" gutterBottom>
-Netflix
-</Typography>
-<Typography color="textSecondary" variant="subtitle1">
-Role
-</Typography>
-<Typography variant="subtitle2" gutterBottom>
-Web Developer
-</Typography>
-</Grid>
-<Grid item   xl={5} lg={5} xs={4}>
-<Typography color="textSecondary" variant="subtitle1">
-City
-</Typography>
-<Typography variant="subtitle2" gutterBottom>
-New York
-</Typography>
-<Typography color="textSecondary" variant="subtitle1">
-Country
-</Typography>
-<Typography variant="subtitle2" gutterBottom>
-USA
-</Typography>
-</Grid>
-
-<Grid item   xl={3} lg={2} xs={4}>
-<Typography color="textSecondary" variant="subtitle1">
-From
-</Typography>
-<Typography variant="subtitle2">
-09/05/2015
-</Typography>
-<Typography color="textSecondary" variant="subtitle1">
-To
-</Typography>
-<Typography variant="subtitle2">
-14/09/2015
-</Typography>
-</Grid>
-</Grid>
-
-
-
-            </ThemeProvider>
-            </Grid>
-</Paper>
-</Grid>
 
         </Grid>
 
