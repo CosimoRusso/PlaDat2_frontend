@@ -37,7 +37,7 @@ const Home = () => {
 const CarouselUI = ({ children }) => <Container>{children}</Container>;
 const Carousel = makeCarousel(CarouselUI);
 const button = <Button variant="contained" size='large' style={{backgroundColor: '#FFD774',  color: '#4b4c4c', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>;
-
+const button2 =  <Button variant="contained" size="large" style={{backgroundColor: 'grey',  color: 'white', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>
   return <div>
     <Carousel defaultWait={7000}>
     <Slide right duration={1000}>
@@ -97,7 +97,7 @@ const button = <Button variant="contained" size='large' style={{backgroundColor:
           <Zoom left cascade>
   <h1 id="herotitle">Find Your Employee</h1>
   <h3 id="herosubtitle" >Find the best student for your job</h3>
-  <Button variant="contained" size="large" style={{backgroundColor: 'grey',  color: 'white', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>
+  <ModalUser content={button2}/>
   </Zoom>
   </div>
   </Zoom>

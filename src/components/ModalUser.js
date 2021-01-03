@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Slide from 'react-reveal/Slide';
-import Typography from "@material-ui/core/Typography";
 import UserType from './UserType'
 
 const useStyles = makeStyles((theme) => ({
