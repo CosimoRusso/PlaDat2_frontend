@@ -10,6 +10,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import Button from '@material-ui/core/Button';
 import makeCarousel from 'react-reveal/makeCarousel';
 import styled from 'styled-components';
+import ModalUser from './components/ModalUser';
 import One from './1.png'
 import Two from './2.png'
 import Three from './3.png'
@@ -35,7 +36,7 @@ const Home = () => {
 `;
 const CarouselUI = ({ children }) => <Container>{children}</Container>;
 const Carousel = makeCarousel(CarouselUI);
-
+const button = <Button variant="contained" size='large' style={{backgroundColor: '#FFD774',  color: '#4b4c4c', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>;
 
   return <div>
     <Carousel defaultWait={7000}>
@@ -52,11 +53,11 @@ const Carousel = makeCarousel(CarouselUI);
     <Grid container  direction="row" justify="center">
         <Grid container direction="row"  lg={7} xs={11} justify="center" alignItems="center">
 <Zoom left cascade>
-        <div style={{marginTop: -50}}>
+        <div>
           <Zoom left cascade>
   <h1 id="herotitle">Create Your Future</h1>
   <h3 id="herosubtitle">Find the right internship for you</h3>
-  <Button variant="contained" size="large" style={{backgroundColor: '#FFD774',  color: '#4b4c4c', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>
+  <ModalUser content={button}/>
   </Zoom>
   </div>
   </Zoom>
@@ -92,7 +93,7 @@ const Carousel = makeCarousel(CarouselUI);
     <Grid container  direction="row" justify="center">
         <Grid container direction="row"  lg={7} xs={11} justify="center" alignItems="center">
 <Zoom left cascade>
-        <div style={{marginTop: -50}}>
+        <div>
           <Zoom left cascade>
   <h1 id="herotitle">Find Your Employee</h1>
   <h3 id="herosubtitle" >Find the best student for your job</h3>
@@ -119,8 +120,6 @@ const Carousel = makeCarousel(CarouselUI);
 </div>
 </Slide>
   </Carousel>
-
-
 
 
 <div style={{height: '90vh'}}>

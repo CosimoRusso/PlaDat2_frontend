@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function TransitionsModal() {
+export default function TransitionsModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -49,13 +49,10 @@ export default function TransitionsModal() {
   return (
 
     <div className={classes.divline}>
-   <Typography
-
-               variant= "subtitle1"
-               color="inherit"
+   <div
                onClick={handleOpen}>
-       Don't have an account? Register
-      </Typography>
+      {props.content}
+      </div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
