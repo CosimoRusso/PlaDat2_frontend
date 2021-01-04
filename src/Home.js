@@ -39,17 +39,16 @@ const Carousel = makeCarousel(CarouselUI);
 const button = <Button variant="contained" size='large' style={{backgroundColor: '#FFD774',  color: '#4b4c4c', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>;
 const button2 =  <Button variant="contained" size="large" style={{backgroundColor: 'grey',  color: 'white', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>
   return <div>
-    <Carousel defaultWait={7000}>
-    <Slide right duration={1000}>
-      <div>
     <Navbar color="#29B3FF"/>
-    <div style={{height: '90vh'}}>
-    <div style={{position: 'relative', backgroundColor: '#29B3FF', minHeight: '300px'}}>
+    <div style={{height: '100vh'}}>
+    <div style={{position: 'relative', backgroundColor: '#29B3FF', maxHeight: '80vh'}}>
     <div class="custom-shape-divider-bottom-1609097516">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
         <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
     </svg>
 </div>
+<Carousel defaultWait={7000}>
+    <Slide right duration={1000}>
     <Grid container  direction="row" justify="center">
         <Grid container direction="row"  lg={7} xs={11} justify="center" alignItems="center">
 <Zoom left cascade>
@@ -68,28 +67,17 @@ const button2 =  <Button variant="contained" size="large" style={{backgroundColo
         <Player
   autoplay
   loop
-  src="https://assets1.lottiefiles.com/private_files/lf30_OrNVxx.json"
+  src="https://assets7.lottiefiles.com/packages/lf20_jcikwtux.json"
   style={{ height: '510px', width: '510px'}}
 >
 </Player>
 </Slide>
         </Grid>
 </Grid>
-</div>
-</div>
-</div>
 </Slide>
 
-<Slide right duration={1000}>
-<div>
-<Navbar color="#FFD774"/>
-    <div style={{height: '90vh'}}>
-    <div style={{position: 'relative', backgroundColor: '#FFD774', minHeight: '300px'}}>
-    <div class="custom-shape-divider-bottom-1609097516">
-    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
-    </svg>
-</div>
+<Slide left duration={1000}>
+
     <Grid container  direction="row" justify="center">
         <Grid container direction="row"  lg={7} xs={11} justify="center" alignItems="center">
 <Zoom left cascade>
@@ -108,18 +96,18 @@ const button2 =  <Button variant="contained" size="large" style={{backgroundColo
         <Player
   autoplay
   loop
-  src="https://assets7.lottiefiles.com/packages/lf20_jcikwtux.json"
+  src="https://assets1.lottiefiles.com/private_files/lf30_OrNVxx.json"
   style={{ height: '510px', width: '510px'}}
 >
 </Player>
 </Slide>
         </Grid>
 </Grid>
-</div>
-</div>
-</div>
 </Slide>
-  </Carousel>
+</Carousel>
+</div>
+</div>
+
 
 
 <div style={{height: '90vh'}}>
