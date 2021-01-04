@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,8 +8,11 @@ import Container from '@material-ui/core/Container';
 import { useForm } from "react-hook-form";
 import Grid from '@material-ui/core/Grid';
 import Theme, {MuiThemeProvider} from '../../Theme';
+import utils from '../../utils';
+import {UserContext} from "../../utils/user-context";
+import {useSnackbar} from "notistack";
 
-
+const {post} = utils;
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,10 +35,26 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Edit() {
+export default function Edit(props) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = data => console.log(data);
+  const {student, setStudent} = props;
+  const {user} = useContext(UserContext);
+  const {enqueueSnackbar} = useSnackbar();
+  const setError = message => enqueueSnackbar(message, {variant: 'error'});
+  const setSuccess = message => enqueueSnackbar(message, {variant: 'success'});
+
+  const onSubmit = async data => {
+    const res = await post('/student/profile', data, user.jwt);
+    if(res.status === 200){
+      setSuccess('Description Updated!');
+      const newStudent = JSON.parse(JSON.stringify(student));
+      newStudent.description = data.description;
+      setStudent(newStudent);
+    }else{
+      setError(res.data.message);
+    }
+  }
 
 
   return (
@@ -54,12 +73,13 @@ export default function Edit() {
                 multiline
                 rows={8}
                 fullWidth
-                inputRef={register({ required: true })}
+                inputRef={register()}
                 required
                 id="description"
                 label="Description"
                 placeholder="Description"
                 name="description"
+                defaultValue={student.description}
               />
 
             {(errors.institution && <Typography color="error">Institution is required.</Typography>)
