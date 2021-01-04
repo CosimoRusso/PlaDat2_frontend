@@ -10,7 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Modal from "./Modal";
-// import logo from "../Logo.png"
+import logo from "./logoWhite.png"
 // import Search from "./Search";
 // import Filters, {RangeSlider} from "./Filters";
 
@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     color: 'black',
 
  }
+  },
+
+  right: {
+    marginLeft: 'auto',
   },
 
 
@@ -84,15 +88,11 @@ const Header = props => {
     <div className={classes.root}>
       <AppBar position="static" style={{backgroundColor: props.color}} className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h5" className={classes.title}>
-            PlaDat
-          {/* <img
-            className={classes.logo}
-            width="100"
-            height="50"
+            <img
+            width="150"
+            height="55"
             src={logo}
-            alt="Bosch Logo"/> */}
-          </Typography>
+            alt="Logo"/>
           {isMobile ? (
             <>
               <IconButton
@@ -105,6 +105,7 @@ const Header = props => {
                 <MenuIcon />
               </IconButton>
               <Menu
+
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
@@ -130,7 +131,7 @@ const Header = props => {
               </Menu>
             </>
           ) : (
-            <div>
+            <div             className={classes.right}>
               <Typography m={10}
                className={classes.line}
                display= 'inline'

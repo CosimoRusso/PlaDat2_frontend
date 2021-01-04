@@ -12,7 +12,6 @@ import Avatar from '@material-ui/core/Avatar';
 import {UserContext} from './utils/user-context';
 import utils from './utils';
 import { useSnackbar } from "notistack";
-import TextField from '@material-ui/core/TextField';
 
 const {get} = utils;
 
