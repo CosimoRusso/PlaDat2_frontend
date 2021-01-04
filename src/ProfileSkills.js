@@ -158,7 +158,7 @@ export default function BasicTable(props) {
                   alert?  <Alert variant="filled" severity="info">
                       <AlertTitle>Level {newSkillRating}</AlertTitle>
                   Level description put here based ok level rating
-                  <Button style={{display: 'block', marginTop: 10, backgroundColor: "lightGrey" }}  variant="contained">Accept level</Button>
+                  <Button onClick={()=>{setAlert(false)}} style={{display: 'block', marginTop: 10, backgroundColor: "lightGrey" }}  variant="contained">Accept level</Button>
                 </Alert> : null
               }
 

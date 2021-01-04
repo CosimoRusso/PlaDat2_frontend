@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Slide from 'react-reveal/Slide';
+import Zoom from 'react-reveal/Zoom';
 import UserType from './UserType'
 
 const useStyles = makeStyles((theme) => ({
@@ -48,10 +49,12 @@ export default function TransitionsModal(props) {
   return (
 
     <div className={classes.divline}>
+      <Zoom left cascade>
    <div
                onClick={handleOpen}>
       {props.content}
       </div>
+      </Zoom>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
