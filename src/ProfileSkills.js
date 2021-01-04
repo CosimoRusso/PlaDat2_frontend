@@ -17,6 +17,7 @@ import {Button, TextField} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import Typography from "@material-ui/core/Typography";
 
 
 const {get, post} = utils;
@@ -132,7 +133,6 @@ export default function BasicTable(props) {
     }
 
     const onSearchSkill = async (text) => {
-        if(newSkill) return;
         setAlert(false);
         if (text.length === 0) setNewSkillList([]);
         const res = await get('/skills/search/' + text);
@@ -179,16 +179,6 @@ export default function BasicTable(props) {
                     <Grid item xs={2} sm={2} md={2} lg={2} >
                         <MUIDrawer studentId={isReadOnly && studentId}/>
                     </Grid>
-                    <div>
-                        {
-                            alert?  <Alert variant="filled" severity="info">
-                                <AlertTitle>Level {newSkillRating}</AlertTitle>
-                                {getLevelDescription(newSkill)}
-                                <Button onClick={()=>{setAlert(false)}} style={{display: 'block', marginTop: 10, backgroundColor: "lightGrey" }}  variant="contained">Accept level</Button>
-                            </Alert> : null
-                        }
-
-                    </div>
                     {!isReadOnly && <Grid item lg={12} xs={10} md={10} sm={10}>
                         <Table className={classes.table} aria-label='create skill table'>
                             <TableBody>
@@ -225,6 +215,18 @@ export default function BasicTable(props) {
                                 </TableRow>
                             </TableBody>
                         </Table>
+                        {
+                            alert? <Table className={classes.table}>
+                                <TableRow>
+                                    <TableCell>
+                                        <Alert variant="filled" severity="info" style={{maxWidth: '100%', display: "block"}}>
+                                            <AlertTitle>Level {newSkillRating}</AlertTitle>
+                                            <p>{getLevelDescription(newSkill)}</p>
+                                        </Alert>
+                                    </TableCell>
+                                </TableRow>
+                            </Table> : null
+                        }
                     </Grid>}
                     <Grid item lg={12} xs={10} md={10} sm={10}>
                         <Table className={classes.table} aria-label="simple table">
