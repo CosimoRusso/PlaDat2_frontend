@@ -124,7 +124,7 @@ export default function GeneralInfo() {
     return (
         <div className={classes.root}>
           <div>
-           <Navbar/>
+          <Navbar color="#29B3FF"/>
            </div>
            <div className={classes.divTop}/>
            <ThemeProvider theme={theme}>

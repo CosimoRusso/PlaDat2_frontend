@@ -43,8 +43,6 @@ export default function ChangePassword() {
     const classes = useStyles();
     const { register, handleSubmit } = useForm();
     const [errors, setErrors] = useState([]);
-    const [currentPassword, setCurrentPassword] = React.useState('');
-    const [showCurrentPassword, setShowCurrentPassword] = React.useState(false);
     const [newPassword, setNewPassword] = React.useState('');
     const [showNewPassword, setShowNewPassword] = React.useState(false);
     const [confirmNewPassword, setConfirmNewPassword] = React.useState('');
@@ -87,31 +85,6 @@ export default function ChangePassword() {
                     Change password
                 </Typography>
                 <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
-                    <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">Current password</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-old-password"
-                            inputRef={register({required: true})}
-                            name="currentPass"
-                            margin="normal"
-                            value={currentPassword}
-                            type={showCurrentPassword ? 'text' : 'password'}
-                            onChange={e => setCurrentPassword(e.target.value)}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {showCurrentPassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            labelWidth={70}
-                        />
-                    </FormControl>
                     <FormControl fullWidth className={clsx(classes.margin, classes.textField)} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">New password</InputLabel>
                         <OutlinedInput

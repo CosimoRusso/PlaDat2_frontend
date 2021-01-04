@@ -166,7 +166,7 @@ export default function SignIn() {
           <Grid container>
             <Grid item>
               <Link href="#" variant="body2">
-              <ModalUser/>
+              <ModalUser content="Don't have an account? Register"/>
               </Link>
             </Grid>
           </Grid>

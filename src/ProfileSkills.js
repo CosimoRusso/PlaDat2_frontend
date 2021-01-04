@@ -15,6 +15,9 @@ import utils from './utils';
 import { useSnackbar } from "notistack";
 import {Button, TextField} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
+
 
 const {get, post} = utils;
 
@@ -57,6 +60,9 @@ const useStyles = makeStyles({
     marginLeft: 55,
     marginTop: 110,
   },
+  alert: {
+      display: 'none',
+  },
 });
 
 export default function BasicTable(props) {
@@ -65,7 +71,7 @@ export default function BasicTable(props) {
     const studentId = props.match.params.studentId || user.userId;
     const isReadOnly = props.match.params.studentId > 0;
     const [student, setStudent] = useState(null);
-
+    const [alert, setAlert] = useState(false);
 
     const dataLoaded = useRef(false);
     const [newSkill, setNewSkill] = useState(null);
@@ -74,6 +80,7 @@ export default function BasicTable(props) {
     const {enqueueSnackbar} = useSnackbar();
     const setError = message => enqueueSnackbar(message, {variant: 'error'});
     const setSuccess = message => enqueueSnackbar(message, {variant: 'success'});
+
 
   const createSkillSubmit = async () => {
       if (!newSkill) return setError('Please insert the value for the skill');
@@ -136,13 +143,26 @@ export default function BasicTable(props) {
           loadData().then(() => {});
       }
   })
+
+
   return (
       <div>
+
           <Grid lg={12} xs={12} md={12} sm={12} container direction="row" justify="center" justifyContent="center" >
               <div className={classes.divTop}>
                   <Grid item xs={2} sm={2} md={2} lg={2} >
                       <MUIDrawer studentId={isReadOnly && studentId}/>
                   </Grid>
+                  <div>
+              {
+                  alert?  <Alert variant="filled" severity="info">
+                      <AlertTitle>Level {newSkillRating}</AlertTitle>
+                  Level description put here based ok level rating
+                  <Button onClick={()=>{setAlert(false)}} style={{display: 'block', marginTop: 10, backgroundColor: "lightGrey" }}  variant="contained">Accept level</Button>
+                </Alert> : null
+              }
+
+          </div>
                   {!isReadOnly && <Grid item lg={12} xs={10} md={10} sm={10}>
                       <Table className={classes.table} aria-label='create skill table'>
                           <TableBody>
@@ -160,6 +180,7 @@ export default function BasicTable(props) {
                                   </TableCell>
                                   <TableCell>
                                       <TextField
+                                      onClick={()=>{setAlert(true)}}
                                           value={newSkillRating}
                                           onChange={e => setNewSkillRating(e.target.value)}
                                           variant="outlined"
@@ -172,7 +193,7 @@ export default function BasicTable(props) {
                                       />
                                   </TableCell>
                                   <TableCell>
-                                      <Button onClick={createSkillSubmit}>Create</Button>
+                                      <Button variant="contained" style={{backgroundColor: "#03a9f4", color: "white"}} onClick={createSkillSubmit}>Create</Button>
                                   </TableCell>
                               </TableRow>
                           </TableBody>

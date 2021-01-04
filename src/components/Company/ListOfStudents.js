@@ -152,7 +152,7 @@ export default function GeneralInfo(props) {
     return (
         <div className={classes.root}>
           <div>
-           <Navbar/>
+           <Navbar color="#03a9f4"/>
            </div>
            <div className={classes.divTop}/>
            <ThemeProvider theme={theme}>

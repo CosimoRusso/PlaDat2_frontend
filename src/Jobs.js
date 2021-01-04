@@ -12,7 +12,7 @@ margin: {
 const Jobs = props => {
   const classes = useStyles();
   return <div>
-      <Navbar/>
+   <Navbar color="#29B3FF"/>
       <Grid className={classes.margin}
   container
   direction="row"

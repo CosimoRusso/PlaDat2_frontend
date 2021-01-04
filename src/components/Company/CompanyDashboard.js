@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     return (
 
     <div className={classes.root}>
-        <Navbar/>
+        <Navbar color="#29B3FF"/>
         <Drawer allJobs={jobs} jobs={jobsDisplayed} setJobs={setJobsDisplayed} />
 
         <Grid className={classes.margin}
