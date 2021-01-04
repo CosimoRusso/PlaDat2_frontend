@@ -37,7 +37,7 @@ const Home = () => {
 const CarouselUI = ({ children }) => <Container>{children}</Container>;
 const Carousel = makeCarousel(CarouselUI);
 const button = <Button variant="contained" size='large' style={{backgroundColor: '#FFD774',  color: '#4b4c4c', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>;
-const button2 =  <Button variant="contained" size="large" style={{backgroundColor: 'grey',  color: 'white', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>
+const button2 =  <Button variant="contained" size="large" style={{backgroundColor: '#FFD774',  color: 'white', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>
   return <div>
     <Navbar color="#29B3FF"/>
     <div style={{height: '100vh'}}>

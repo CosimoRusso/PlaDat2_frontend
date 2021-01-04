@@ -32,7 +32,7 @@ export default function EditJob (props) {
 
     return (
         <div>
-            <Navbar/>
+            <Navbar color="#29B3FF"/>
             {!job && <p>Loading...</p>}
             {job && <EditViewJob job={job} setJob={setJob}/>}
         </div>
