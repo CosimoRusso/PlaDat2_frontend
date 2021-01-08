@@ -77,7 +77,7 @@ export default function Edit(props) {
     const result = await postFile("/company/imageUpload", formData, user.jwt);
     if (result.status === 200){
       const newCompany = JSON.parse(JSON.stringify(company));
-      newCompany.profile = result.data.picture;
+      newCompany.picture = result.data.picture;
       setCompany(newCompany);
       onSuccess("Image updated");
     }else{
@@ -95,7 +95,7 @@ export default function Edit(props) {
         </Typography>
 
           <Grid container justify="center">
-          <Avatar style={{border: "2px solid lightGrey"}} src={company.profile || logo} className={classes.large}></Avatar>
+          <Avatar style={{border: "2px solid lightGrey"}} src={company.picture || logo} className={classes.large}></Avatar>
         </Grid>
           <label htmlFor="upload-photo" >
             <TextField id="upload-photo" name="upload-photo" type="file" style={{display: "none"}} onChange={onPictureChange}/>
