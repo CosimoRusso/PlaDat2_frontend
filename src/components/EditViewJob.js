@@ -84,11 +84,12 @@ export default function EditViewJob(props) {
         }else{
             setError("Unable to load cities: " + res.data.message);
         }
-        res = await get('/skills');
+    }
+
+    const searchSkills = async (text) => {
+        const res = await get('/skills/search/' + text);
         if (res.status === 200){
             setSkills(res.data);
-        }else{
-            setError("Unable to load skills: " + res.data.message);
         }
     }
 
@@ -115,7 +116,10 @@ export default function EditViewJob(props) {
         if (result.status === 200){
             setSuccess("Skill removed");
             const newJob = getCopyOfJob();
-            newJob.requiredSkills = newJob.requiredSkills.filter(s => s.id !== skillId);
+            if (required)
+                newJob.requiredSkills = newJob.requiredSkills.filter(s => s.id !== skillId);
+            else
+                newJob.optionalSkills = newJob.optionalSkills.filter(s => s.id !== skillId);
             setJob(newJob);
         }else{
             setError('Cannot remove skill: ' + result.data.message);
@@ -215,8 +219,9 @@ export default function EditViewJob(props) {
                         </FormGroup>
                         <Autocomplete
                             options={skills}
-                            getOptionLabel={c => c.name}
+                            getOptionLabel={c => c.name + " - " + c.SkillCategory.name}
                             value={reqSkill}
+                            onKeyUp={(e) => searchSkills(e.target.value)}
                             onChange={(e, newVal) => addSkill(newVal, true)}
                             renderInput={params => <TextField {...params}
                                                               variant="outlined"
@@ -233,15 +238,16 @@ export default function EditViewJob(props) {
                                     color='primary'
                                     style={{marginRight: '10px'}}
                                     key={s.id}
-                                    label={s.name}
+                                    label={s.name + " - " + s.SkillCategory.name}
                                     onDelete={() => removeSkill(s.id, true)}
                                 />)
                         }
 
                         <Autocomplete
                             options={skills}
-                            getOptionLabel={c => c.name}
+                            getOptionLabel={c => c.name + " - " + c.SkillCategory.name}
                             value={optSkill}
+                            onKeyUp={(e) => searchSkills(e.target.value)}
                             onChange={(e, newVal) => addSkill(newVal, false)}
                             renderInput={params => <TextField {...params}
                                                               variant="outlined"
@@ -258,7 +264,7 @@ export default function EditViewJob(props) {
                                     color='primary'
                                     style={{marginRight: '10px'}}
                                     key={s.id}
-                                    label={s.name}
+                                    label={s.name + " - " + s.SkillCategory.name}
                                     onDelete={() => removeSkill(s.id, false)}
                                 />)
                         }

@@ -17,7 +17,6 @@ import {Button, TextField} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-import Typography from "@material-ui/core/Typography";
 
 
 const {get, post} = utils;
@@ -72,7 +71,6 @@ export default function BasicTable(props) {
     const studentId = props.match.params.studentId || user.userId;
     const isReadOnly = props.match.params.studentId > 0;
     const [student, setStudent] = useState(null);
-    const [alert, setAlert] = useState(false);
 
     const dataLoaded = useRef(false);
     const [newSkill, setNewSkill] = useState(null);
@@ -85,7 +83,12 @@ export default function BasicTable(props) {
 
     const createSkillSubmit = async () => {
         if (!newSkill) return setError('Please insert the value for the skill');
-        if (newSkillRating < 1 || newSkillRating > 5) return setError('Rating must be between 1 and 5');
+
+        const levels = newSkill.SkillCategory.LevelDescriptions.map(l => parseInt(l.level));
+        const min = Math.min.apply(Math, levels);
+        const max = Math.max.apply(Math, levels);
+        if (newSkillRating < min || newSkillRating > max) return setError(`Rating for this skill must be between ${min} and ${max}`);
+
         const createSkillRes = await post('/student/addCapability', {id: newSkill.id, rating: newSkillRating}, user.jwt);
         if (createSkillRes.status !== 201) return setError(createSkillRes.data.message);
         await loadData();
@@ -133,7 +136,6 @@ export default function BasicTable(props) {
     }
 
     const onSearchSkill = async (text) => {
-        setAlert(false);
         if (text.length === 0) setNewSkillList([]);
         const res = await get('/skills/search/' + text);
         if (res.status === 200){
@@ -149,7 +151,7 @@ export default function BasicTable(props) {
             const level =  levels.find(x => x.level === newSkillRating);
             if (level) return level.description;
         }
-        return "Invalid Level";
+        return null;
     }
 
     const onLevelChange = (newLevel) => {
@@ -161,6 +163,17 @@ export default function BasicTable(props) {
         if (newLevel < min) return setError("This is the minimum level for this skill");
         if (newLevel > max) return setError("This is the maximum level for this skill");
         setNewSkillRating(parseInt(newLevel));
+    }
+
+    const onNewSkillChange = newVal => {
+        setNewSkill(newVal);
+        if (newVal && newVal.SkillCategory){
+            const levels = newVal.SkillCategory.LevelDescriptions.map(l => parseInt(l.level));
+            const min = Math.min.apply(Math, levels);
+            const max = Math.max.apply(Math, levels);
+            if (newSkillRating < min) setNewSkillRating(min);
+            if (newSkillRating > max) setNewSkillRating(max);
+        }
     }
 
     useEffect(() => {
@@ -189,7 +202,7 @@ export default function BasicTable(props) {
                                             value={newSkill}
                                             fullWidth
                                             onKeyUp={e => onSearchSkill(e.target.value)}
-                                            onChange={(e, newVal) => setNewSkill(newVal)}
+                                            onChange={(e, newVal) => onNewSkillChange(newVal)}
                                             options={newSkillList}
                                             getOptionLabel={(skill) => skill.name + " - " + skill.SkillCategory.name}
                                             renderInput={(params) => <TextField {...params} label="Choose the new skill" variant="outlined" required margin="normal" autoFocus name="newSkill" />}
@@ -197,7 +210,6 @@ export default function BasicTable(props) {
                                     </TableCell>
                                     <TableCell align="right" style={{maxWidth: '50px', textAlign: "center"}}>
                                         <TextField
-                                            onClick={()=>{setAlert(true)}}
                                             value={newSkillRating}
                                             onChange={e => onLevelChange(e.target.value)}
                                             variant="outlined"
@@ -216,7 +228,7 @@ export default function BasicTable(props) {
                             </TableBody>
                         </Table>
                         {
-                            alert? <Table className={classes.table}>
+                            getLevelDescription(newSkill)? <Table className={classes.table}>
                                 <TableRow>
                                     <TableCell>
                                         <Alert variant="filled" severity="info" style={{maxWidth: '100%', display: "block"}}>
