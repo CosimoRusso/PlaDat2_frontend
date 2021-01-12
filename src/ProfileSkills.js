@@ -140,8 +140,6 @@ export default function BasicTable(props) {
         const res = await get('/skills/search/' + text);
         if (res.status === 200){
             setNewSkillList(res.data);
-        }else{
-            setError(res.data.message);
         }
     }
 
@@ -160,8 +158,8 @@ export default function BasicTable(props) {
         const levelsInt = levels.map(x => parseInt(x.level));
         const min = Math.min.apply(Math, levelsInt);
         const max = Math.max.apply(Math, levelsInt);
-        if (newLevel < min) return setError("This is the minimum level for this skill");
-        if (newLevel > max) return setError("This is the maximum level for this skill");
+        if (newLevel < min) return //setError("This is the minimum level for this skill");
+        if (newLevel > max) return //setError("This is the maximum level for this skill");
         setNewSkillRating(parseInt(newLevel));
     }
 

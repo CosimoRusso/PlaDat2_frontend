@@ -184,7 +184,7 @@ export default function CardCarousel(props){
                                           className={classes.tag}
                                           variant="outlined"
                                           color="primary"
-                                          label={s.name}
+                                          label={s.name + " - " + s.SkillCategory.name}
                                           href="#chip"
                                           style={{backgroundColor: '#1076a3', color: 'white'}}
                                     />
@@ -194,7 +194,7 @@ export default function CardCarousel(props){
                                           className={classes.tag}
                                           variant="outlined"
                                           color="secondary"
-                                          label={s.name}
+                                          label={s.name + " - " + s.SkillCategory.name}
                                           href="#chip"
                                     />
                                 )}
