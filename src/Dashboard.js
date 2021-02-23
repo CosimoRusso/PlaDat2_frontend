@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
         <Card job={job} discardJob={discardJob}/>
       </Grid>
   )}
+        {jobsDisplayed.length === 0 && <p>Sorry, Nothing to show here. Try <a href={"/student/skills"}>adding more skills</a></p>}
   </Grid>
   </div>
   );

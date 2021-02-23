@@ -22,13 +22,6 @@ const Home = () => {
     const { user } = useContext(UserContext);
     const [carouselTime, setCarouselTime] = useState(7000);
 
-    if(user) {
-        if (user.userType === 'student')
-            return <Redirect to={'/dashboard'} />
-        else
-            return <Redirect to={'company/dashboard'} />
-    }
-
     const Container = styled.div`
       position: relative;
       overflow: hidden;
@@ -39,6 +32,12 @@ const Home = () => {
     const Carousel = makeCarousel(CarouselUI);
     const button = <Button onClick={() => setCarouselTime(1000000)} variant="contained" size='large' style={{backgroundColor: '#FFD774',  color: '#4b4c4c', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>;
     const button2 = <Button onClick={() => setCarouselTime(1000000)} variant="contained" size="large" style={{backgroundColor: '#FFD774',  color: 'white', fontWeight: 500, marginTop: 40,  boxShadow: '20'}}>Join Now</Button>
+    if(user) {
+        if (user.userType === 'student')
+            return <Redirect to={'/dashboard'} />
+        else
+            return <Redirect to={'company/dashboard'} />
+    }
     return <div>
         <Navbar color="#29B3FF"/>
         <div style={{height: '100vh'}}>
