@@ -25,6 +25,7 @@ const useStyles = makeStyles({
 export default function Circle(props) {
     const classes = useStyles();
     const {value} = props;
+    const maxValue = props.maxValue || 7;
     return (
         <div className={classes.size}>
 
@@ -40,7 +41,7 @@ export default function Circle(props) {
                         return (
                             <CircularProgressbar
                                 value={value}
-                                maxValue={5}
+                                maxValue={maxValue}
                                 text={`${roundedValue}`}
                                 styles={buildStyles({ pathTransition: "none" })}
                             />

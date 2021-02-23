@@ -80,13 +80,17 @@ export default function BasicTable(props) {
     const setError = message => enqueueSnackbar(message, {variant: 'error'});
     const setSuccess = message => enqueueSnackbar(message, {variant: 'success'});
 
+    const getMaxMinLevels = (skill) => {
+        const levels = skill.SkillCategory.LevelDescriptions.map(l => parseInt(l.level));
+        const min = Math.min.apply(Math, levels);
+        const max = Math.max.apply(Math, levels);
+        return {min, max}
+    }
 
     const createSkillSubmit = async () => {
         if (!newSkill) return setError('Please insert the value for the skill');
 
-        const levels = newSkill.SkillCategory.LevelDescriptions.map(l => parseInt(l.level));
-        const min = Math.min.apply(Math, levels);
-        const max = Math.max.apply(Math, levels);
+        const {min, max} = getMaxMinLevels(newSkill);
         if (newSkillRating < min || newSkillRating > max) return setError(`Rating for this skill must be between ${min} and ${max}`);
 
         const createSkillRes = await post('/student/addCapability', {id: newSkill.id, rating: newSkillRating}, user.jwt);
@@ -255,7 +259,7 @@ export default function BasicTable(props) {
                                     <TableRow key={skill.id}>
                                         <TableCell align="center">{ skill.SkillCategory ? skill.SkillCategory.name : 'No Category'}</TableCell>
                                         <TableCell align="center">{skill.name}</TableCell>
-                                        <TableCell align="center"><Circle value={skill.StudentSkill.rating} /> </TableCell>
+                                        <TableCell align="center"><Circle value={skill.StudentSkill.rating} maxValue={getMaxMinLevels(skill).max} /> </TableCell>
 
                                         {!isReadOnly && <TableCell align="center"><ModalSkills skill={skill} onUpdate={onSkillUpdate}/></TableCell>}
                                         {!isReadOnly && <TableCell align="center"><DeleteOutlineOutlinedIcon
