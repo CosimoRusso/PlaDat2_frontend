@@ -20,13 +20,14 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Modal from "./Modal";
+import logo from '../components/logoWhite.png'
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-root: {
-  flexGrow: 1,
-},
+  root: {
+    flexGrow: 1,
+  },
   title: {
     flexGrow: 1,
   },
@@ -39,15 +40,15 @@ root: {
       margin: theme.spacing(3),
     },
     '&:hover': {
-     color: 'black',
-  }
-   },
-   active: {
+      color: 'black',
+    }
+  },
+  active: {
     '&:active': {
       color: '#03a9f4 !important',
 
-   }
-   },
+    }
+  },
 
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -112,17 +113,17 @@ const Drawer = props => {
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const itemsList = [
     {
-        text: "General Info",
-        icon: <InfoOutlinedIcon/>,
-        onClick: () => history.push('/student/profile/' + (studentId || ''))
+      text: "General Info",
+      icon: <InfoOutlinedIcon/>,
+      onClick: () => history.push('/student/profile/' + (studentId || ''))
     },
 
     {
-        text: "Skills",
-        icon: <EditOutlinedIcon />,
-        onClick: () => history.push('/student/skills/' + (studentId || ''))
+      text: "Skills",
+      icon: <EditOutlinedIcon />,
+      onClick: () => history.push('/student/skills/' + (studentId || ''))
     },
-];
+  ];
   if (!studentId){
     itemsList.push({
       text: "Applied Internships",
@@ -139,125 +140,125 @@ const Drawer = props => {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, classes.color, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+            position="fixed"
+            className={clsx(classes.appBar, classes.color, {
+              [classes.appBarShift]: open,
+            })}
+        >
+          <Toolbar>
 
-        {!isMobile ? (
-           <>
+            {!isMobile ? (
+                <>
 
-          <IconButton
+                  <IconButton
                       edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
+                      color="inherit"
+                      aria-label="open drawer"
+                      onClick={handleDrawerOpen}
+                      className={classes.menuButton}
+                  >
+                    <MenuIcon />
 
-          </IconButton>
+                  </IconButton>
 
-          <Typography variant="h5" className={classes.title}>
-            PlaDat
-            </Typography>
+                  <Typography variant="h5" className={classes.title}>
+                    <img src={logo} style={{height: "50px"}} alt={"PlaDat"} />
+                  </Typography>
 
-          <Typography m={10}
-               display= 'inline'
-               className={classes.line}
-               variant= "subtitle1"
-               onClick={() => history.push('/')}
-              >
-                Home
-              </Typography>
-              <Typography r={10}
-                display = 'inline'
-                className={classes.line}
-                variant= "subtitle1"
-                onClick={() => history.push('/browsejobs')}
-              >
-               Browse Jobs
-              </Typography>
-              <Typography r={10}
-                className={classes.line}
-                display = 'inline'
-                variant= "subtitle1"
-              >
-                <Modal/>
-              </Typography>
+                  <Typography m={10}
+                              display= 'inline'
+                              className={classes.line}
+                              variant= "subtitle1"
+                              onClick={() => history.push('/')}
+                  >
+                    Home
+                  </Typography>
+                  <Typography r={10}
+                              display = 'inline'
+                              className={classes.line}
+                              variant= "subtitle1"
+                              onClick={() => history.push('/browsejobs')}
+                  >
+                    Browse Jobs
+                  </Typography>
+                  <Typography r={10}
+                              className={classes.line}
+                              display = 'inline'
+                              variant= "subtitle1"
+                  >
+                    <Modal/>
+                  </Typography>
 
-              </>
+                </>
 
-     ) : (
-      <>
-  <Typography variant="h5" className={classes.title}>
-            PlaDat
-            </Typography>
-          <Typography m={10}
-               className={classes.line}
-               variant= "subtitle1"
-               onClick={() => history.push('/')}
-              >
-                Home
-              </Typography>
-              <Typography r={10}
-                display = 'inline'
-                className={classes.line}
-                variant= "subtitle1"
-                onClick={() => history.push('/browsejobs')}
-              >
-               Browse Jobs
-              </Typography>
-              <Typography r={10}
-                className={classes.line}
-                display = 'inline'
-                variant= "subtitle1"
-              >
-                <Modal/>
-              </Typography>
-              </>
-                      )}
-        </Toolbar>
-      </AppBar>
-      <MUIDrawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
+            ) : (
+                <>
+                  <Typography variant="h5" className={classes.title}>
+                    <img src={logo} style={{height: "50px"}} alt={"PlaDat"} />
+                  </Typography>
+                  <Typography m={10}
+                              className={classes.line}
+                              variant= "subtitle1"
+                              onClick={() => history.push('/')}
+                  >
+                    Home
+                  </Typography>
+                  <Typography r={10}
+                              display = 'inline'
+                              className={classes.line}
+                              variant= "subtitle1"
+                              onClick={() => history.push('/browsejobs')}
+                  >
+                    Browse Jobs
+                  </Typography>
+                  <Typography r={10}
+                              className={classes.line}
+                              display = 'inline'
+                              variant= "subtitle1"
+                  >
+                    <Modal/>
+                  </Typography>
+                </>
+            )}
+          </Toolbar>
+        </AppBar>
+        <MUIDrawer
+            variant="permanent"
+            className={clsx(classes.drawer, {
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            })}
+            classes={{
+              paper: clsx({
+                [classes.drawerOpen]: open,
+                [classes.drawerClose]: !open,
+              }),
+            }}
 
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-        <List>
-          {itemsList.map((item, index) => {
-            const { text, icon, onClick } = item;
-            return (
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+          <List>
+            {itemsList.map((item, index) => {
+              const { text, icon, onClick } = item;
+              return (
 
-              <ListItem button key={text} onClick={onClick}>
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText  primary={text} />
-              </ListItem>
-            );
-          })}
-        </List>
-      </MUIDrawer>
+                  <ListItem button key={text} onClick={onClick}>
+                    <ListItemIcon>{icon}</ListItemIcon>
+                    <ListItemText  primary={text} />
+                  </ListItem>
+              );
+            })}
+          </List>
+        </MUIDrawer>
 
-    </div>
+      </div>
   );
 }
 export default Drawer;
