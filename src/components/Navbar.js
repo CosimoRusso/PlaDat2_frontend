@@ -16,151 +16,154 @@ import logo from "./logoWhite.png"
 
 const useStyles = makeStyles((theme) => ({
 
-  root: {
-    flexGrow: 1,
-  },
+    root: {
+        flexGrow: 1,
+    },
 
-  color: {
-    background: '#03a9f4',
-  },
+    color: {
+        background: '#03a9f4',
+    },
 
-  line: {
-   margin: theme.spacing(3),
-   '&:hover': {
-    color: 'black',
+    line: {
+        margin: theme.spacing(3),
+        '&:hover': {
+            color: 'black',
 
- }
-  },
+        }
+    },
 
-  right: {
-    marginLeft: 'auto',
-  },
+    right: {
+        marginLeft: 'auto',
+        '&:hover':{
+            cursor: 'pointer'
+        }
+    },
 
 
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
 }));
 
 const Header = props => {
-  const { history } = props;
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+    const { history } = props;
+    const classes = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleMenu = event => {
-    setAnchorEl(event.currentTarget);
-  };
+    const handleMenu = event => {
+        setAnchorEl(event.currentTarget);
+    };
 
-  const handleMenuClick = pageURL => {
-    history.push(pageURL);
+    const handleMenuClick = pageURL => {
+        history.push(pageURL);
 
-  };
+    };
 
-  const handleButtonClick = pageURL => {
-    history.push(pageURL);
-  };
+    const handleButtonClick = pageURL => {
+        history.push(pageURL);
+    };
 
-  const menuItems = [
-    {
-      menuTitle: "Home",
-      pageURL: "/"
-    },
-    {
-      menuTitle: "Jobs",
-      pageURL: "/browsejobs"
-    },
-    {
-      menuTitle: <Modal/>,
-    },
-    {
-      menuTitle: "Profile",
-      pageURL: "/profile"
-    },
-  ];
+    const menuItems = [
+        {
+            menuTitle: "Home",
+            pageURL: "/"
+        },
+        {
+            menuTitle: "Jobs",
+            pageURL: "/browsejobs"
+        },
+        {
+            menuTitle: <Modal/>,
+        },
+        {
+            menuTitle: "Profile",
+            pageURL: "/profile"
+        },
+    ];
 
-  return (
-    <div className={classes.root}>
-      <AppBar position="static" style={{backgroundColor: props.color}} className={classes.appBar}>
-        <Toolbar>
-            <img
-            width="150"
-            height="55"
-            src={logo}
-            alt="Logo"/>
-          {isMobile ? (
-            <>
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-                onClick={handleMenu}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
+    return (
+        <div className={classes.root}>
+            <AppBar position="static" style={{backgroundColor: props.color}} className={classes.appBar}>
+                <Toolbar>
+                    <img
+                        width="150"
+                        height="55"
+                        src={logo}
+                        alt="Logo"/>
+                    {isMobile ? (
+                        <>
+                            <IconButton
+                                edge="start"
+                                className={classes.menuButton}
+                                color="inherit"
+                                aria-label="menu"
+                                onClick={handleMenu}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <Menu
 
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
-                }}
-                open={open}
-                onClose={() => setAnchorEl(null)}
-              >
-                {menuItems.map(menuItem => {
-                  const { menuTitle, pageURL } = menuItem;
-                  return (
-                    <MenuItem onClick={() => handleMenuClick(pageURL)}>
-                      {menuTitle}
-                    </MenuItem>
-                  );
-                })}
-              </Menu>
-            </>
-          ) : (
-            <div             className={classes.right}>
-              <Typography m={10}
-               className={classes.line}
-               display= 'inline'
-               variant= "subtitle1"
-               onClick={() => handleButtonClick("/")}
-              >
-                Home
-              </Typography>
-              <Typography r={10}
-                className={classes.line}
-                display = 'inline'
-                variant= "subtitle1"
-                onClick={() => handleButtonClick("/browsejobs")}
-              >
-               Browse Jobs
-              </Typography>
-              <Typography r={10}
-                className={classes.line}
-                display = 'inline'
-                variant= "subtitle1"
-              >
-                <Modal/>
-              </Typography>
-            </div>
-          )}
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right"
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right"
+                                }}
+                                open={open}
+                                onClose={() => setAnchorEl(null)}
+                            >
+                                {menuItems.map(menuItem => {
+                                    const { menuTitle, pageURL } = menuItem;
+                                    return (
+                                        <MenuItem onClick={() => handleMenuClick(pageURL)}>
+                                            {menuTitle}
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Menu>
+                        </>
+                    ) : (
+                        <div             className={classes.right}>
+                            <Typography m={10}
+                                        className={classes.line}
+                                        display= 'inline'
+                                        variant= "subtitle1"
+                                        onClick={() => handleButtonClick("/")}
+                            >
+                                Home
+                            </Typography>
+                            <Typography r={10}
+                                        className={classes.line}
+                                        display = 'inline'
+                                        variant= "subtitle1"
+                                        onClick={() => handleButtonClick("/browsejobs")}
+                            >
+                                Browse Jobs
+                            </Typography>
+                            <Typography r={10}
+                                        className={classes.line}
+                                        display = 'inline'
+                                        variant= "subtitle1"
+                            >
+                                <Modal/>
+                            </Typography>
+                        </div>
+                    )}
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
 };
 
 export default withRouter(Header);
