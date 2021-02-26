@@ -52,4 +52,4 @@ If you want, you can contact the company via email, the option is stated in the 
 
 When you are registered and logged in as a company, an empty dashboard will show up with a button to add a new job. After the button is pressed a simple form with the job name and description needs to be filled in order to add a job. After that new form with much more fields will show up. Here company can add skills, location, and some other important information for the job.
  
-(https://user-images.githubusercontent.com/60764070/109355707-e4383280-787f-11eb-8a5f-3dd8eed19aa9.png)
+https://user-images.githubusercontent.com/60764070/109355707-e4383280-787f-11eb-8a5f-3dd8eed19aa9.png
