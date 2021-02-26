@@ -17,13 +17,13 @@ If you are already a registered user, just simply click on the login button in t
 
 ![login](https://user-images.githubusercontent.com/60898529/109020457-45160e00-76ba-11eb-865c-dfd7f76abb03.jpg)
 
-## Dashboard
 
-When you are registered and loged in, dashboard with recomended jobs will show up. As you can see from the picture below there are couple of filters that can help you in searching your dream job. All the jobs are ranked in a way that fits your skills and needs. 
+# Student
+## Add skills
+
+When you are registered and logged in as a student, dashboard with recomended jobs will show up. As you can see from the picture below there are couple of filters that can help you in searching your dream job. All the jobs are ranked in a way that fits your skills and needs. 
 
 ![dashboard](https://user-images.githubusercontent.com/60898529/109354245-cd90dc00-787d-11eb-922d-7d70292c20a1.jpg)
-
-In case you decline some offers from the dashboard and change your mind later, you can always find them in the "Browse jobs".
 
 ## Your dashboard is empty and it does not offers any jobs?
 
@@ -47,7 +47,9 @@ If you want, you can contact the company via email, the option is stated in the 
 
 ![notifications](https://user-images.githubusercontent.com/60898529/109353839-33c92f00-787d-11eb-837e-f441258de31e.jpg)
 
+# Company
+## Add job
 
-
+When you are registered and logged in as a company, an empty dashboard will show up with a button to add a new job. After the button is pressed a simple form with the job name and description needs to be filled in order to add a job. After that new form with much more fields will show up. Here company can add skills, location, and some other important information for the job.
  
-
+(https://user-images.githubusercontent.com/60764070/109355707-e4383280-787f-11eb-8a5f-3dd8eed19aa9.png)
