@@ -24,7 +24,7 @@ When you are registered and loged in, dashboard with recomended jobs will show u
 
 Do not worry! You just need to add more informations about yourself and add more skills. You can do that by clicking on the link "Profile details" like it is shown in the picture below. 
 
-![profile details](https://user-images.githubusercontent.com/60898529/109305425-fa250380-783d-11eb-8c10-3a297f863e07.jpg)
+![profile details](https://user-images.githubusercontent.com/60898529/109305536-29d40b80-783e-11eb-8530-bff63e1aef20.jpg)
 
 By clicking this link you will lead you to the page where you can edit your informations.
 
