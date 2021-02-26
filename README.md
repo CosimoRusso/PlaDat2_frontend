@@ -53,3 +53,10 @@ If you want, you can contact the company via email, the option is stated in the 
 When you are registered and logged in as a company, an empty dashboard will show up with a button to add a new job. After the button is pressed a simple form with the job name and description needs to be filled in order to add a job. After that new form with much more fields will show up. Here company can add skills, location, and some other important information for the job.
  
 ![Screen Shot 2021-02-26 at 22 13 03](https://user-images.githubusercontent.com/60764070/109355707-e4383280-787f-11eb-8a5f-3dd8eed19aa9.png)
+![Screen Shot 2021-02-26 at 22 13 18](https://user-images.githubusercontent.com/60764070/109356108-8bb56500-7880-11eb-9f4b-fb28727ce988.png)
+
+## View students that applied for the job
+
+For every job, that company posted they can see the list of students that applied for that job. From there they can view the profile of the student, accept or denied the student for the job.
+
+![Screen Shot 2021-02-26 at 22 24 48](https://user-images.githubusercontent.com/60764070/109356953-b48a2a00-7881-11eb-84ba-2db05d9d41e3.png)
