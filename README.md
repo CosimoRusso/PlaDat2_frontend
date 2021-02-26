@@ -1,3 +1,6 @@
+# License
+This product is released under the [GPL License](https://github.com/CosimoRusso/PlaDat2_frontend/blob/master/public/license.txt).
+
 # Getting Started with MatchUP
 
 MatchUp is a web application which creates a matching service that connects placement students with potential employers, in a similar way to dating services. The main objective is to provide a safe way for students to get the best possible job and for companies to find the most suitable people for their specific job. It allows making this whole placement process easier and more efficient for both students and employers.
