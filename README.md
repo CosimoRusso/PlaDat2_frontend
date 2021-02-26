@@ -28,6 +28,7 @@ Do not worry! You just need to add more informations about yourself and add more
 
 By clicking this link you will lead you to the page where you can edit your informations.
 
-![edit skills](https://user-images.githubusercontent.com/60898529/109304633-d4e3c580-783c-11eb-92ba-e1621160388d.jpg)
+![skills](https://user-images.githubusercontent.com/60898529/109306151-09f11780-783f-11eb-8a3c-88fb6c3aa2cf.jpg)
+
 
 
