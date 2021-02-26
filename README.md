@@ -8,9 +8,26 @@ Since this project is implemented in the form of a web application, it makes it 
 
 Let's start!
 
-## Start with registration and adding some basic informations
+## Register and add some basic informations
 
 If you are already a registered user, just simply click on the login button in the navigation bar. In case you still did not register yet, there is a link that will lead you to the simple form where you can add your basic information.
 
 ![login](https://user-images.githubusercontent.com/60898529/109020457-45160e00-76ba-11eb-865c-dfd7f76abb03.jpg)
+
+## Add skills
+
+When you are registered and loged in, dashboard with recomended jobs will show up. As you can see from the picture below there are couple of filters that can help you in searching your dream job. All the jobs are ranked in a way that fits your skills and needs. 
+
+![dashboard](https://user-images.githubusercontent.com/60898529/109304844-2429f600-783d-11eb-888b-b0830b2eb831.jpg)
+
+## Your dashboard is empty and it does not offers any jobs?
+
+Do not worry! You just need to add more informations about yourself and add more skills. You can do that by clicking on the link "Profile details" like it is shown in the picture below. 
+
+![profile details](https://user-images.githubusercontent.com/60898529/109305425-fa250380-783d-11eb-8c10-3a297f863e07.jpg)
+
+By clicking this link you will lead you to the page where you can edit your informations.
+
+![edit skills](https://user-images.githubusercontent.com/60898529/109304633-d4e3c580-783c-11eb-92ba-e1621160388d.jpg)
+
 
