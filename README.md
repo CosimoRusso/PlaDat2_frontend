@@ -17,11 +17,13 @@ If you are already a registered user, just simply click on the login button in t
 
 ![login](https://user-images.githubusercontent.com/60898529/109020457-45160e00-76ba-11eb-865c-dfd7f76abb03.jpg)
 
-## Add skills
+## Dashboard
 
 When you are registered and loged in, dashboard with recomended jobs will show up. As you can see from the picture below there are couple of filters that can help you in searching your dream job. All the jobs are ranked in a way that fits your skills and needs. 
 
 ![dashboard](https://user-images.githubusercontent.com/60898529/109354245-cd90dc00-787d-11eb-922d-7d70292c20a1.jpg)
+
+In case you decline some offers from the dashboard and change your mind later, you can always find them in the "Browse jobs".
 
 ## Your dashboard is empty and it does not offers any jobs?
 
