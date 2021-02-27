@@ -41,7 +41,7 @@ Every job has its own description where you can find out everything you need.
 
 ![read more](https://user-images.githubusercontent.com/60898529/109353432-a2f25380-787c-11eb-9eec-1c50c52776bb.jpg)
 
-After choosing the right job you can apply by simply clicking button and wait for the respond from the company. In the dashboard page you will have a notification when the status of your offer is resolved, whether it is positive or negative. If you want to test it on your own you can create student account, apply for the job and you will get a response from the company during the day.
+After choosing the right job you can apply by simply clicking button and wait for the response from the company. In the dashboard page you will have a notification when the status of your offer is resolved, whether it is positive or negative. If you want to test it on your own you can create student account, apply for the job and you will get a response from the company during the day.
 
 If you want, you can contact the company via email, the option is stated in the same place as notifications.
 
