@@ -7,7 +7,7 @@ MatchUp is a web application which creates a matching service that connects plac
 
 # How to start?
 
-Since this project is implemented in the form of a web application, it makes it self-explanatory and quite easy to use. However, if you have any ambiguities we will be more than willing to instruct you in the main steps you need to follow to take advantage of this application. If you have any problems or concerns regarding the application you can contact us at any time at [info@pladat.tk](mailto:info@pladat.tk).
+Since this project is implemented in the form of a web application, it makes it self-explanatory and quite easy to use. However, if you have any ambiguities we will be more than willing to instruct you in the main steps you need to follow to take advantage of this application. For any problems or concerns regarding the application you can contact us at any time at [info@pladat.tk](mailto:info@pladat.tk).
 
 Let's start!
 
